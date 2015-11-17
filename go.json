@@ -1,0 +1,20 @@
+{
+    "id" : "go",
+	"version" : "0.0.1",
+    "description": "Go support for gauge",
+	"run": {
+		"windows": ["bin/gauge-go", "--start"],
+		"linux": ["bin/gauge-go", "--start"],
+		"darwin": ["bin/gauge-go", "--start"]
+	},
+	"init": {
+        "windows": ["bin/gauge-go", "--init"],
+        "linux": ["bin/gauge-go", "--init"],
+        "darwin": ["bin/gauge-go", "--init"]
+    },
+    "lib": "libs",
+    "gaugeVersionSupport": {
+      "minimum": "0.2.0",
+      "maximum": ""
+    }
+}
