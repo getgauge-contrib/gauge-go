@@ -5,10 +5,11 @@ import (
 	"fmt"
 	"os"
 	"path"
+	"os/exec"
+	"io/ioutil"
 
 	"github.com/getgauge/common"
 	"github.com/manuviswam/gauge-go/constants"
-	"io/ioutil"
 )
 
 var pluginDir = ""
@@ -30,7 +31,13 @@ func main() {
 }
 
 func startGo() {
-	fmt.Println("Start called")
+	os.Chdir(path.Join(projectRoot, constants.DefaultSpecImplDir))
+	cmd := exec.Command(constants.CommandGo, constants.ArgTest)
+	cmd.Stdout = os.Stdout
+	err := cmd.Run()
+	if err != nil {
+		fmt.Println("Error occured while executing 'go test' :", err)
+	}
 }
 
 func initGo() {

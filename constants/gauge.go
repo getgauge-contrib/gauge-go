@@ -4,4 +4,6 @@ const (
 	DefaultSpecImplDir      = "specimpl"
 	DefaultStepImplFileName = "stepimplementation.go"
 	DefaultInitTestFileName = "gauge_test.go"
+	CommandGo               = "go"
+	ArgTest                 = "test"
 )
