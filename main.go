@@ -3,10 +3,10 @@ package main
 import (
 	"flag"
 	"fmt"
-	"os"
-	"path"
-	"os/exec"
 	"io/ioutil"
+	"os"
+	"os/exec"
+	"path"
 
 	"github.com/getgauge/common"
 	"github.com/manuviswam/gauge-go/constants"
@@ -34,6 +34,7 @@ func startGo() {
 	os.Chdir(path.Join(projectRoot, constants.DefaultSpecImplDir))
 	cmd := exec.Command(constants.CommandGo, constants.ArgTest)
 	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
 	err := cmd.Run()
 	if err != nil {
 		fmt.Println("Error occured while executing 'go test' :", err)
