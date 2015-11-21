@@ -2,12 +2,13 @@ package runner
 
 import (
 	"fmt"
-	"os"
 	"net"
+	"os"
+	"bytes"
 
-	"github.com/manuviswam/gauge-go/constants"
 	"github.com/golang/protobuf/proto"
-	"github.com/manuviswam/gauge-go/gauge_messages"
+	c "github.com/manuviswam/gauge-go/constants"
+	m "github.com/manuviswam/gauge-go/gauge_messages"
 )
 
 var steps map[string]func()
@@ -28,26 +29,66 @@ func Run() {
 		fmt.Println(step)
 	}
 
-	var gaugePort = os.Getenv(constants.GaugePortVariable)
+	var gaugePort = os.Getenv(c.GaugePortVariable)
 
 	fmt.Println("Connecting port:", gaugePort)
 	conn, err := net.Dial("tcp", net.JoinHostPort("127.0.0.1", gaugePort))
+	defer conn.Close()
 	if err != nil {
 		fmt.Println("dial error:", err)
 		return
 	}
-	defer conn.Close()
-	b := make([]byte, constants.MaxMessageSize)
 	for {
-		conn.Read(b)
-		processMessage(b)
-		fmt.Println("total size:",len(b))
+		data, err := readMessageBytes(conn)
+		if err != nil {
+			fmt.Println("Error reading message : ", err)
+		}
+		msg, err := decodeMessage(data)
+		if err != nil {
+			fmt.Println("Error decoding message :", err)
+		}
+		fmt.Println("Message received : ", msg)
+		msgToSend := m.Message{
+			MessageType: m.Message_StepNamesResponse.Enum(),
+			MessageId:   msg.MessageId,
+			StepNamesResponse: &m.StepNamesResponse{
+				Steps: getAllStepDescriptions(),
+			},
+		}
+		protoMsg, _ := proto.Marshal(&msgToSend)
+		conn.Write(protoMsg)
 	}
 }
 
-func processMessage(data []byte) error {
-	message := gauge_messages.Message{}
-	proto.Unmarshal(data, &message)
-	fmt.Println("Message recieved : ", message)
-	return nil
+func decodeMessage(data []byte) (*m.Message, error) {
+	message := new(m.Message)
+	err := proto.Unmarshal(data, message)
+	return message, err
+}
+
+func readMessageBytes(conn net.Conn) ([]byte, error) {
+	buffer := new(bytes.Buffer)
+	data := make([]byte, c.MaxMessageSize)
+	for {
+		n, err := conn.Read(data)
+		if err != nil {
+			conn.Close()
+			return nil, fmt.Errorf("Connection closed [%s] cause: %s", conn.RemoteAddr(), err.Error())
+		}
+
+		buffer.Write(data[0:n])
+
+		messageLength, bytesRead := proto.DecodeVarint(buffer.Bytes())
+		if messageLength > 0 && messageLength < uint64(buffer.Len()) {
+			return buffer.Bytes()[bytesRead : messageLength+uint64(bytesRead)], nil
+		}
+	}
+}
+
+func getAllStepDescriptions() []string {
+	stepDesc := make([]string, len(steps))
+	for k := range steps {
+		stepDesc = append(stepDesc, k)
+	}
+	return stepDesc
 }

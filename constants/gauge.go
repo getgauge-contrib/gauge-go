@@ -7,5 +7,5 @@ const (
 	CommandGo               = "go"
 	ArgTest                 = "test"
 	GaugePortVariable       = "GAUGE_INTERNAL_PORT"
-	MaxMessageSize			= 4098
+	MaxMessageSize          = 8192
 )
