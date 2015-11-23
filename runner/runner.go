@@ -5,17 +5,20 @@ import (
 	"net"
 	"os"
 
-	"github.com/golang/protobuf/proto"
 	c "github.com/manuviswam/gauge-go/constants"
 	t "github.com/manuviswam/gauge-go/testsuit"
 	m "github.com/manuviswam/gauge-go/gauge_messages"
 	mu "github.com/manuviswam/gauge-go/messageutil"
+	mp "github.com/manuviswam/gauge-go/messageprocessors"
 )
 
 var steps []t.Step
+var processors mp.ProcessorDictionary
 
 func init() {
 	steps = make([]t.Step, 0)
+	processors = mp.ProcessorDictionary{}
+	processors[*m.Message_StepNamesRequest.Enum()] = &mp.StepNamesRequestProcessor{}
 }
 
 func Describe(stepDesc string, impl func()) bool {
@@ -29,8 +32,6 @@ func Describe(stepDesc string, impl func()) bool {
 
 func Run() {
 	fmt.Println("We have got ", len(steps), " step implementations") // remove
-	fmt.Println("Steps\n========") // remove
-	fmt.Println(getAllDescriptions()) // remove
 
 	var gaugePort = os.Getenv(c.GaugePortVariable)
 
@@ -48,22 +49,14 @@ func Run() {
 			return
 		}
 		fmt.Println("Message received : ", msg) // remove
-		msgToSend := m.Message{
-			MessageType: m.Message_StepNamesResponse.Enum(),
-			MessageId:   msg.MessageId,
-			StepNamesResponse: &m.StepNamesResponse{
-				Steps: getAllDescriptions(),
-			},
+
+		processor := processors[*msg.MessageType.Enum()]
+
+		if processor == nil {
+			fmt.Println("Unable to find processor for message type : ", msg.MessageType)
+			return
 		}
-		protoMsg, _ := proto.Marshal(&msgToSend)
-		conn.Write(protoMsg)
+		processor.Process(conn, msg, steps)
 	}
 }
 
-func getAllDescriptions() []string {
-	descs := make([]string, len(steps))
-	for _, step := range steps {
-		descs = append(descs, step.Description)
-	}
-	return descs
-}
