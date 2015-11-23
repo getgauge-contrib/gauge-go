@@ -8,25 +8,30 @@ import (
 
 	"github.com/golang/protobuf/proto"
 	c "github.com/manuviswam/gauge-go/constants"
+	t "github.com/manuviswam/gauge-go/testsuit"
 	m "github.com/manuviswam/gauge-go/gauge_messages"
 )
 
-var steps map[string]func()
+var steps []t.Step
 
 func init() {
-	steps = make(map[string]func())
+	steps = make([]t.Step, 0)
 }
 
 func Describe(stepDesc string, impl func()) bool {
-	steps[stepDesc] = impl
+	step := t.Step{
+		Description:stepDesc,
+		Impl:impl,
+	}
+	steps = append(steps, step)
 	return true
 }
 
 func Run() {
 	fmt.Println("We have got ", len(steps), " step implementations")
 	fmt.Println("Steps\n========")
-	for step, _ := range steps {
-		fmt.Println(step)
+	for _,step := range steps {
+		fmt.Println(step.Description)
 	}
 
 	var gaugePort = os.Getenv(c.GaugePortVariable)
@@ -52,7 +57,7 @@ func Run() {
 			MessageType: m.Message_StepNamesResponse.Enum(),
 			MessageId:   msg.MessageId,
 			StepNamesResponse: &m.StepNamesResponse{
-				Steps: getAllStepDescriptions(),
+				Steps: getAllDescriptions(),
 			},
 		}
 		protoMsg, _ := proto.Marshal(&msgToSend)
@@ -85,10 +90,10 @@ func readMessageBytes(conn net.Conn) ([]byte, error) {
 	}
 }
 
-func getAllStepDescriptions() []string {
-	stepDesc := make([]string, len(steps))
-	for k := range steps {
-		stepDesc = append(stepDesc, k)
+func getAllDescriptions() []string {
+	descs := make([]string, len(steps))
+	for _, step := range steps {
+		descs = append(descs, step.Description)
 	}
-	return stepDesc
+	return descs
 }
