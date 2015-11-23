@@ -1,8 +1,9 @@
 package messageutil
+
 import (
-	"net"
 	"bytes"
 	"fmt"
+	"net"
 
 	"github.com/golang/protobuf/proto"
 	c "github.com/manuviswam/gauge-go/constants"

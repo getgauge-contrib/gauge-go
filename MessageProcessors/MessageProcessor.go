@@ -12,4 +12,3 @@ type MessageProcessor interface {
 }
 
 type ProcessorDictionary map[m.Message_MessageType]MessageProcessor
-

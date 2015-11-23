@@ -2,9 +2,9 @@ package testsuit
 
 type Step struct {
 	Description string
-	Impl func()
+	Impl        func()
 }
 
-func (step *Step)Execute()  {
+func (step *Step) Execute() {
 	step.Impl()
 }

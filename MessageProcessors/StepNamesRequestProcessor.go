@@ -1,15 +1,16 @@
 package messageprocessors
 
 import (
+	"net"
+
 	"github.com/golang/protobuf/proto"
 	m "github.com/manuviswam/gauge-go/gauge_messages"
 	t "github.com/manuviswam/gauge-go/testsuit"
-	"net"
 )
 
-type StepNamesRequestProcessor struct {}
+type StepNamesRequestProcessor struct{}
 
-func (s *StepNamesRequestProcessor) Process(conn net.Conn, msg *m.Message, steps []t.Step)  {
+func (s *StepNamesRequestProcessor) Process(conn net.Conn, msg *m.Message, steps []t.Step) {
 	msgToSend := m.Message{
 		MessageType: m.Message_StepNamesResponse.Enum(),
 		MessageId:   msg.MessageId,
