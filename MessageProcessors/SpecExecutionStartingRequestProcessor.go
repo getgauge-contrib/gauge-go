@@ -7,7 +7,7 @@ import (
 
 type SpecExecutionStartingRequestProcessor struct{}
 
-func (r *SpecExecutionStartingRequestProcessor) Process(msg *m.Message, steps []t.Step)*m.Message {
+func (r *SpecExecutionStartingRequestProcessor) Process(msg *m.Message, steps []t.Step) *m.Message {
 	//TODO do the intended operation here. Right now I am focused on getting the first test running.
 	//TODO So I am replying with whatever this function is supposed to do is a success.
 	failed := false
@@ -17,10 +17,9 @@ func (r *SpecExecutionStartingRequestProcessor) Process(msg *m.Message, steps []
 		MessageId:   msg.MessageId,
 		ExecutionStatusResponse: &m.ExecutionStatusResponse{
 			ExecutionResult: &m.ProtoExecutionResult{
-				Failed: &failed,
+				Failed:        &failed,
 				ExecutionTime: &executionTime,
 			},
 		},
 	}
 }
-

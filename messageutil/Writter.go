@@ -3,8 +3,8 @@ package messageutil
 import (
 	"net"
 
-	"github.com/golang/protobuf/proto"
 	"github.com/getgauge/common"
+	"github.com/golang/protobuf/proto"
 	"github.com/manuviswam/gauge-go/gauge_messages"
 )
 
