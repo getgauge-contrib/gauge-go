@@ -29,6 +29,7 @@ func init() {
 	processors[*m.Message_ExecuteStep.Enum()] = &mp.ExecuteStepProcessor{}
 	processors[*m.Message_ExecutionEnding.Enum()] = &mp.ExecutionEndingProcessor{}
 	processors[*m.Message_StepExecutionEnding.Enum()] = &mp.StepExecutionEndingProcessor{}
+	processors[*m.Message_ScenarioExecutionEnding.Enum()] = &mp.ScenarioExecutionEndingProcessor{}
 }
 
 func Describe(stepDesc string, impl func()) bool {
