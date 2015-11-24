@@ -24,6 +24,7 @@ func init() {
 	processors[*m.Message_SuiteDataStoreInit.Enum()] = &mp.SuiteDatastoreInitRequestProcessor{}
 	processors[*m.Message_ExecutionStarting.Enum()] = &mp.ExecutionStartingRequestProcessor{}
 	processors[*m.Message_SpecExecutionStarting.Enum()] = &mp.SpecExecutionStartingRequestProcessor{}
+	processors[*m.Message_ScenarioExecutionStarting.Enum()] = &mp.ScenarioExecutionStartingRequestProcessor{}
 }
 
 func Describe(stepDesc string, impl func()) bool {
@@ -54,7 +55,6 @@ func Run() {
 			fmt.Println("Error reading message : ", err)
 			return
 		}
-		fmt.Println("Message received : ", msg) // remove
 
 		processor := processors[*msg.MessageType.Enum()]
 
