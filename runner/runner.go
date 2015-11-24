@@ -61,6 +61,9 @@ func Run() {
 			fmt.Println("Error reading message : ", err)
 			return
 		}
+		if *msg.MessageType.Enum() == *m.Message_KillProcessRequest.Enum() {
+			return
+		}
 
 		processor := processors[*msg.MessageType.Enum()]
 
