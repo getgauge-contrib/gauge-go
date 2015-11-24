@@ -22,6 +22,7 @@ func init() {
 	processors[*m.Message_StepNamesRequest.Enum()] = &mp.StepNamesRequestProcessor{}
 	processors[*m.Message_StepValidateRequest.Enum()] = &mp.StepValidateRequestProcessor{}
 	processors[*m.Message_SuiteDataStoreInit.Enum()] = &mp.SuiteDatastoreInitRequestProcessor{}
+	processors[*m.Message_ExecutionStarting.Enum()] = &mp.ExecutionStartingRequestProcessor{}
 }
 
 func Describe(stepDesc string, impl func()) bool {
