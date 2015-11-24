@@ -1,14 +1,12 @@
 package messageprocessors
 
 import (
-	"net"
-
 	m "github.com/manuviswam/gauge-go/gauge_messages"
 	t "github.com/manuviswam/gauge-go/testsuit"
 )
 
 type MessageProcessor interface {
-	Process(net.Conn, *m.Message, []t.Step)
+	Process(*m.Message, []t.Step)*m.Message
 }
 
 type ProcessorDictionary map[m.Message_MessageType]MessageProcessor

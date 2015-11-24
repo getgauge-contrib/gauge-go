@@ -59,7 +59,9 @@ func Run() {
 			fmt.Println("Unable to find processor for message type : ", msg.MessageType)
 			return
 		}
-		processor.Process(conn, msg, steps)
+		msgToSend := processor.Process(msg, steps)
+
+		mu.WriteGaugeMessage(msgToSend, conn)
 	}
 }
 
