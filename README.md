@@ -3,6 +3,14 @@
 
 Go language plugin for Thoughtworks Gauge
 
+To install plugin
+Checkout the repository
+run the command
+```sh
+go build
+```
+copy gauge-go.exe to <gauge plugin directory>/go/1.0.0/bin/ directory
+copy go.json file to <gauge plugin directory>/go/1.0.0/ directory
 
 To initialize a project with gauge-go, in an empty directory run:
 ```sh
