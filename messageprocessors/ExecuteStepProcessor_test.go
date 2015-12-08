@@ -13,7 +13,7 @@ func TestShouldRunStep(tst *testing.T) {
 	called := false
 	step := t.Step{
 		Description: stepText,
-		Impl:        func() { called = true },
+		Impl:        func(args ...interface{}) { called = true },
 	}
 	steps := make([]t.Step, 0)
 	steps = append(steps, step)
@@ -40,7 +40,7 @@ func TestShouldRunReturnExecutionStatusResponseWithSameId(tst *testing.T) {
 	called := false
 	step := t.Step{
 		Description: stepText,
-		Impl:        func() { called = true },
+		Impl:        func(args ...interface{}) { called = true },
 	}
 	steps := make([]t.Step, 0)
 	steps = append(steps, step)

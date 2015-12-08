@@ -29,7 +29,7 @@ func TestShouldReturnAllStepNames(tst *testing.T) {
 	msgId := int64(12345)
 	step := t.Step{
 		Description: stepText,
-		Impl:        func() {},
+		Impl:        func(args ...interface{}) {},
 	}
 	steps := make([]t.Step, 0)
 	steps = append(steps, step)

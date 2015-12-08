@@ -33,7 +33,7 @@ func init() {
 	processors[*m.Message_SpecExecutionEnding.Enum()] = &mp.SpecExecutionEndingProcessor{}
 }
 
-func Describe(stepDesc string, impl func()) bool {
+func Describe(stepDesc string, impl func(...interface{})) bool {
 	desc := parseDesc(stepDesc)
 	step := t.Step{
 		Description: desc,
