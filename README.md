@@ -3,6 +3,8 @@
 
 Go language plugin for Thoughtworks Gauge
 
+[![Build Status](https://travis-ci.org/manuviswam/gauge-go.svg?branch=master)](https://travis-ci.org/manuviswam/gauge-go)
+
 To install plugin
 Checkout the repository
 run the command
