@@ -1,6 +1,6 @@
 package models
 import (
-	m "github.com/getgauge/gauge/gauge_messages"
+	m "github.com/manuviswam/gauge-go/gauge_messages"
 )
 
 type Table struct {
@@ -29,7 +29,7 @@ func (t *Table) ConvertToProtoTable() *m.ProtoTable {
 	return p
 }
 
-func CreateFromProtoTable(p *m.ProtoTable) *Table {
+func CreateTableFromProtoTable(p *m.ProtoTable) *Table {
 	//TODO handle error scenarios
 	t := &Table{
 		Headers: &TableRow{

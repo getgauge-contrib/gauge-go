@@ -3,6 +3,7 @@ package messageprocessors
 import (
 	"fmt"
 	m "github.com/manuviswam/gauge-go/gauge_messages"
+	"github.com/manuviswam/gauge-go/models"
 	t "github.com/manuviswam/gauge-go/testsuit"
 	"time"
 )
@@ -52,7 +53,7 @@ func getArgs(r *m.ExecuteStepRequest) []interface{} {
 	var args []interface{}
 	for _, param := range r.GetParameters() {
 		if *param.ParameterType.Enum() == *m.Parameter_Table.Enum() {
-			args = append(args, *param.Table)
+			args = append(args, models.CreateTableFromProtoTable(param.Table))
 		} else {
 			args = append(args, *param.Value)
 		}

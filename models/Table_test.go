@@ -3,8 +3,7 @@ package models
 import (
 	"testing"
 	"github.com/stretchr/testify/assert"
-	m "github.com/getgauge/gauge/gauge_messages"
-
+	m "github.com/manuviswam/gauge-go/gauge_messages"
 )
 
 func TestConvertToProtoTable(t *testing.T) {
@@ -44,7 +43,7 @@ func TestCreateFromProtoTable(t *testing.T) {
 		Rows: rows,
 	}
 
-	tbl := CreateFromProtoTable(p)
+	tbl := CreateTableFromProtoTable(p)
 
 	assert.Contains(t, tbl.Headers.Cells, "Header 1")
 	assert.Contains(t, tbl.Headers.Cells, "Header 2")
