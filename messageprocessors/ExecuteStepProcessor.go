@@ -22,8 +22,7 @@ func (r *ExecuteStepProcessor) Process(msg *m.Message, steps []t.Step) *m.Messag
 	} else {
 		args := getArgs(msg.ExecuteStepRequest)
 		start := time.Now()
-		//Omit the first argument which is always <nil>
-		step.Execute(args[1:]...) //TODO error handling, multiple arguments
+		step.Execute(args...) //TODO error handling
 		executionTime = time.Since(start).Nanoseconds()
 	}
 
@@ -50,7 +49,7 @@ func getStepWithDesc(desc string, steps []t.Step) *t.Step {
 }
 
 func getArgs(r *m.ExecuteStepRequest) []interface{} {
-	args := make([]interface{}, 1)
+	var args []interface{}
 	for _, param := range r.GetParameters() {
 		if *param.ParameterType.Enum() == *m.Parameter_Table.Enum() {
 			args = append(args, *param.Table)
