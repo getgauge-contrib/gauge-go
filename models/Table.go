@@ -1,4 +1,5 @@
 package models
+
 import (
 	m "github.com/manuviswam/gauge-go/gauge_messages"
 )
@@ -7,12 +8,12 @@ type Table struct {
 	// / Contains the Headers for the table
 	Headers *TableRow
 	// / Contains the Rows for the table
-	Rows             []*TableRow
+	Rows []*TableRow
 }
 
 type TableRow struct {
 	// / Represents the cells of a given table
-	Cells            []string
+	Cells []string
 }
 
 func (t *Table) ConvertToProtoTable() *m.ProtoTable {
@@ -24,7 +25,7 @@ func (t *Table) ConvertToProtoTable() *m.ProtoTable {
 	}
 
 	for _, row := range t.Rows {
-		p.Rows = append(p.Rows, &m.ProtoTableRow{ Cells: row.Cells})
+		p.Rows = append(p.Rows, &m.ProtoTableRow{Cells: row.Cells})
 	}
 	return p
 }
@@ -38,7 +39,7 @@ func CreateTableFromProtoTable(p *m.ProtoTable) *Table {
 	}
 
 	for _, row := range p.Rows {
-		t.Rows = append(t.Rows, &TableRow{ Cells: row.Cells})
+		t.Rows = append(t.Rows, &TableRow{Cells: row.Cells})
 	}
 	return t
 }

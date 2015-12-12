@@ -1,22 +1,22 @@
 package testsuit
 
 import (
-	"testing"
 	"github.com/stretchr/testify/assert"
+	"testing"
 )
 
-func TestShouldRunImplementation(t *testing.T){
+func TestShouldRunImplementation(t *testing.T) {
 	called := false
 	var calledWith interface{}
 	step := Step{
 		Description: "Test description",
-		Impl: func(args ...interface{}){
+		Impl: func(args ...interface{}) {
 			calledWith = args
 			called = true
 		},
 	}
 
-	step.Execute(1,true,"foo")
+	step.Execute(1, true, "foo")
 
 	assert.True(t, called)
 	assert.Contains(t, calledWith, 1)
