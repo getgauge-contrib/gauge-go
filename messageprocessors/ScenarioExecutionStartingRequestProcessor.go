@@ -8,18 +8,9 @@ import (
 type ScenarioExecutionStartingRequestProcessor struct{}
 
 func (r *ScenarioExecutionStartingRequestProcessor) Process(msg *m.Message, context t.GaugeContext) *m.Message {
-	//TODO do the intended operation here. Right now I am focused on getting the first test running.
-	//TODO So I am replying with whatever this function is supposed to do is a success.
-	failed := false
-	executionTime := int64(1)
-	return &m.Message{
-		MessageType: m.Message_ExecutionStatusResponse.Enum(),
-		MessageId:   msg.MessageId,
-		ExecutionStatusResponse: &m.ExecutionStatusResponse{
-			ExecutionResult: &m.ProtoExecutionResult{
-				Failed:        &failed,
-				ExecutionTime: &executionTime,
-			},
-		},
-	}
+	tags := msg.GetScenarioExecutionStartingRequest().GetCurrentExecutionInfo().GetCurrentScenario().GetTags()
+	hooks := context.GetHooks(t.BEFORESCENARIO, tags)
+
+	executionTime, err := executeHooks(hooks)
+	return createResponseMessage(msg.MessageId, executionTime, err)
 }
