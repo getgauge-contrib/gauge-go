@@ -7,7 +7,7 @@ import (
 
 type StepExecutionStartingRequestProcessor struct{}
 
-func (r *StepExecutionStartingRequestProcessor) Process(msg *m.Message, steps []t.Step) *m.Message {
+func (r *StepExecutionStartingRequestProcessor) Process(msg *m.Message, context t.GaugeContext) *m.Message {
 	//TODO do the intended operation here. Right now I am focused on getting the first test running.
 	//TODO So I am replying with whatever this function is supposed to do is a success.
 	failed := false

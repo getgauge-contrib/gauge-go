@@ -14,11 +14,15 @@ import (
 	"regexp"
 )
 
-var steps []t.Step
+var context t.GaugeContext
 var processors mp.ProcessorDictionary
 
 func init() {
-	steps = make([]t.Step, 0)
+	context = t.GaugeContext{
+		Steps: make([]t.Step, 0),
+		Hooks: nil,
+	}
+
 	processors = mp.ProcessorDictionary{}
 	processors[*m.Message_StepNamesRequest.Enum()] = &mp.StepNamesRequestProcessor{}
 	processors[*m.Message_StepValidateRequest.Enum()] = &mp.StepValidateRequestProcessor{}
@@ -56,12 +60,12 @@ func Describe(stepDesc string, impl interface{}) bool {
 		Description: desc,
 		Impl:        impl,
 	}
-	steps = append(steps, step)
+	context.Steps = append(context.Steps, step)
 	return true
 }
 
 func Run() {
-	fmt.Println("We have got ", len(steps), " step implementations") // remove
+	fmt.Println("We have got ", len(context.Steps), " step implementations") // remove
 
 	var gaugePort = os.Getenv(c.GaugePortVariable)
 
@@ -88,7 +92,7 @@ func Run() {
 			fmt.Println("Unable to find processor for message type : ", msg.MessageType)
 			return
 		}
-		msgToSend := processor.Process(msg, steps)
+		msgToSend := processor.Process(msg, context)
 
 		mu.WriteGaugeMessage(msgToSend, conn)
 	}

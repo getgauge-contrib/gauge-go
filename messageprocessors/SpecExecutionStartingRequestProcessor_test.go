@@ -9,7 +9,9 @@ import (
 
 func TestShouldReturnExecutionStatusResponseWithSameIdForSpecExecutionStarting(tst *testing.T) {
 	msgId := int64(12345)
-	steps := make([]t.Step, 0)
+	context := t.GaugeContext{
+		Steps : make([]t.Step, 0),
+	}
 
 	msg := &m.Message{
 		MessageType: m.Message_SpecExecutionStarting.Enum(),
@@ -18,7 +20,7 @@ func TestShouldReturnExecutionStatusResponseWithSameIdForSpecExecutionStarting(t
 
 	p := SpecExecutionStartingRequestProcessor{}
 
-	result := p.Process(msg, steps)
+	result := p.Process(msg, context)
 
 	assert.Equal(tst, result.MessageType, m.Message_ExecutionStatusResponse.Enum())
 	assert.Equal(tst, *result.MessageId, msgId)

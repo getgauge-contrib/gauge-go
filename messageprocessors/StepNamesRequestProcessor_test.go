@@ -9,7 +9,9 @@ import (
 
 func TestShouldReturnStepNamesResponseWithSameIdForStepnamesRequest(tst *testing.T) {
 	msgId := int64(12345)
-	steps := make([]t.Step, 0)
+	context := t.GaugeContext{
+		Steps : make([]t.Step, 0),
+	}
 
 	msg := &m.Message{
 		MessageType: m.Message_StepNamesRequest.Enum(),
@@ -18,7 +20,7 @@ func TestShouldReturnStepNamesResponseWithSameIdForStepnamesRequest(tst *testing
 
 	p := StepNamesRequestProcessor{}
 
-	result := p.Process(msg, steps)
+	result := p.Process(msg, context)
 
 	assert.Equal(tst, result.MessageType, m.Message_StepNamesResponse.Enum())
 	assert.Equal(tst, *result.MessageId, msgId)
@@ -27,12 +29,13 @@ func TestShouldReturnStepNamesResponseWithSameIdForStepnamesRequest(tst *testing
 func TestShouldReturnAllStepNames(tst *testing.T) {
 	stepText := "Step description"
 	msgId := int64(12345)
-	step := t.Step{
-		Description: stepText,
-		Impl:        func(args ...interface{}) {},
+	context := t.GaugeContext{
+		Steps : []t.Step{t.Step{
+				Description: stepText,
+				Impl:        func(args ...interface{}) {},
+			},
+		},
 	}
-	steps := make([]t.Step, 0)
-	steps = append(steps, step)
 
 	msg := &m.Message{
 		MessageType: m.Message_StepNamesRequest.Enum(),
@@ -41,7 +44,7 @@ func TestShouldReturnAllStepNames(tst *testing.T) {
 
 	p := StepNamesRequestProcessor{}
 
-	result := p.Process(msg, steps)
+	result := p.Process(msg, context)
 
 	assert.Contains(tst, result.StepNamesResponse.Steps, stepText)
 }

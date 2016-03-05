@@ -10,12 +10,12 @@ import (
 
 type ExecuteStepProcessor struct{}
 
-func (r *ExecuteStepProcessor) Process(msg *m.Message, steps []t.Step) *m.Message {
+func (r *ExecuteStepProcessor) Process(msg *m.Message, context t.GaugeContext) *m.Message {
 	var failed bool
 	var executionTime int64
 	var errorMsg string
 
-	step := getStepWithDesc(*msg.ExecuteStepRequest.ParsedStepText, steps)
+	step := context.GetStepByDesc(*msg.ExecuteStepRequest.ParsedStepText)
 	if step == nil {
 		failed = true
 		executionTime = int64(0)
@@ -38,15 +38,6 @@ func (r *ExecuteStepProcessor) Process(msg *m.Message, steps []t.Step) *m.Messag
 			},
 		},
 	}
-}
-
-func getStepWithDesc(desc string, steps []t.Step) *t.Step {
-	for _, step := range steps {
-		if step.Description == desc {
-			return &step
-		}
-	}
-	return nil
 }
 
 func getArgs(r *m.ExecuteStepRequest) []interface{} {

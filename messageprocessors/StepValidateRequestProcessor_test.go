@@ -10,7 +10,9 @@ import (
 func TestShouldReturnStepNamesResponseWithSameIdForStepValidateRequest(tst *testing.T) {
 	stepText := "Step description"
 	msgId := int64(12345)
-	steps := make([]t.Step, 0)
+	context := t.GaugeContext{
+		Steps : make([]t.Step, 0),
+	}
 
 	msg := &m.Message{
 		MessageType: m.Message_StepNamesRequest.Enum(),
@@ -22,7 +24,7 @@ func TestShouldReturnStepNamesResponseWithSameIdForStepValidateRequest(tst *test
 
 	p := StepValidateRequestProcessor{}
 
-	result := p.Process(msg, steps)
+	result := p.Process(msg, context)
 
 	assert.Equal(tst, result.MessageType, m.Message_StepValidateResponse.Enum())
 	assert.Equal(tst, *result.MessageId, msgId)
@@ -31,12 +33,13 @@ func TestShouldReturnStepNamesResponseWithSameIdForStepValidateRequest(tst *test
 func TestShouldValidateStep(tst *testing.T) {
 	stepText := "Step description"
 	msgId := int64(12345)
-	step := t.Step{
-		Description: stepText,
-		Impl:        func(args ...interface{}) {},
+	context := t.GaugeContext{
+		Steps : []t.Step{t.Step{
+				Description: stepText,
+				Impl:        func(args ...interface{}) {},
+			},
+		},
 	}
-	steps := make([]t.Step, 0)
-	steps = append(steps, step)
 
 	msg := &m.Message{
 		MessageType: m.Message_StepNamesRequest.Enum(),
@@ -48,7 +51,7 @@ func TestShouldValidateStep(tst *testing.T) {
 
 	p := StepValidateRequestProcessor{}
 
-	result := p.Process(msg, steps)
+	result := p.Process(msg, context)
 
 	assert.True(tst, *result.StepValidateResponse.IsValid)
 }

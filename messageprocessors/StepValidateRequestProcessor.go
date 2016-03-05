@@ -7,9 +7,10 @@ import (
 
 type StepValidateRequestProcessor struct{}
 
-func (s *StepValidateRequestProcessor) Process(msg *m.Message, steps []t.Step)*m.Message {
+func (s *StepValidateRequestProcessor) Process(msg *m.Message, context t.GaugeContext)*m.Message {
 	stepDesc := msg.StepValidateRequest.StepText
-	valid := isValid(steps, stepDesc)
+	//TODO validate method signature
+	valid := isValid(context.Steps, stepDesc)
 	errorMsg := ""
 
 	if !valid {

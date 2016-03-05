@@ -1,0 +1,34 @@
+package testsuit
+
+type HookType int
+type Operator int
+
+const (
+	BEFORESUITE HookType = 1
+	BEFORERSPEC HookType = 2
+	BEFORESCENARIO HookType = 3
+	BEFORESTEP HookType = 4
+
+	AFTERSUITE HookType = 5
+	AFTERSPEC HookType = 6
+	AFTERSCENARIO HookType = 7
+	AFTERSTEP HookType = 8
+)
+
+const (
+	AND Operator = 1
+	OR Operator = 2
+
+	NOOP Operator = 0
+)
+
+type Hook struct {
+	Type HookType
+	Impl func()
+	Tags []string
+	Operator Operator
+}
+
+func (hook *Hook) Execute() {
+	hook.Impl()
+}
