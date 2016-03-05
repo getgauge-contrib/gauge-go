@@ -22,7 +22,7 @@ const (
 
 type Hook struct {
 	Type HookType
-	Impl func()
+	Impl func() error
 	Tags []string
 	Operator Operator
 }

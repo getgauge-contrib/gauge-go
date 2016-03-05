@@ -3,15 +3,29 @@ package messageprocessors
 import (
 	m "github.com/manuviswam/gauge-go/gauge_messages"
 	t "github.com/manuviswam/gauge-go/testsuit"
+	"time"
 )
 
 type ExecutionStartingRequestProcessor struct{}
 
 func (r *ExecutionStartingRequestProcessor) Process(msg *m.Message, context t.GaugeContext) *m.Message {
-	//TODO do the intended operation here. Right now I am focused on getting the first test running.
-	//TODO So I am replying with whatever this function is supposed to do is a success.
-	failed := false
-	executionTime := int64(1)
+	var failed = false
+	var executionTime int64
+	var errorMsg string
+
+	tags := msg.GetExecutionStartingRequest().GetCurrentExecutionInfo().GetCurrentScenario().GetTags()
+	beforeSuiteHooks := context.GetHooks(t.BEFORESUITE, tags)
+
+	start := time.Now()
+	for _, hook := range beforeSuiteHooks   {
+		err := hook.Impl()
+		if err != nil {
+			failed = true
+			errorMsg = err.Error()
+		}
+	}
+	executionTime = time.Since(start).Nanoseconds()
+
 	return &m.Message{
 		MessageType: m.Message_ExecutionStatusResponse.Enum(),
 		MessageId:   msg.MessageId,
@@ -19,6 +33,7 @@ func (r *ExecutionStartingRequestProcessor) Process(msg *m.Message, context t.Ga
 			ExecutionResult: &m.ProtoExecutionResult{
 				Failed:        &failed,
 				ExecutionTime: &executionTime,
+				ErrorMessage:  &errorMsg,
 			},
 		},
 	}

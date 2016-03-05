@@ -20,7 +20,7 @@ var processors mp.ProcessorDictionary
 func init() {
 	context = t.GaugeContext{
 		Steps: make([]t.Step, 0),
-		Hooks: nil,
+		Hooks: make([]t.Hook, 0),
 	}
 
 	processors = mp.ProcessorDictionary{}
@@ -61,6 +61,18 @@ func Describe(stepDesc string, impl interface{}) bool {
 		Impl:        impl,
 	}
 	context.Steps = append(context.Steps, step)
+	return true
+}
+
+func BeforeSuite(fn func() error, tags []string, op t.Operator) bool {
+	hook := t.Hook{
+		Type: t.BEFORESUITE,
+		Impl: fn,
+		Tags: tags,
+		Operator: op,
+	}
+
+	context.Hooks = append(context.Hooks, hook)
 	return true
 }
 
