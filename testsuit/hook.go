@@ -18,8 +18,6 @@ const (
 const (
 	AND Operator = 1
 	OR Operator = 2
-
-	NOOP Operator = 0
 )
 
 type Hook struct {

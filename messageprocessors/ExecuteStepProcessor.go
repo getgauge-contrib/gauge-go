@@ -1,7 +1,6 @@
 package messageprocessors
 
 import (
-	"fmt"
 	m "github.com/manuviswam/gauge-go/gauge_messages"
 	"github.com/manuviswam/gauge-go/models"
 	t "github.com/manuviswam/gauge-go/testsuit"
@@ -15,11 +14,11 @@ func (r *ExecuteStepProcessor) Process(msg *m.Message, context t.GaugeContext) *
 	var executionTime int64
 	var errorMsg string
 
-	step := context.GetStepByDesc(*msg.ExecuteStepRequest.ParsedStepText)
-	if step == nil {
+	step, err := context.GetStepByDesc(*msg.ExecuteStepRequest.ParsedStepText)
+	if err != nil {
 		failed = true
 		executionTime = int64(0)
-		errorMsg = fmt.Sprint("No implementation found for step : ", msg.ExecuteStepRequest.ActualStepText)
+		errorMsg = err.Error()
 	} else {
 		args := getArgs(msg.ExecuteStepRequest)
 		start := time.Now()
