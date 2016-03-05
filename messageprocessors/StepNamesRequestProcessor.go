@@ -7,7 +7,7 @@ import (
 
 type StepNamesRequestProcessor struct{}
 
-func (s *StepNamesRequestProcessor) Process(msg *m.Message, context t.GaugeContext) *m.Message {
+func (s *StepNamesRequestProcessor) Process(msg *m.Message, context *t.GaugeContext) *m.Message {
 	return &m.Message{
 		MessageType: m.Message_StepNamesResponse.Enum(),
 		MessageId:   msg.MessageId,

@@ -7,7 +7,7 @@ import (
 
 type StepExecutionEndingProcessor struct{}
 
-func (r *StepExecutionEndingProcessor) Process(msg *m.Message, context t.GaugeContext) *m.Message {
+func (r *StepExecutionEndingProcessor) Process(msg *m.Message, context *t.GaugeContext) *m.Message {
 	tags := msg.GetStepExecutionEndingRequest().GetCurrentExecutionInfo().GetCurrentSpec().GetTags()
 	hooks := context.GetHooks(t.AFTERSTEP, tags)
 

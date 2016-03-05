@@ -10,7 +10,7 @@ import (
 
 func TestShouldReturnExecutionStatusResponseWithSameIdForScenarioExecutionStartingRequest(tst *testing.T) {
 	msgId := int64(12345)
-	context := t.GaugeContext{
+	context := &t.GaugeContext{
 		Steps: make([]t.Step, 0),
 	}
 
@@ -30,7 +30,7 @@ func TestShouldReturnExecutionStatusResponseWithSameIdForScenarioExecutionStarti
 func TestExecutesHooksForTheTagsForScenarioExecutionStartingRequest(tst *testing.T) {
 	called1 := false
 	called2 := false
-	context := t.GaugeContext{
+	context := &t.GaugeContext{
 		Hooks: []t.Hook{
 			t.Hook{
 				Type: t.BEFORESCENARIO,
@@ -78,7 +78,7 @@ func TestExecutesHooksForTheTagsForScenarioExecutionStartingRequest(tst *testing
 func TestReportErrorIfHookFailsForScenarioExecutionStartingRequest(tst *testing.T) {
 	called1 := false
 	called2 := false
-	context := t.GaugeContext{
+	context := &t.GaugeContext{
 		Hooks: []t.Hook{
 			t.Hook{
 				Type: t.BEFORESCENARIO,

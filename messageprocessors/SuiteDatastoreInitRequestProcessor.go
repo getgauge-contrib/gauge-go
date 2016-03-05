@@ -7,7 +7,7 @@ import (
 
 type SuiteDatastoreInitRequestProcessor struct{}
 
-func (s *SuiteDatastoreInitRequestProcessor) Process(msg *m.Message, context t.GaugeContext) *m.Message {
+func (s *SuiteDatastoreInitRequestProcessor) Process(msg *m.Message, context *t.GaugeContext) *m.Message {
 	//TODO do the intended operation here. Right now I am focused on getting the first test running.
 	//TODO So I am replying with whatever this function is supposed to do is a success.
 	failed := false

@@ -10,7 +10,7 @@ import (
 func TestShouldReturnStepNamesResponseWithSameIdForStepValidateRequest(tst *testing.T) {
 	stepText := "Step description"
 	msgId := int64(12345)
-	context := t.GaugeContext{
+	context := &t.GaugeContext{
 		Steps: make([]t.Step, 0),
 	}
 
@@ -33,7 +33,7 @@ func TestShouldReturnStepNamesResponseWithSameIdForStepValidateRequest(tst *test
 func TestShouldValidateStep(tst *testing.T) {
 	stepText := "Step description"
 	msgId := int64(12345)
-	context := t.GaugeContext{
+	context := &t.GaugeContext{
 		Steps: []t.Step{t.Step{
 			Description: stepText,
 			Impl:        func(args ...interface{}) {},

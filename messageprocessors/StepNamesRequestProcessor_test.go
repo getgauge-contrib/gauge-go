@@ -9,7 +9,7 @@ import (
 
 func TestShouldReturnStepNamesResponseWithSameIdForStepnamesRequest(tst *testing.T) {
 	msgId := int64(12345)
-	context := t.GaugeContext{
+	context := &t.GaugeContext{
 		Steps: make([]t.Step, 0),
 	}
 
@@ -29,7 +29,7 @@ func TestShouldReturnStepNamesResponseWithSameIdForStepnamesRequest(tst *testing
 func TestShouldReturnAllStepNames(tst *testing.T) {
 	stepText := "Step description"
 	msgId := int64(12345)
-	context := t.GaugeContext{
+	context := &t.GaugeContext{
 		Steps: []t.Step{t.Step{
 			Description: stepText,
 			Impl:        func(args ...interface{}) {},

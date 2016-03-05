@@ -14,11 +14,11 @@ import (
 	"regexp"
 )
 
-var context t.GaugeContext
+var context *t.GaugeContext
 var processors mp.ProcessorDictionary
 
 func init() {
-	context = t.GaugeContext{
+	context = &t.GaugeContext{
 		Steps: make([]t.Step, 0),
 		Hooks: make([]t.Hook, 0),
 	}

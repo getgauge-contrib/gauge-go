@@ -6,7 +6,7 @@ import (
 )
 
 type MessageProcessor interface {
-	Process(*m.Message, t.GaugeContext) *m.Message
+	Process(*m.Message, *t.GaugeContext) *m.Message
 }
 
 type ProcessorDictionary map[m.Message_MessageType]MessageProcessor

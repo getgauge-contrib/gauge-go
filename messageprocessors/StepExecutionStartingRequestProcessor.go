@@ -7,7 +7,7 @@ import (
 
 type StepExecutionStartingRequestProcessor struct{}
 
-func (r *StepExecutionStartingRequestProcessor) Process(msg *m.Message, context t.GaugeContext) *m.Message {
+func (r *StepExecutionStartingRequestProcessor) Process(msg *m.Message, context *t.GaugeContext) *m.Message {
 	tags := msg.GetStepExecutionStartingRequest().GetCurrentExecutionInfo().GetCurrentSpec().GetTags()
 	hooks := context.GetHooks(t.BEFORESTEP, tags)
 

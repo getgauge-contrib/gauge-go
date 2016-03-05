@@ -10,7 +10,7 @@ import (
 
 func TestShouldReturnExecutionStatusResponseWithSameIdForExecutionStarting(tst *testing.T) {
 	msgId := int64(12345)
-	context := t.GaugeContext{
+	context := &t.GaugeContext{
 		Steps: make([]t.Step, 0),
 	}
 	msg := &m.Message{
@@ -29,7 +29,7 @@ func TestShouldReturnExecutionStatusResponseWithSameIdForExecutionStarting(tst *
 func TestExecutesHooksForTheTags(tst *testing.T) {
 	called1 := false
 	called2 := false
-	context := t.GaugeContext{
+	context := &t.GaugeContext{
 		Hooks: []t.Hook{
 			t.Hook{
 				Type: t.BEFORESUITE,
@@ -78,7 +78,7 @@ func TestExecutesHooksForTheTags(tst *testing.T) {
 func TestReportErrorIfHookFails(tst *testing.T) {
 	called1 := false
 	called2 := false
-	context := t.GaugeContext{
+	context := &t.GaugeContext{
 		Hooks: []t.Hook{
 			t.Hook{
 				Type: t.BEFORESUITE,

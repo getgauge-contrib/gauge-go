@@ -7,7 +7,7 @@ import (
 
 type ScenarioExecutionStartingRequestProcessor struct{}
 
-func (r *ScenarioExecutionStartingRequestProcessor) Process(msg *m.Message, context t.GaugeContext) *m.Message {
+func (r *ScenarioExecutionStartingRequestProcessor) Process(msg *m.Message, context *t.GaugeContext) *m.Message {
 	tags := msg.GetScenarioExecutionStartingRequest().GetCurrentExecutionInfo().GetCurrentScenario().GetTags()
 	hooks := context.GetHooks(t.BEFORESCENARIO, tags)
 

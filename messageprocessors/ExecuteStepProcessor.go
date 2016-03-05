@@ -9,7 +9,7 @@ import (
 
 type ExecuteStepProcessor struct{}
 
-func (r *ExecuteStepProcessor) Process(msg *m.Message, context t.GaugeContext) *m.Message {
+func (r *ExecuteStepProcessor) Process(msg *m.Message, context *t.GaugeContext) *m.Message {
 	var failed bool
 	var executionTime int64
 	var errorMsg string

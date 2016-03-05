@@ -7,7 +7,7 @@ import (
 
 type SpecExecutionEndingProcessor struct{}
 
-func (r *SpecExecutionEndingProcessor) Process(msg *m.Message, context t.GaugeContext) *m.Message {
+func (r *SpecExecutionEndingProcessor) Process(msg *m.Message, context *t.GaugeContext) *m.Message {
 	tags := msg.GetSpecExecutionEndingRequest().GetCurrentExecutionInfo().GetCurrentSpec().GetTags()
 	hooks := context.GetHooks(t.AFTERSPEC, tags)
 

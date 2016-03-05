@@ -7,7 +7,7 @@ import (
 
 type SpecExecutionStartingRequestProcessor struct{}
 
-func (r *SpecExecutionStartingRequestProcessor) Process(msg *m.Message, context t.GaugeContext) *m.Message {
+func (r *SpecExecutionStartingRequestProcessor) Process(msg *m.Message, context *t.GaugeContext) *m.Message {
 	tags := msg.GetSpecExecutionStartingRequest().GetCurrentExecutionInfo().GetCurrentSpec().GetTags()
 	hooks := context.GetHooks(t.BEFORESPEC, tags)
 
