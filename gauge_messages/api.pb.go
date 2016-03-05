@@ -7,6 +7,9 @@ Package gauge_messages is a generated protocol buffer package.
 
 It is generated from these files:
 	api.proto
+	api_v2.proto
+	messages.proto
+	spec.proto
 
 It has these top-level messages:
 	GetProjectRootRequest
@@ -36,6 +39,56 @@ It has these top-level messages:
 	FormatSpecsResponse
 	UnsupportedApiMessageResponse
 	APIMessage
+	ExecutionRequest
+	ExecutionResponse
+	KillProcessRequest
+	ExecutionStatusResponse
+	ExecutionStartingRequest
+	ExecutionEndingRequest
+	SpecExecutionStartingRequest
+	SpecExecutionEndingRequest
+	ScenarioExecutionStartingRequest
+	ScenarioExecutionEndingRequest
+	StepExecutionStartingRequest
+	StepExecutionEndingRequest
+	ExecutionInfo
+	SpecInfo
+	ScenarioInfo
+	StepInfo
+	ExecuteStepRequest
+	StepValidateRequest
+	StepValidateResponse
+	SuiteExecutionResult
+	StepNamesRequest
+	StepNamesResponse
+	ScenarioDataStoreInitRequest
+	SpecDataStoreInitRequest
+	SuiteDataStoreInitRequest
+	ParameterPosition
+	RefactorRequest
+	RefactorResponse
+	StepNameRequest
+	StepNameResponse
+	UnsupportedMessageResponse
+	Message
+	ProtoSpec
+	ProtoItem
+	ProtoScenario
+	ProtoTableDrivenScenario
+	ProtoStep
+	ProtoConcept
+	ProtoTags
+	Fragment
+	Parameter
+	ProtoComment
+	ProtoTable
+	ProtoTableRow
+	ProtoStepExecutionResult
+	ProtoExecutionResult
+	ProtoHookFailure
+	ProtoSuiteResult
+	ProtoSpecResult
+	ProtoStepValue
 */
 package gauge_messages
 
@@ -47,6 +100,10 @@ import math "math"
 var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
+
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the proto package it is being compiled against.
+const _ = proto.ProtoPackageIsVersion1
 
 type APIMessage_APIMessageType int32
 
@@ -73,6 +130,8 @@ const (
 	APIMessage_FormatSpecsRequest               APIMessage_APIMessageType = 20
 	APIMessage_FormatSpecsResponse              APIMessage_APIMessageType = 21
 	APIMessage_UnsupportedApiMessageResponse    APIMessage_APIMessageType = 22
+	APIMessage_ExecutionRequest                 APIMessage_APIMessageType = 23
+	APIMessage_ExecutionResponse                APIMessage_APIMessageType = 24
 )
 
 var APIMessage_APIMessageType_name = map[int32]string{
@@ -98,6 +157,8 @@ var APIMessage_APIMessageType_name = map[int32]string{
 	20: "FormatSpecsRequest",
 	21: "FormatSpecsResponse",
 	22: "UnsupportedApiMessageResponse",
+	23: "ExecutionRequest",
+	24: "ExecutionResponse",
 }
 var APIMessage_APIMessageType_value = map[string]int32{
 	"GetProjectRootRequest":            1,
@@ -122,6 +183,8 @@ var APIMessage_APIMessageType_value = map[string]int32{
 	"FormatSpecsRequest":               20,
 	"FormatSpecsResponse":              21,
 	"UnsupportedApiMessageResponse":    22,
+	"ExecutionRequest":                 23,
+	"ExecutionResponse":                24,
 }
 
 func (x APIMessage_APIMessageType) Enum() *APIMessage_APIMessageType {
@@ -140,15 +203,19 @@ func (x *APIMessage_APIMessageType) UnmarshalJSON(data []byte) error {
 	*x = APIMessage_APIMessageType(value)
 	return nil
 }
+func (APIMessage_APIMessageType) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor0, []int{26, 0}
+}
 
 // / Request to get the Root Directory of the project
 type GetProjectRootRequest struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *GetProjectRootRequest) Reset()         { *m = GetProjectRootRequest{} }
-func (m *GetProjectRootRequest) String() string { return proto.CompactTextString(m) }
-func (*GetProjectRootRequest) ProtoMessage()    {}
+func (m *GetProjectRootRequest) Reset()                    { *m = GetProjectRootRequest{} }
+func (m *GetProjectRootRequest) String() string            { return proto.CompactTextString(m) }
+func (*GetProjectRootRequest) ProtoMessage()               {}
+func (*GetProjectRootRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
 
 // / Response of GetProjectRootRequest.
 type GetProjectRootResponse struct {
@@ -157,9 +224,10 @@ type GetProjectRootResponse struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *GetProjectRootResponse) Reset()         { *m = GetProjectRootResponse{} }
-func (m *GetProjectRootResponse) String() string { return proto.CompactTextString(m) }
-func (*GetProjectRootResponse) ProtoMessage()    {}
+func (m *GetProjectRootResponse) Reset()                    { *m = GetProjectRootResponse{} }
+func (m *GetProjectRootResponse) String() string            { return proto.CompactTextString(m) }
+func (*GetProjectRootResponse) ProtoMessage()               {}
+func (*GetProjectRootResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
 
 func (m *GetProjectRootResponse) GetProjectRoot() string {
 	if m != nil && m.ProjectRoot != nil {
@@ -173,9 +241,10 @@ type GetInstallationRootRequest struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *GetInstallationRootRequest) Reset()         { *m = GetInstallationRootRequest{} }
-func (m *GetInstallationRootRequest) String() string { return proto.CompactTextString(m) }
-func (*GetInstallationRootRequest) ProtoMessage()    {}
+func (m *GetInstallationRootRequest) Reset()                    { *m = GetInstallationRootRequest{} }
+func (m *GetInstallationRootRequest) String() string            { return proto.CompactTextString(m) }
+func (*GetInstallationRootRequest) ProtoMessage()               {}
+func (*GetInstallationRootRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
 
 // / Response of GetInstallationRootRequest
 type GetInstallationRootResponse struct {
@@ -184,9 +253,10 @@ type GetInstallationRootResponse struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *GetInstallationRootResponse) Reset()         { *m = GetInstallationRootResponse{} }
-func (m *GetInstallationRootResponse) String() string { return proto.CompactTextString(m) }
-func (*GetInstallationRootResponse) ProtoMessage()    {}
+func (m *GetInstallationRootResponse) Reset()                    { *m = GetInstallationRootResponse{} }
+func (m *GetInstallationRootResponse) String() string            { return proto.CompactTextString(m) }
+func (*GetInstallationRootResponse) ProtoMessage()               {}
+func (*GetInstallationRootResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{3} }
 
 func (m *GetInstallationRootResponse) GetInstallationRoot() string {
 	if m != nil && m.InstallationRoot != nil {
@@ -200,9 +270,10 @@ type GetAllStepsRequest struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *GetAllStepsRequest) Reset()         { *m = GetAllStepsRequest{} }
-func (m *GetAllStepsRequest) String() string { return proto.CompactTextString(m) }
-func (*GetAllStepsRequest) ProtoMessage()    {}
+func (m *GetAllStepsRequest) Reset()                    { *m = GetAllStepsRequest{} }
+func (m *GetAllStepsRequest) String() string            { return proto.CompactTextString(m) }
+func (*GetAllStepsRequest) ProtoMessage()               {}
+func (*GetAllStepsRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{4} }
 
 // / Response to GetAllStepsRequest
 type GetAllStepsResponse struct {
@@ -211,9 +282,10 @@ type GetAllStepsResponse struct {
 	XXX_unrecognized []byte            `json:"-"`
 }
 
-func (m *GetAllStepsResponse) Reset()         { *m = GetAllStepsResponse{} }
-func (m *GetAllStepsResponse) String() string { return proto.CompactTextString(m) }
-func (*GetAllStepsResponse) ProtoMessage()    {}
+func (m *GetAllStepsResponse) Reset()                    { *m = GetAllStepsResponse{} }
+func (m *GetAllStepsResponse) String() string            { return proto.CompactTextString(m) }
+func (*GetAllStepsResponse) ProtoMessage()               {}
+func (*GetAllStepsResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{5} }
 
 func (m *GetAllStepsResponse) GetAllSteps() []*ProtoStepValue {
 	if m != nil {
@@ -227,9 +299,10 @@ type GetAllSpecsRequest struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *GetAllSpecsRequest) Reset()         { *m = GetAllSpecsRequest{} }
-func (m *GetAllSpecsRequest) String() string { return proto.CompactTextString(m) }
-func (*GetAllSpecsRequest) ProtoMessage()    {}
+func (m *GetAllSpecsRequest) Reset()                    { *m = GetAllSpecsRequest{} }
+func (m *GetAllSpecsRequest) String() string            { return proto.CompactTextString(m) }
+func (*GetAllSpecsRequest) ProtoMessage()               {}
+func (*GetAllSpecsRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{6} }
 
 // / Response to GetAllSpecsRequest
 type GetAllSpecsResponse struct {
@@ -238,9 +311,10 @@ type GetAllSpecsResponse struct {
 	XXX_unrecognized []byte       `json:"-"`
 }
 
-func (m *GetAllSpecsResponse) Reset()         { *m = GetAllSpecsResponse{} }
-func (m *GetAllSpecsResponse) String() string { return proto.CompactTextString(m) }
-func (*GetAllSpecsResponse) ProtoMessage()    {}
+func (m *GetAllSpecsResponse) Reset()                    { *m = GetAllSpecsResponse{} }
+func (m *GetAllSpecsResponse) String() string            { return proto.CompactTextString(m) }
+func (*GetAllSpecsResponse) ProtoMessage()               {}
+func (*GetAllSpecsResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{7} }
 
 func (m *GetAllSpecsResponse) GetSpecs() []*ProtoSpec {
 	if m != nil {
@@ -254,9 +328,10 @@ type GetAllConceptsRequest struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *GetAllConceptsRequest) Reset()         { *m = GetAllConceptsRequest{} }
-func (m *GetAllConceptsRequest) String() string { return proto.CompactTextString(m) }
-func (*GetAllConceptsRequest) ProtoMessage()    {}
+func (m *GetAllConceptsRequest) Reset()                    { *m = GetAllConceptsRequest{} }
+func (m *GetAllConceptsRequest) String() string            { return proto.CompactTextString(m) }
+func (*GetAllConceptsRequest) ProtoMessage()               {}
+func (*GetAllConceptsRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{8} }
 
 // / Response to GetAllConceptsResponse
 type GetAllConceptsResponse struct {
@@ -265,9 +340,10 @@ type GetAllConceptsResponse struct {
 	XXX_unrecognized []byte         `json:"-"`
 }
 
-func (m *GetAllConceptsResponse) Reset()         { *m = GetAllConceptsResponse{} }
-func (m *GetAllConceptsResponse) String() string { return proto.CompactTextString(m) }
-func (*GetAllConceptsResponse) ProtoMessage()    {}
+func (m *GetAllConceptsResponse) Reset()                    { *m = GetAllConceptsResponse{} }
+func (m *GetAllConceptsResponse) String() string            { return proto.CompactTextString(m) }
+func (*GetAllConceptsResponse) ProtoMessage()               {}
+func (*GetAllConceptsResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{9} }
 
 func (m *GetAllConceptsResponse) GetConcepts() []*ConceptInfo {
 	if m != nil {
@@ -287,9 +363,10 @@ type ConceptInfo struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *ConceptInfo) Reset()         { *m = ConceptInfo{} }
-func (m *ConceptInfo) String() string { return proto.CompactTextString(m) }
-func (*ConceptInfo) ProtoMessage()    {}
+func (m *ConceptInfo) Reset()                    { *m = ConceptInfo{} }
+func (m *ConceptInfo) String() string            { return proto.CompactTextString(m) }
+func (*ConceptInfo) ProtoMessage()               {}
+func (*ConceptInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{10} }
 
 func (m *ConceptInfo) GetStepValue() *ProtoStepValue {
 	if m != nil {
@@ -321,9 +398,10 @@ type GetStepValueRequest struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *GetStepValueRequest) Reset()         { *m = GetStepValueRequest{} }
-func (m *GetStepValueRequest) String() string { return proto.CompactTextString(m) }
-func (*GetStepValueRequest) ProtoMessage()    {}
+func (m *GetStepValueRequest) Reset()                    { *m = GetStepValueRequest{} }
+func (m *GetStepValueRequest) String() string            { return proto.CompactTextString(m) }
+func (*GetStepValueRequest) ProtoMessage()               {}
+func (*GetStepValueRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{11} }
 
 func (m *GetStepValueRequest) GetStepText() string {
 	if m != nil && m.StepText != nil {
@@ -346,9 +424,10 @@ type GetStepValueResponse struct {
 	XXX_unrecognized []byte          `json:"-"`
 }
 
-func (m *GetStepValueResponse) Reset()         { *m = GetStepValueResponse{} }
-func (m *GetStepValueResponse) String() string { return proto.CompactTextString(m) }
-func (*GetStepValueResponse) ProtoMessage()    {}
+func (m *GetStepValueResponse) Reset()                    { *m = GetStepValueResponse{} }
+func (m *GetStepValueResponse) String() string            { return proto.CompactTextString(m) }
+func (*GetStepValueResponse) ProtoMessage()               {}
+func (*GetStepValueResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{12} }
 
 func (m *GetStepValueResponse) GetStepValue() *ProtoStepValue {
 	if m != nil {
@@ -367,6 +446,9 @@ type GetLanguagePluginLibPathRequest struct {
 func (m *GetLanguagePluginLibPathRequest) Reset()         { *m = GetLanguagePluginLibPathRequest{} }
 func (m *GetLanguagePluginLibPathRequest) String() string { return proto.CompactTextString(m) }
 func (*GetLanguagePluginLibPathRequest) ProtoMessage()    {}
+func (*GetLanguagePluginLibPathRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor0, []int{13}
+}
 
 func (m *GetLanguagePluginLibPathRequest) GetLanguage() string {
 	if m != nil && m.Language != nil {
@@ -385,6 +467,9 @@ type GetLanguagePluginLibPathResponse struct {
 func (m *GetLanguagePluginLibPathResponse) Reset()         { *m = GetLanguagePluginLibPathResponse{} }
 func (m *GetLanguagePluginLibPathResponse) String() string { return proto.CompactTextString(m) }
 func (*GetLanguagePluginLibPathResponse) ProtoMessage()    {}
+func (*GetLanguagePluginLibPathResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor0, []int{14}
+}
 
 func (m *GetLanguagePluginLibPathResponse) GetPath() string {
 	if m != nil && m.Path != nil {
@@ -400,9 +485,10 @@ type ErrorResponse struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *ErrorResponse) Reset()         { *m = ErrorResponse{} }
-func (m *ErrorResponse) String() string { return proto.CompactTextString(m) }
-func (*ErrorResponse) ProtoMessage()    {}
+func (m *ErrorResponse) Reset()                    { *m = ErrorResponse{} }
+func (m *ErrorResponse) String() string            { return proto.CompactTextString(m) }
+func (*ErrorResponse) ProtoMessage()               {}
+func (*ErrorResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{15} }
 
 func (m *ErrorResponse) GetError() string {
 	if m != nil && m.Error != nil {
@@ -420,9 +506,10 @@ type PerformRefactoringRequest struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *PerformRefactoringRequest) Reset()         { *m = PerformRefactoringRequest{} }
-func (m *PerformRefactoringRequest) String() string { return proto.CompactTextString(m) }
-func (*PerformRefactoringRequest) ProtoMessage()    {}
+func (m *PerformRefactoringRequest) Reset()                    { *m = PerformRefactoringRequest{} }
+func (m *PerformRefactoringRequest) String() string            { return proto.CompactTextString(m) }
+func (*PerformRefactoringRequest) ProtoMessage()               {}
+func (*PerformRefactoringRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{16} }
 
 func (m *PerformRefactoringRequest) GetOldStep() string {
 	if m != nil && m.OldStep != nil {
@@ -449,9 +536,10 @@ type PerformRefactoringResponse struct {
 	XXX_unrecognized []byte   `json:"-"`
 }
 
-func (m *PerformRefactoringResponse) Reset()         { *m = PerformRefactoringResponse{} }
-func (m *PerformRefactoringResponse) String() string { return proto.CompactTextString(m) }
-func (*PerformRefactoringResponse) ProtoMessage()    {}
+func (m *PerformRefactoringResponse) Reset()                    { *m = PerformRefactoringResponse{} }
+func (m *PerformRefactoringResponse) String() string            { return proto.CompactTextString(m) }
+func (*PerformRefactoringResponse) ProtoMessage()               {}
+func (*PerformRefactoringResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{17} }
 
 func (m *PerformRefactoringResponse) GetSuccess() bool {
 	if m != nil && m.Success != nil {
@@ -482,9 +570,10 @@ type ExtractConceptInfoRequest struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *ExtractConceptInfoRequest) Reset()         { *m = ExtractConceptInfoRequest{} }
-func (m *ExtractConceptInfoRequest) String() string { return proto.CompactTextString(m) }
-func (*ExtractConceptInfoRequest) ProtoMessage()    {}
+func (m *ExtractConceptInfoRequest) Reset()                    { *m = ExtractConceptInfoRequest{} }
+func (m *ExtractConceptInfoRequest) String() string            { return proto.CompactTextString(m) }
+func (*ExtractConceptInfoRequest) ProtoMessage()               {}
+func (*ExtractConceptInfoRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{18} }
 
 func (m *ExtractConceptInfoRequest) GetText() string {
 	if m != nil && m.Text != nil {
@@ -508,9 +597,10 @@ type ExtractConceptRequest struct {
 	XXX_unrecognized []byte    `json:"-"`
 }
 
-func (m *ExtractConceptRequest) Reset()         { *m = ExtractConceptRequest{} }
-func (m *ExtractConceptRequest) String() string { return proto.CompactTextString(m) }
-func (*ExtractConceptRequest) ProtoMessage()    {}
+func (m *ExtractConceptRequest) Reset()                    { *m = ExtractConceptRequest{} }
+func (m *ExtractConceptRequest) String() string            { return proto.CompactTextString(m) }
+func (*ExtractConceptRequest) ProtoMessage()               {}
+func (*ExtractConceptRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{19} }
 
 func (m *ExtractConceptRequest) GetConceptName() *Step {
 	if m != nil {
@@ -556,9 +646,10 @@ type TextInfo struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *TextInfo) Reset()         { *m = TextInfo{} }
-func (m *TextInfo) String() string { return proto.CompactTextString(m) }
-func (*TextInfo) ProtoMessage()    {}
+func (m *TextInfo) Reset()                    { *m = TextInfo{} }
+func (m *TextInfo) String() string            { return proto.CompactTextString(m) }
+func (*TextInfo) ProtoMessage()               {}
+func (*TextInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{20} }
 
 func (m *TextInfo) GetFileName() string {
 	if m != nil && m.FileName != nil {
@@ -591,9 +682,10 @@ type Step struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *Step) Reset()         { *m = Step{} }
-func (m *Step) String() string { return proto.CompactTextString(m) }
-func (*Step) ProtoMessage()    {}
+func (m *Step) Reset()                    { *m = Step{} }
+func (m *Step) String() string            { return proto.CompactTextString(m) }
+func (*Step) ProtoMessage()               {}
+func (*Step) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{21} }
 
 func (m *Step) GetName() string {
 	if m != nil && m.Name != nil {
@@ -627,9 +719,10 @@ type ExtractConceptResponse struct {
 	XXX_unrecognized []byte   `json:"-"`
 }
 
-func (m *ExtractConceptResponse) Reset()         { *m = ExtractConceptResponse{} }
-func (m *ExtractConceptResponse) String() string { return proto.CompactTextString(m) }
-func (*ExtractConceptResponse) ProtoMessage()    {}
+func (m *ExtractConceptResponse) Reset()                    { *m = ExtractConceptResponse{} }
+func (m *ExtractConceptResponse) String() string            { return proto.CompactTextString(m) }
+func (*ExtractConceptResponse) ProtoMessage()               {}
+func (*ExtractConceptResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{22} }
 
 func (m *ExtractConceptResponse) GetIsSuccess() bool {
 	if m != nil && m.IsSuccess != nil {
@@ -659,9 +752,10 @@ type FormatSpecsRequest struct {
 	XXX_unrecognized []byte   `json:"-"`
 }
 
-func (m *FormatSpecsRequest) Reset()         { *m = FormatSpecsRequest{} }
-func (m *FormatSpecsRequest) String() string { return proto.CompactTextString(m) }
-func (*FormatSpecsRequest) ProtoMessage()    {}
+func (m *FormatSpecsRequest) Reset()                    { *m = FormatSpecsRequest{} }
+func (m *FormatSpecsRequest) String() string            { return proto.CompactTextString(m) }
+func (*FormatSpecsRequest) ProtoMessage()               {}
+func (*FormatSpecsRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{23} }
 
 func (m *FormatSpecsRequest) GetSpecs() []string {
 	if m != nil {
@@ -679,9 +773,10 @@ type FormatSpecsResponse struct {
 	XXX_unrecognized []byte   `json:"-"`
 }
 
-func (m *FormatSpecsResponse) Reset()         { *m = FormatSpecsResponse{} }
-func (m *FormatSpecsResponse) String() string { return proto.CompactTextString(m) }
-func (*FormatSpecsResponse) ProtoMessage()    {}
+func (m *FormatSpecsResponse) Reset()                    { *m = FormatSpecsResponse{} }
+func (m *FormatSpecsResponse) String() string            { return proto.CompactTextString(m) }
+func (*FormatSpecsResponse) ProtoMessage()               {}
+func (*FormatSpecsResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{24} }
 
 func (m *FormatSpecsResponse) GetErrors() []string {
 	if m != nil {
@@ -702,9 +797,10 @@ type UnsupportedApiMessageResponse struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *UnsupportedApiMessageResponse) Reset()         { *m = UnsupportedApiMessageResponse{} }
-func (m *UnsupportedApiMessageResponse) String() string { return proto.CompactTextString(m) }
-func (*UnsupportedApiMessageResponse) ProtoMessage()    {}
+func (m *UnsupportedApiMessageResponse) Reset()                    { *m = UnsupportedApiMessageResponse{} }
+func (m *UnsupportedApiMessageResponse) String() string            { return proto.CompactTextString(m) }
+func (*UnsupportedApiMessageResponse) ProtoMessage()               {}
+func (*UnsupportedApiMessageResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{25} }
 
 // / A generic message composing of all possible operations.
 // / One of the Request/Response fields will have value, depending on the MessageType set.
@@ -758,12 +854,17 @@ type APIMessage struct {
 	FormatSpecsResponse *FormatSpecsResponse `protobuf:"bytes,23,opt,name=formatSpecsResponse" json:"formatSpecsResponse,omitempty"`
 	// / [UnsupportedApiMessageResponse] (#gauge.messages.UnsupportedApiMessageResponse)
 	UnsupportedApiMessageResponse *UnsupportedApiMessageResponse `protobuf:"bytes,24,opt,name=unsupportedApiMessageResponse" json:"unsupportedApiMessageResponse,omitempty"`
-	XXX_unrecognized              []byte                         `json:"-"`
+	// / [ExecutionRequest] (#gauge.messages.ExecutionRequest)
+	ExecutionRequest *ExecutionRequest `protobuf:"bytes,25,opt,name=executionRequest" json:"executionRequest,omitempty"`
+	// / [ExecutionResponse] (#gauge.messages.ExecutionResponse)
+	ExecutionResponse *ExecutionResponse `protobuf:"bytes,26,opt,name=executionResponse" json:"executionResponse,omitempty"`
+	XXX_unrecognized  []byte             `json:"-"`
 }
 
-func (m *APIMessage) Reset()         { *m = APIMessage{} }
-func (m *APIMessage) String() string { return proto.CompactTextString(m) }
-func (*APIMessage) ProtoMessage()    {}
+func (m *APIMessage) Reset()                    { *m = APIMessage{} }
+func (m *APIMessage) String() string            { return proto.CompactTextString(m) }
+func (*APIMessage) ProtoMessage()               {}
+func (*APIMessage) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{26} }
 
 func (m *APIMessage) GetMessageType() APIMessage_APIMessageType {
 	if m != nil && m.MessageType != nil {
@@ -933,6 +1034,129 @@ func (m *APIMessage) GetUnsupportedApiMessageResponse() *UnsupportedApiMessageRe
 	return nil
 }
 
+func (m *APIMessage) GetExecutionRequest() *ExecutionRequest {
+	if m != nil {
+		return m.ExecutionRequest
+	}
+	return nil
+}
+
+func (m *APIMessage) GetExecutionResponse() *ExecutionResponse {
+	if m != nil {
+		return m.ExecutionResponse
+	}
+	return nil
+}
+
 func init() {
+	proto.RegisterType((*GetProjectRootRequest)(nil), "gauge.messages.GetProjectRootRequest")
+	proto.RegisterType((*GetProjectRootResponse)(nil), "gauge.messages.GetProjectRootResponse")
+	proto.RegisterType((*GetInstallationRootRequest)(nil), "gauge.messages.GetInstallationRootRequest")
+	proto.RegisterType((*GetInstallationRootResponse)(nil), "gauge.messages.GetInstallationRootResponse")
+	proto.RegisterType((*GetAllStepsRequest)(nil), "gauge.messages.GetAllStepsRequest")
+	proto.RegisterType((*GetAllStepsResponse)(nil), "gauge.messages.GetAllStepsResponse")
+	proto.RegisterType((*GetAllSpecsRequest)(nil), "gauge.messages.GetAllSpecsRequest")
+	proto.RegisterType((*GetAllSpecsResponse)(nil), "gauge.messages.GetAllSpecsResponse")
+	proto.RegisterType((*GetAllConceptsRequest)(nil), "gauge.messages.GetAllConceptsRequest")
+	proto.RegisterType((*GetAllConceptsResponse)(nil), "gauge.messages.GetAllConceptsResponse")
+	proto.RegisterType((*ConceptInfo)(nil), "gauge.messages.ConceptInfo")
+	proto.RegisterType((*GetStepValueRequest)(nil), "gauge.messages.GetStepValueRequest")
+	proto.RegisterType((*GetStepValueResponse)(nil), "gauge.messages.GetStepValueResponse")
+	proto.RegisterType((*GetLanguagePluginLibPathRequest)(nil), "gauge.messages.GetLanguagePluginLibPathRequest")
+	proto.RegisterType((*GetLanguagePluginLibPathResponse)(nil), "gauge.messages.GetLanguagePluginLibPathResponse")
+	proto.RegisterType((*ErrorResponse)(nil), "gauge.messages.ErrorResponse")
+	proto.RegisterType((*PerformRefactoringRequest)(nil), "gauge.messages.PerformRefactoringRequest")
+	proto.RegisterType((*PerformRefactoringResponse)(nil), "gauge.messages.PerformRefactoringResponse")
+	proto.RegisterType((*ExtractConceptInfoRequest)(nil), "gauge.messages.ExtractConceptInfoRequest")
+	proto.RegisterType((*ExtractConceptRequest)(nil), "gauge.messages.ExtractConceptRequest")
+	proto.RegisterType((*TextInfo)(nil), "gauge.messages.textInfo")
+	proto.RegisterType((*Step)(nil), "gauge.messages.step")
+	proto.RegisterType((*ExtractConceptResponse)(nil), "gauge.messages.ExtractConceptResponse")
+	proto.RegisterType((*FormatSpecsRequest)(nil), "gauge.messages.FormatSpecsRequest")
+	proto.RegisterType((*FormatSpecsResponse)(nil), "gauge.messages.FormatSpecsResponse")
+	proto.RegisterType((*UnsupportedApiMessageResponse)(nil), "gauge.messages.UnsupportedApiMessageResponse")
+	proto.RegisterType((*APIMessage)(nil), "gauge.messages.APIMessage")
 	proto.RegisterEnum("gauge.messages.APIMessage_APIMessageType", APIMessage_APIMessageType_name, APIMessage_APIMessageType_value)
+}
+
+var fileDescriptor0 = []byte{
+	// 1247 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0x94, 0x57, 0xdb, 0x52, 0xe3, 0x46,
+	0x13, 0x2e, 0x30, 0x5e, 0xec, 0x36, 0xd8, 0xe3, 0xf1, 0x81, 0xb1, 0xf9, 0x39, 0xac, 0xd8, 0x3f,
+	0x05, 0x49, 0x20, 0xc4, 0xb9, 0x48, 0x55, 0x36, 0xbb, 0x1b, 0x8a, 0x2c, 0x94, 0x2b, 0x2c, 0xe5,
+	0x02, 0x92, 0xdb, 0x94, 0x30, 0x63, 0xa3, 0x94, 0x90, 0x14, 0x49, 0xce, 0x92, 0x37, 0xca, 0xeb,
+	0xe4, 0x45, 0xf2, 0x0c, 0xe9, 0x19, 0x8f, 0x8c, 0x0e, 0x23, 0xb1, 0xb9, 0xb3, 0x7b, 0xa6, 0xbf,
+	0x9e, 0xf9, 0xba, 0x7b, 0xbe, 0x16, 0x54, 0x4d, 0xcf, 0x3a, 0xf2, 0x7c, 0x37, 0x74, 0x69, 0x7d,
+	0x6a, 0xce, 0xa6, 0xfc, 0xe8, 0x81, 0x07, 0x81, 0x39, 0xe5, 0x41, 0x1f, 0x02, 0x8f, 0x8f, 0xe7,
+	0x6b, 0xfd, 0x35, 0xdc, 0xf6, 0xeb, 0x1f, 0x83, 0xf9, 0x3f, 0x63, 0x03, 0x3a, 0xe7, 0x3c, 0x1c,
+	0xf9, 0xee, 0x6f, 0x7c, 0x1c, 0x5e, 0xb9, 0x6e, 0x78, 0xc5, 0x7f, 0x9f, 0xf1, 0x20, 0x34, 0x0e,
+	0xa1, 0x9b, 0x5e, 0x08, 0x3c, 0xd7, 0x09, 0x38, 0x6d, 0x41, 0xcd, 0x7b, 0x32, 0xb3, 0xa5, 0xdd,
+	0xe5, 0xfd, 0xaa, 0xf1, 0x3f, 0xe8, 0xe3, 0xf6, 0xa1, 0x13, 0x84, 0xa6, 0x6d, 0x9b, 0xa1, 0xe5,
+	0x3a, 0x71, 0xb0, 0x6f, 0x61, 0x53, 0xbb, 0xaa, 0x10, 0x19, 0x10, 0x2b, 0xb5, 0xa6, 0x60, 0xdb,
+	0x40, 0xd1, 0xf1, 0xc4, 0xb6, 0xaf, 0x43, 0xee, 0x05, 0x11, 0xdc, 0x39, 0xb4, 0x12, 0x56, 0x05,
+	0x73, 0x0c, 0x15, 0x53, 0xd9, 0xd0, 0xbd, 0xb4, 0x5f, 0x1b, 0x6c, 0x1f, 0x25, 0x89, 0x38, 0x1a,
+	0x89, 0x4b, 0x8b, 0x1d, 0xbf, 0x98, 0xf6, 0x8c, 0xc7, 0xe0, 0x91, 0x9f, 0x05, 0xfc, 0xbb, 0x05,
+	0xfc, 0xdc, 0xaa, 0xe0, 0xf7, 0xa1, 0x2c, 0x68, 0x8c, 0xb0, 0x7b, 0x7a, 0x6c, 0xdc, 0xa1, 0x48,
+	0x45, 0x80, 0x53, 0xd7, 0x19, 0x73, 0x2f, 0x8c, 0x1d, 0xbc, 0x9b, 0x5e, 0x50, 0xe0, 0x87, 0x50,
+	0x19, 0x2b, 0x9b, 0xc2, 0xdf, 0x4c, 0xe3, 0x2b, 0x9f, 0xa1, 0x33, 0x71, 0x8d, 0x09, 0xd4, 0x62,
+	0x7f, 0xe9, 0xd7, 0x50, 0x0d, 0xa2, 0x4b, 0x49, 0xe6, 0x9e, 0xbd, 0x3a, 0x25, 0x50, 0x99, 0x58,
+	0x36, 0xf7, 0xcc, 0xf0, 0x9e, 0x2d, 0x0b, 0xae, 0x29, 0x05, 0xb0, 0x2d, 0x87, 0x5f, 0xce, 0x1e,
+	0x6e, 0xb9, 0xcf, 0x4a, 0x68, 0x2b, 0x2b, 0x2a, 0x16, 0x5e, 0xea, 0x1e, 0xc2, 0x59, 0xc4, 0xbb,
+	0xe1, 0x8f, 0x2a, 0x51, 0xb4, 0x0b, 0xf5, 0x7b, 0x33, 0x18, 0x3a, 0x02, 0xe1, 0xc6, 0xbc, 0xb5,
+	0x39, 0x82, 0x2e, 0xed, 0x57, 0x8c, 0x21, 0xb4, 0x93, 0x00, 0xea, 0xbe, 0xff, 0xfd, 0xc4, 0xc6,
+	0x37, 0xb0, 0x83, 0x50, 0x17, 0xa6, 0x33, 0x9d, 0xe1, 0xf2, 0xc8, 0x9e, 0x4d, 0x2d, 0xe7, 0xc2,
+	0xba, 0x1d, 0xe1, 0x0d, 0x62, 0xe7, 0xb2, 0xd5, 0xba, 0x2a, 0xa0, 0x63, 0xd8, 0xcd, 0x77, 0x52,
+	0x67, 0x59, 0x83, 0x15, 0x49, 0xc3, 0xdc, 0x63, 0x1b, 0xd6, 0xdf, 0xfb, 0xbe, 0xeb, 0x2f, 0x96,
+	0xd7, 0xa1, 0xcc, 0x85, 0x41, 0xad, 0xbf, 0x81, 0xde, 0x88, 0xfb, 0x13, 0xd7, 0x7f, 0xb8, 0xe2,
+	0x13, 0x73, 0x1c, 0xba, 0xbe, 0xe5, 0x4c, 0xa3, 0x03, 0x34, 0x60, 0xd5, 0xb5, 0xef, 0xc4, 0x99,
+	0x15, 0x2f, 0x68, 0x70, 0xf8, 0x47, 0x69, 0x90, 0x2c, 0x1b, 0xd7, 0xd0, 0xd7, 0xb9, 0xab, 0x58,
+	0xb8, 0x3d, 0x98, 0x8d, 0xc7, 0xc8, 0x80, 0xf4, 0xaf, 0xd0, 0x3a, 0xbc, 0x90, 0xc1, 0x03, 0x74,
+	0x2f, 0x21, 0x5e, 0x1b, 0xd6, 0x44, 0xda, 0x82, 0xd3, 0x7b, 0xbc, 0x12, 0xbf, 0xc3, 0x34, 0xa1,
+	0xd5, 0x38, 0x80, 0xde, 0xfb, 0xc7, 0xd0, 0x47, 0xb8, 0x58, 0x55, 0x44, 0x67, 0xc2, 0xeb, 0x85,
+	0x8b, 0x44, 0x19, 0x7f, 0x2f, 0x41, 0x27, 0xb9, 0x37, 0xda, 0x77, 0x00, 0x35, 0x55, 0x82, 0x97,
+	0xe6, 0x43, 0x94, 0x94, 0x76, 0x3a, 0x29, 0x22, 0x6b, 0x74, 0x0f, 0x5b, 0x41, 0xb6, 0xd9, 0xb2,
+	0x2c, 0x55, 0xfd, 0xa6, 0x4d, 0x68, 0x8d, 0xe5, 0x29, 0x4f, 0xc6, 0xbe, 0x1b, 0x04, 0xea, 0x29,
+	0x91, 0x85, 0x55, 0xa1, 0x1b, 0xd0, 0x50, 0xc1, 0xce, 0xf0, 0x3a, 0x32, 0xe0, 0x8a, 0x24, 0x6c,
+	0x00, 0x24, 0xe0, 0x36, 0x6e, 0xe4, 0x77, 0xa2, 0xbc, 0xc4, 0x45, 0x58, 0x19, 0x4b, 0xa9, 0x36,
+	0x60, 0xe9, 0x28, 0xa1, 0x5a, 0xc7, 0xb6, 0xaa, 0x44, 0xbf, 0xa3, 0xba, 0x5e, 0x5c, 0x41, 0x96,
+	0x26, 0xbe, 0x2d, 0x7e, 0x88, 0x3c, 0x5f, 0x88, 0xfa, 0x76, 0x65, 0x26, 0xca, 0xb4, 0x09, 0x55,
+	0xee, 0xdc, 0x29, 0xd3, 0xbc, 0xdc, 0x5f, 0xc3, 0x8a, 0x3c, 0x3a, 0x52, 0xe6, 0x3c, 0x01, 0x60,
+	0x01, 0x84, 0x8b, 0x92, 0x96, 0x78, 0x9e, 0xe9, 0x9b, 0x0f, 0xb2, 0xcc, 0x65, 0x9c, 0x92, 0xb0,
+	0x1b, 0x23, 0xe8, 0xa6, 0x89, 0x55, 0x59, 0xc5, 0x48, 0x56, 0x70, 0x9d, 0xc8, 0xeb, 0xa2, 0xa8,
+	0xe6, 0x98, 0xfa, 0xb4, 0xee, 0x01, 0x3d, 0xc3, 0x42, 0x31, 0xc3, 0xf8, 0xf3, 0x24, 0x5c, 0x9f,
+	0xde, 0xa1, 0x2a, 0xbe, 0xad, 0xad, 0xc4, 0x26, 0x15, 0xf3, 0xa9, 0x70, 0xe4, 0x36, 0xc1, 0xcb,
+	0x47, 0xd3, 0x77, 0x90, 0x04, 0x55, 0x4a, 0xc6, 0x0e, 0x6c, 0xfd, 0xec, 0x04, 0x33, 0xcf, 0x73,
+	0x7d, 0x24, 0xfb, 0xc4, 0xb3, 0x3e, 0xcc, 0x89, 0x8d, 0x20, 0x8c, 0x7f, 0xf0, 0x45, 0x38, 0x19,
+	0x0d, 0x95, 0x99, 0xbe, 0x85, 0x9a, 0xa2, 0xfe, 0xe6, 0x4f, 0x6f, 0xce, 0x4d, 0x7d, 0x70, 0x90,
+	0x4e, 0xca, 0x93, 0x43, 0xec, 0xa7, 0x70, 0x10, 0x2c, 0xa8, 0x5d, 0xc3, 0x3b, 0x99, 0x82, 0x12,
+	0x3d, 0x01, 0xea, 0x65, 0xa4, 0x47, 0xd2, 0x59, 0x1b, 0xfc, 0x3f, 0x8d, 0xac, 0xd5, 0x29, 0x7a,
+	0x0a, 0x2d, 0x2f, 0x2b, 0x52, 0x58, 0x4c, 0x02, 0xe3, 0xb3, 0xe7, 0x30, 0x14, 0x59, 0x3f, 0xc1,
+	0x86, 0xa5, 0x97, 0x2e, 0x55, 0x7b, 0x9f, 0x6b, 0x80, 0x72, 0xc4, 0x8e, 0x7e, 0x00, 0x66, 0xe5,
+	0x28, 0x1d, 0x7b, 0x21, 0xd1, 0xbe, 0xf8, 0x24, 0x34, 0x75, 0xb6, 0xd7, 0xd0, 0x30, 0x93, 0xfa,
+	0xc7, 0x56, 0x25, 0x8a, 0xa1, 0x41, 0x49, 0x29, 0x25, 0x7d, 0x03, 0xc4, 0x4c, 0xc9, 0x24, 0xab,
+	0x48, 0xef, 0xbd, 0x42, 0xef, 0x64, 0xec, 0x58, 0xf5, 0xb1, 0x6a, 0x61, 0xec, 0x78, 0x9d, 0xaa,
+	0xd8, 0xf1, 0xaa, 0x64, 0x50, 0x18, 0x3b, 0x51, 0xc0, 0xe8, 0x1e, 0xa4, 0x74, 0x87, 0xd5, 0x72,
+	0xdd, 0x33, 0x12, 0xf5, 0x0e, 0x9a, 0x41, 0x5a, 0x75, 0xd8, 0x9a, 0xf4, 0x7f, 0x55, 0xec, 0xaf,
+	0xe2, 0x9f, 0x43, 0xdd, 0x4e, 0xa8, 0x0b, 0x5b, 0x97, 0xde, 0x5f, 0x69, 0xbc, 0x0b, 0x45, 0x69,
+	0x08, 0x0d, 0x3b, 0xa9, 0x38, 0xac, 0x2e, 0x91, 0x8e, 0x3f, 0x1d, 0x49, 0x9d, 0xe9, 0xcb, 0xe8,
+	0xd5, 0x68, 0x48, 0x80, 0xad, 0x34, 0x40, 0x52, 0xb8, 0xb0, 0xbb, 0xcc, 0xcc, 0x0c, 0xc2, 0x48,
+	0x6e, 0x77, 0x65, 0x07, 0x16, 0xd1, 0x5d, 0x66, 0x76, 0x5a, 0x61, 0xcd, 0xdc, 0xee, 0xd2, 0xcd,
+	0x36, 0x17, 0xd0, 0xf3, 0xf2, 0x14, 0x93, 0x51, 0x09, 0x95, 0x79, 0x46, 0xf2, 0x25, 0xf6, 0x12,
+	0xfa, 0x5e, 0xae, 0x80, 0xb2, 0x96, 0xbe, 0x5d, 0x0b, 0x24, 0xf7, 0x47, 0xe8, 0x70, 0x9d, 0x1e,
+	0xb2, 0xb6, 0x9e, 0x28, 0xbd, 0x78, 0x9e, 0x41, 0x97, 0x6b, 0x1f, 0x7f, 0xd6, 0xd1, 0x73, 0x95,
+	0x23, 0x15, 0x6f, 0x81, 0x4e, 0x32, 0x4f, 0x3e, 0xeb, 0xea, 0x9b, 0x4e, 0x23, 0x0e, 0x3f, 0x40,
+	0x6b, 0x92, 0x55, 0x03, 0xb6, 0xa1, 0x6f, 0x1c, 0x9d, 0x70, 0xdc, 0xc0, 0xd6, 0xac, 0x48, 0x16,
+	0x18, 0x93, 0x58, 0x87, 0x69, 0xac, 0x42, 0x2d, 0xa1, 0xdf, 0x01, 0xe1, 0x8f, 0x7c, 0x3c, 0x93,
+	0xcf, 0x9b, 0xba, 0x55, 0x4f, 0x02, 0xed, 0x66, 0x99, 0x49, 0xee, 0xa3, 0xdf, 0x43, 0x33, 0xe6,
+	0xab, 0x4e, 0xd1, 0x97, 0xce, 0x2f, 0x0b, 0x9c, 0x95, 0x8a, 0xfd, 0x55, 0x86, 0x7a, 0x4a, 0x89,
+	0x7a, 0x39, 0x1f, 0x3d, 0x64, 0x89, 0xf6, 0xf3, 0x3e, 0x7b, 0xc8, 0x32, 0xdd, 0x2e, 0xfa, 0xc6,
+	0x21, 0x25, 0xba, 0x53, 0xf8, 0x95, 0x43, 0x56, 0x70, 0x72, 0xd0, 0x7c, 0xcd, 0x90, 0x72, 0xd2,
+	0xbe, 0xd8, 0xff, 0x22, 0x66, 0x8f, 0xa5, 0x98, 0xac, 0xe2, 0xf0, 0xa4, 0xfb, 0x40, 0x21, 0x15,
+	0xb5, 0x90, 0x7e, 0x0b, 0x49, 0x15, 0xbf, 0xb0, 0xb4, 0x63, 0x38, 0x01, 0x1c, 0xe5, 0x9e, 0x9b,
+	0xaa, 0x49, 0x8d, 0xbe, 0x7a, 0x7e, 0x8a, 0x26, 0x6b, 0x28, 0xf0, 0xc9, 0xc9, 0x99, 0xac, 0x2b,
+	0xa6, 0xb3, 0x0f, 0x0b, 0xa9, 0x2b, 0xa6, 0x35, 0xef, 0x05, 0x69, 0xd0, 0xad, 0x82, 0x19, 0x9b,
+	0x10, 0x91, 0x88, 0xfc, 0x86, 0x26, 0x4d, 0x11, 0x55, 0xdb, 0xa5, 0x84, 0x8a, 0xa8, 0xfa, 0xce,
+	0x23, 0x2d, 0x41, 0x77, 0xb6, 0xa3, 0x48, 0x5b, 0xb0, 0xaa, 0x69, 0x14, 0xd2, 0xa1, 0x2f, 0x9f,
+	0x99, 0xa0, 0x48, 0x17, 0x07, 0x3b, 0x92, 0xae, 0x67, 0xb2, 0x41, 0x3b, 0xd0, 0xcc, 0x14, 0x2a,
+	0x61, 0xff, 0x06, 0x00, 0x00, 0xff, 0xff, 0x40, 0x72, 0x86, 0x6e, 0xc2, 0x0f, 0x00, 0x00,
 }

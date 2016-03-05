@@ -32,6 +32,8 @@ func init() {
 	processors[*m.Message_StepExecutionEnding.Enum()] = &mp.StepExecutionEndingProcessor{}
 	processors[*m.Message_ScenarioExecutionEnding.Enum()] = &mp.ScenarioExecutionEndingProcessor{}
 	processors[*m.Message_SpecExecutionEnding.Enum()] = &mp.SpecExecutionEndingProcessor{}
+	processors[*m.Message_SpecDataStoreInit.Enum()] = &mp.SpecDataStoreInitProcessor{}
+	processors[*m.Message_ScenarioDataStoreInit.Enum()] = &mp.ScenarioDataStoreInitProcessor{}
 }
 
 func Describe(stepDesc string, impl interface{}) bool {
@@ -43,6 +45,8 @@ func Describe(stepDesc string, impl interface{}) bool {
 		fmt.Printf("Expected a function implementation for '%s' but got type '%s' - Ignoring test\n", stepDesc, implType.String())
 		return false
 	}
+
+	//TODO validate not just the number of arguments but method signature
 	if implType.NumIn() != noOfArgs {
 		//TODO decide whether to ignore or fail test
 		fmt.Printf("Mismatch in number of arguments in implementation of '%s' expected : %d, actual : %d - Ignoring test\n", desc, noOfArgs, implType.NumIn())
