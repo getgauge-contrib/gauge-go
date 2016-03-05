@@ -14,19 +14,14 @@ go build
 copy gauge-go.exe to <gauge plugin directory>/go/1.0.0/bin/ directory
 copy go.json file to <gauge plugin directory>/go/1.0.0/ directory
 
-To initialize a project with gauge-go, in an empty directory run:
-```sh
-gauge --init go
-```
-
 ## Usage
 
 If you are new to Gauge, please consult the [Gauge documentation](http://getgauge.io/documentation/user/current/) to know about how Gauge works.
 
-**Initialize:** To initialize a project with gauge-js, in an empty directory run:
+**Initialize:** To initialize a project with gauge-go, in an empty directory run:
 
 ```sh
-$ gauge --init js
+$ gauge --init go
 ```
 
 **Run specs:**
@@ -44,7 +39,7 @@ $ gauge specs/
 Use the `Describe()` method to implement your steps. For example:
 
 ```go
-var _ = Describe("Vowels in English language are <vowels>.", func (vowelsGiven) {
+var _ = Describe("Vowels in English language are <vowels>.", func (vowelsGiven string) {
   assert.Equal(vowelsGiven, "aeiou")
 })
 ```
@@ -108,13 +103,13 @@ This data store keeps values added to it in the lifecycle of the specification e
 
 **Store a value:**
 
-```js
+```go
 GetSpecStore()[key] = value
 ```
 
 **Retrieve a value:**
 
-```js
+```go
 value := GetSpecStore()[key]
 ```
 
