@@ -18,21 +18,18 @@ var context *t.GaugeContext
 var processors mp.ProcessorDictionary
 
 func init() {
-	suiteStore := make(map[string]interface{})
-	specStore := make(map[string]interface{})
-	scenarioStore := make(map[string]interface{})
 	context = &t.GaugeContext{
 		Steps:         make([]t.Step, 0),
 		Hooks:         make([]t.Hook, 0),
-		SuiteStore:    &suiteStore,
-		SpecStore:     &specStore,
-		ScenarioStore: &scenarioStore,
+		SuiteStore:    make(map[string]interface{}),
+		SpecStore:     make(map[string]interface{}),
+		ScenarioStore: make(map[string]interface{}),
 	}
 
 	processors = mp.ProcessorDictionary{}
 	processors[*m.Message_StepNamesRequest.Enum()] = &mp.StepNamesRequestProcessor{}
 	processors[*m.Message_StepValidateRequest.Enum()] = &mp.StepValidateRequestProcessor{}
-	processors[*m.Message_SuiteDataStoreInit.Enum()] = &mp.SuiteDatastoreInitRequestProcessor{}
+	processors[*m.Message_SuiteDataStoreInit.Enum()] = &mp.SuiteDataStoreInitRequestProcessor{}
 	processors[*m.Message_ExecutionStarting.Enum()] = &mp.ExecutionStartingRequestProcessor{}
 	processors[*m.Message_SpecExecutionStarting.Enum()] = &mp.SpecExecutionStartingRequestProcessor{}
 	processors[*m.Message_ScenarioExecutionStarting.Enum()] = &mp.ScenarioExecutionStartingRequestProcessor{}

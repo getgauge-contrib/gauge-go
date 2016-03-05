@@ -18,10 +18,31 @@ func TestShouldReturnExecutionStatusResponseWithSameIdForSuiteDatastoreInitReque
 		MessageId:   &msgId,
 	}
 
-	p := SuiteDatastoreInitRequestProcessor{}
+	p := SuiteDataStoreInitRequestProcessor{}
 
 	result := p.Process(msg, context)
 
 	assert.Equal(tst, result.MessageType, m.Message_ExecutionStatusResponse.Enum())
 	assert.Equal(tst, *result.MessageId, msgId)
+}
+
+func TestShouldResetSuiteDataStore(tst *testing.T) {
+	msgId := int64(12345)
+	context := &t.GaugeContext{
+		SuiteStore: make(map[string]interface{}),
+	}
+	msg := &m.Message{
+		MessageType: m.Message_ScenarioDataStoreInit.Enum(),
+		MessageId:   &msgId,
+	}
+
+	context.SuiteStore["foo"] = "bar"
+
+	p := SuiteDataStoreInitRequestProcessor{}
+
+	result := p.Process(msg, context)
+
+	assert.Equal(tst, result.MessageType, m.Message_ExecutionStatusResponse.Enum())
+	assert.Equal(tst, *result.MessageId, msgId)
+	assert.Nil(tst, context.SuiteStore["foo"])
 }
