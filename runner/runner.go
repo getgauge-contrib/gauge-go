@@ -163,6 +163,19 @@ func AfterStep(fn func() error, tags []string, op t.Operator) bool {
 	return true
 }
 
+func GetSuiteStore() map[string]interface{} {
+	return context.SuiteStore
+
+}
+
+func GetSpecStore() map[string]interface{} {
+	return context.SpecStore
+}
+
+func GetScenarioStore() map[string]interface{} {
+	return context.ScenarioStore
+}
+
 func Run() {
 	fmt.Println("We have got ", len(context.Steps), " step implementations") // remove
 
