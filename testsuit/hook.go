@@ -5,7 +5,7 @@ type Operator int
 
 const (
 	BEFORESUITE HookType = 1
-	BEFORERSPEC HookType = 2
+	BEFORESPEC HookType = 2
 	BEFORESCENARIO HookType = 3
 	BEFORESTEP HookType = 4
 

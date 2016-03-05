@@ -76,6 +76,90 @@ func BeforeSuite(fn func() error, tags []string, op t.Operator) bool {
 	return true
 }
 
+func AfterSuite(fn func() error, tags []string, op t.Operator) bool {
+	hook := t.Hook{
+		Type: t.AFTERSUITE,
+		Impl: fn,
+		Tags: tags,
+		Operator: op,
+	}
+
+	context.Hooks = append(context.Hooks, hook)
+	return true
+}
+
+func BeforeSpec(fn func() error, tags []string, op t.Operator) bool {
+	hook := t.Hook{
+		Type: t.BEFORESPEC,
+		Impl: fn,
+		Tags: tags,
+		Operator: op,
+	}
+
+	context.Hooks = append(context.Hooks, hook)
+	return true
+}
+
+func AfterSpec(fn func() error, tags []string, op t.Operator) bool {
+	hook := t.Hook{
+		Type: t.AFTERSPEC,
+		Impl: fn,
+		Tags: tags,
+		Operator: op,
+	}
+
+	context.Hooks = append(context.Hooks, hook)
+	return true
+}
+
+func BeforeScenario(fn func() error, tags []string, op t.Operator) bool {
+	hook := t.Hook{
+		Type: t.BEFORESCENARIO,
+		Impl: fn,
+		Tags: tags,
+		Operator: op,
+	}
+
+	context.Hooks = append(context.Hooks, hook)
+	return true
+}
+
+func AfterScenario(fn func() error, tags []string, op t.Operator) bool {
+	hook := t.Hook{
+		Type: t.AFTERSCENARIO,
+		Impl: fn,
+		Tags: tags,
+		Operator: op,
+	}
+
+	context.Hooks = append(context.Hooks, hook)
+	return true
+}
+
+func BeforeStep(fn func() error, tags []string, op t.Operator) bool {
+	hook := t.Hook{
+		Type: t.BEFORESTEP,
+		Impl: fn,
+		Tags: tags,
+		Operator: op,
+	}
+
+	context.Hooks = append(context.Hooks, hook)
+	return true
+}
+
+func AfterStep(fn func() error, tags []string, op t.Operator) bool {
+	hook := t.Hook{
+		Type: t.AFTERSTEP,
+		Impl: fn,
+		Tags: tags,
+		Operator: op,
+	}
+
+	context.Hooks = append(context.Hooks, hook)
+	return true
+}
+
 func Run() {
 	fmt.Println("We have got ", len(context.Steps), " step implementations") // remove
 
