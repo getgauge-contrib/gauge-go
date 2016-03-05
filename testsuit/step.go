@@ -1,10 +1,19 @@
 package testsuit
 
+import (
+	"reflect"
+)
+
 type Step struct {
 	Description string
-	Impl        func(...interface{})
+	Impl        interface{}
 }
 
 func (step *Step) Execute(args ...interface{}) {
-	step.Impl(args...)
+	fn := reflect.ValueOf(step.Impl)
+	rargs := make([]reflect.Value, len(args))
+	for i, a := range args {
+		rargs[i] = reflect.ValueOf(a)
+	}
+	fn.Call(rargs)
 }
