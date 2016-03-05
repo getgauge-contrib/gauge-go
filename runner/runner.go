@@ -66,9 +66,9 @@ func Describe(stepDesc string, impl interface{}) bool {
 
 func BeforeSuite(fn func() error, tags []string, op t.Operator) bool {
 	hook := t.Hook{
-		Type: t.BEFORESUITE,
-		Impl: fn,
-		Tags: tags,
+		Type:     t.BEFORESUITE,
+		Impl:     fn,
+		Tags:     tags,
 		Operator: op,
 	}
 
@@ -78,9 +78,9 @@ func BeforeSuite(fn func() error, tags []string, op t.Operator) bool {
 
 func AfterSuite(fn func() error, tags []string, op t.Operator) bool {
 	hook := t.Hook{
-		Type: t.AFTERSUITE,
-		Impl: fn,
-		Tags: tags,
+		Type:     t.AFTERSUITE,
+		Impl:     fn,
+		Tags:     tags,
 		Operator: op,
 	}
 
@@ -90,9 +90,9 @@ func AfterSuite(fn func() error, tags []string, op t.Operator) bool {
 
 func BeforeSpec(fn func() error, tags []string, op t.Operator) bool {
 	hook := t.Hook{
-		Type: t.BEFORESPEC,
-		Impl: fn,
-		Tags: tags,
+		Type:     t.BEFORESPEC,
+		Impl:     fn,
+		Tags:     tags,
 		Operator: op,
 	}
 
@@ -102,9 +102,9 @@ func BeforeSpec(fn func() error, tags []string, op t.Operator) bool {
 
 func AfterSpec(fn func() error, tags []string, op t.Operator) bool {
 	hook := t.Hook{
-		Type: t.AFTERSPEC,
-		Impl: fn,
-		Tags: tags,
+		Type:     t.AFTERSPEC,
+		Impl:     fn,
+		Tags:     tags,
 		Operator: op,
 	}
 
@@ -114,9 +114,9 @@ func AfterSpec(fn func() error, tags []string, op t.Operator) bool {
 
 func BeforeScenario(fn func() error, tags []string, op t.Operator) bool {
 	hook := t.Hook{
-		Type: t.BEFORESCENARIO,
-		Impl: fn,
-		Tags: tags,
+		Type:     t.BEFORESCENARIO,
+		Impl:     fn,
+		Tags:     tags,
 		Operator: op,
 	}
 
@@ -126,9 +126,9 @@ func BeforeScenario(fn func() error, tags []string, op t.Operator) bool {
 
 func AfterScenario(fn func() error, tags []string, op t.Operator) bool {
 	hook := t.Hook{
-		Type: t.AFTERSCENARIO,
-		Impl: fn,
-		Tags: tags,
+		Type:     t.AFTERSCENARIO,
+		Impl:     fn,
+		Tags:     tags,
 		Operator: op,
 	}
 
@@ -138,9 +138,9 @@ func AfterScenario(fn func() error, tags []string, op t.Operator) bool {
 
 func BeforeStep(fn func() error, tags []string, op t.Operator) bool {
 	hook := t.Hook{
-		Type: t.BEFORESTEP,
-		Impl: fn,
-		Tags: tags,
+		Type:     t.BEFORESTEP,
+		Impl:     fn,
+		Tags:     tags,
 		Operator: op,
 	}
 
@@ -150,9 +150,9 @@ func BeforeStep(fn func() error, tags []string, op t.Operator) bool {
 
 func AfterStep(fn func() error, tags []string, op t.Operator) bool {
 	hook := t.Hook{
-		Type: t.AFTERSTEP,
-		Impl: fn,
-		Tags: tags,
+		Type:     t.AFTERSTEP,
+		Impl:     fn,
+		Tags:     tags,
 		Operator: op,
 	}
 

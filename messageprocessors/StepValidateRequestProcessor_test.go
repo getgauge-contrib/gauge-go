@@ -1,9 +1,9 @@
 package messageprocessors
 
 import (
-	 m "github.com/manuviswam/gauge-go/gauge_messages"
-	 t "github.com/manuviswam/gauge-go/testsuit"
-	 "github.com/stretchr/testify/assert"
+	m "github.com/manuviswam/gauge-go/gauge_messages"
+	t "github.com/manuviswam/gauge-go/testsuit"
+	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
@@ -11,13 +11,13 @@ func TestShouldReturnStepNamesResponseWithSameIdForStepValidateRequest(tst *test
 	stepText := "Step description"
 	msgId := int64(12345)
 	context := t.GaugeContext{
-		Steps : make([]t.Step, 0),
+		Steps: make([]t.Step, 0),
 	}
 
 	msg := &m.Message{
 		MessageType: m.Message_StepNamesRequest.Enum(),
 		MessageId:   &msgId,
-		StepValidateRequest : &m.StepValidateRequest{
+		StepValidateRequest: &m.StepValidateRequest{
 			StepText: &stepText,
 		},
 	}
@@ -34,17 +34,17 @@ func TestShouldValidateStep(tst *testing.T) {
 	stepText := "Step description"
 	msgId := int64(12345)
 	context := t.GaugeContext{
-		Steps : []t.Step{t.Step{
-				Description: stepText,
-				Impl:        func(args ...interface{}) {},
-			},
+		Steps: []t.Step{t.Step{
+			Description: stepText,
+			Impl:        func(args ...interface{}) {},
+		},
 		},
 	}
 
 	msg := &m.Message{
 		MessageType: m.Message_StepNamesRequest.Enum(),
 		MessageId:   &msgId,
-		StepValidateRequest : &m.StepValidateRequest{
+		StepValidateRequest: &m.StepValidateRequest{
 			StepText: &stepText,
 		},
 	}

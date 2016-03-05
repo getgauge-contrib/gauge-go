@@ -1,8 +1,8 @@
 package testsuit
 
 import (
-"github.com/stretchr/testify/assert"
-"testing"
+	"github.com/stretchr/testify/assert"
+	"testing"
 )
 
 func TestShouldGetStepsWithDescription(t *testing.T) {
@@ -10,7 +10,7 @@ func TestShouldGetStepsWithDescription(t *testing.T) {
 		Steps: []Step{
 			Step{
 				Description: "I have an implementation",
-				Impl: func() {  },
+				Impl:        func() {},
 			},
 		},
 	}
@@ -26,7 +26,7 @@ func TestShouldReturnErrorForUnImplementedStep(t *testing.T) {
 		Steps: []Step{
 			Step{
 				Description: "I have an implementation",
-				Impl: func() {  },
+				Impl:        func() {},
 			},
 		},
 	}
@@ -39,11 +39,11 @@ func TestShouldReturnErrorForUnImplementedStep(t *testing.T) {
 
 func TestShouldGetHooksOfGivenType(t *testing.T) {
 	context := &GaugeContext{
-		Hooks: []Hook {
+		Hooks: []Hook{
 			Hook{
-				Type: BEFORESUITE,
-				Impl: func() error { return nil },
-				Tags: []string{},
+				Type:     BEFORESUITE,
+				Impl:     func() error { return nil },
+				Tags:     []string{},
 				Operator: AND,
 			},
 		},
@@ -54,20 +54,19 @@ func TestShouldGetHooksOfGivenType(t *testing.T) {
 	assert.Equal(t, 1, len(hooks))
 }
 
-
 func TestShouldGetHooksWithAnyOfTheseTags(t *testing.T) {
 	context := &GaugeContext{
-		Hooks: []Hook {
+		Hooks: []Hook{
 			Hook{
-				Type: BEFORESUITE,
-				Impl: func() error { return nil },
-				Tags: []string{"foo", "bar"},
+				Type:     BEFORESUITE,
+				Impl:     func() error { return nil },
+				Tags:     []string{"foo", "bar"},
 				Operator: OR,
 			},
 			Hook{
-				Type: BEFORESUITE,
-				Impl: func() error { return nil },
-				Tags: []string{"notfoo", "bar"},
+				Type:     BEFORESUITE,
+				Impl:     func() error { return nil },
+				Tags:     []string{"notfoo", "bar"},
 				Operator: OR,
 			},
 		},
@@ -81,17 +80,17 @@ func TestShouldGetHooksWithAnyOfTheseTags(t *testing.T) {
 
 func TestShouldNotGetHooksIfTagsDontMatch(t *testing.T) {
 	context := &GaugeContext{
-		Hooks: []Hook {
+		Hooks: []Hook{
 			Hook{
-				Type: BEFORESUITE,
-				Impl: func() error { return nil },
-				Tags: []string{"foo", "bar"},
+				Type:     BEFORESUITE,
+				Impl:     func() error { return nil },
+				Tags:     []string{"foo", "bar"},
 				Operator: OR,
 			},
 			Hook{
-				Type: BEFORESUITE,
-				Impl: func() error { return nil },
-				Tags: []string{"notfoo", "bar"},
+				Type:     BEFORESUITE,
+				Impl:     func() error { return nil },
+				Tags:     []string{"notfoo", "bar"},
 				Operator: OR,
 			},
 		},
@@ -103,26 +102,25 @@ func TestShouldNotGetHooksIfTagsDontMatch(t *testing.T) {
 }
 func TestShouldGetHooksWithBothTags(t *testing.T) {
 	context := &GaugeContext{
-		Hooks: []Hook {
+		Hooks: []Hook{
 			Hook{
-				Type: BEFORESUITE,
-				Impl: func() error { return nil },
-				Tags: []string{"foo", "bar"},
+				Type:     BEFORESUITE,
+				Impl:     func() error { return nil },
+				Tags:     []string{"foo", "bar"},
 				Operator: AND,
 			},
 			Hook{
-				Type: BEFORESUITE,
-				Impl: func() error { return nil },
-				Tags: []string{"notfoo", "bar"},
+				Type:     BEFORESUITE,
+				Impl:     func() error { return nil },
+				Tags:     []string{"notfoo", "bar"},
 				Operator: AND,
 			},
 		},
 	}
 
-	hooks := context.GetHooks(BEFORESUITE, []string{"foo","bar"})
+	hooks := context.GetHooks(BEFORESUITE, []string{"foo", "bar"})
 
 	assert.Equal(t, 1, len(hooks))
 	assert.Contains(t, hooks[0].Tags, "foo")
 	assert.Contains(t, hooks[0].Tags, "bar")
 }
-

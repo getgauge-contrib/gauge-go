@@ -1,7 +1,8 @@
 package testsuit
+
 import (
-	"fmt"
 	"errors"
+	"fmt"
 )
 
 type GaugeContext struct {
@@ -20,14 +21,16 @@ func (c *GaugeContext) GetStepByDesc(desc string) (*Step, error) {
 
 func (c *GaugeContext) GetHooks(hookType HookType, tags []string) []Hook {
 	filteredByType := filterByType(c.Hooks, hookType)
-	h := make([]Hook,0)
+	h := make([]Hook, 0)
 	//TODO complexity is O(n^3) optimize it
 	for _, hook := range filteredByType {
 		switch hook.Operator {
-			case OR : if containsAny(tags, hook.Tags) {
+		case OR:
+			if containsAny(tags, hook.Tags) {
 				h = append(h, hook)
 			}
-			case AND : if containsAll(tags, hook.Tags) {
+		case AND:
+			if containsAll(tags, hook.Tags) {
 				h = append(h, hook)
 			}
 		}
@@ -37,12 +40,12 @@ func (c *GaugeContext) GetHooks(hookType HookType, tags []string) []Hook {
 
 func filterByType(hooks []Hook, t HookType) []Hook {
 	h := make([]Hook, 0)
-	for _, hook := range hooks  {
+	for _, hook := range hooks {
 		if hook.Type == t {
 			h = append(h, hook)
 		}
 	}
-	return  h
+	return h
 }
 
 func containsAny(s []string, k []string) bool {

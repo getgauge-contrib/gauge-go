@@ -12,10 +12,10 @@ func TestShouldRunStep(tst *testing.T) {
 	msgId := int64(12345)
 	called := false
 	context := t.GaugeContext{
-		Steps : []t.Step{t.Step{
-				Description: stepText,
-				Impl:        func(args ...interface{}) { called = true },
-			},
+		Steps: []t.Step{t.Step{
+			Description: stepText,
+			Impl:        func(args ...interface{}) { called = true },
+		},
 		},
 	}
 
@@ -40,10 +40,10 @@ func TestShouldRunReturnExecutionStatusResponseWithSameId(tst *testing.T) {
 	msgId := int64(12345)
 	called := false
 	context := t.GaugeContext{
-		Steps : []t.Step{t.Step{
-				Description: stepText,
-				Impl:        func(args ...interface{}) { called = true },
-			},
+		Steps: []t.Step{t.Step{
+			Description: stepText,
+			Impl:        func(args ...interface{}) { called = true },
+		},
 		},
 	}
 

@@ -10,7 +10,7 @@ import (
 func TestShouldReturnExecutionStatusResponseWithSameIdForScenarioDataStoreInit(tst *testing.T) {
 	msgId := int64(12345)
 	context := t.GaugeContext{
-		Steps : make([]t.Step, 0),
+		Steps: make([]t.Step, 0),
 	}
 	msg := &m.Message{
 		MessageType: m.Message_ScenarioDataStoreInit.Enum(),

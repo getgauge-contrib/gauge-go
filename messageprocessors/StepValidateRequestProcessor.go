@@ -7,7 +7,7 @@ import (
 
 type StepValidateRequestProcessor struct{}
 
-func (s *StepValidateRequestProcessor) Process(msg *m.Message, context t.GaugeContext)*m.Message {
+func (s *StepValidateRequestProcessor) Process(msg *m.Message, context t.GaugeContext) *m.Message {
 	stepDesc := msg.StepValidateRequest.StepText
 	//TODO validate method signature
 	valid := isValid(context.Steps, stepDesc)
