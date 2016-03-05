@@ -18,9 +18,15 @@ var context *t.GaugeContext
 var processors mp.ProcessorDictionary
 
 func init() {
+	suiteStore := make(map[string]interface{})
+	specStore := make(map[string]interface{})
+	scenarioStore := make(map[string]interface{})
 	context = &t.GaugeContext{
-		Steps: make([]t.Step, 0),
-		Hooks: make([]t.Hook, 0),
+		Steps:         make([]t.Step, 0),
+		Hooks:         make([]t.Hook, 0),
+		SuiteStore:    &suiteStore,
+		SpecStore:     &specStore,
+		ScenarioStore: &scenarioStore,
 	}
 
 	processors = mp.ProcessorDictionary{}

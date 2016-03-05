@@ -6,8 +6,11 @@ import (
 )
 
 type GaugeContext struct {
-	Steps []Step
-	Hooks []Hook
+	Steps         []Step
+	Hooks         []Hook
+	ScenarioStore *map[string]interface{}
+	SpecStore     *map[string]interface{}
+	SuiteStore    *map[string]interface{}
 }
 
 func (c *GaugeContext) GetStepByDesc(desc string) (*Step, error) {
