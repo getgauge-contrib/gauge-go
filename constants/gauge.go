@@ -1,11 +1,12 @@
 package constants
 
 const (
-	DefaultSpecImplDir      = "specimpl"
-	DefaultStepImplFileName = "stepimplementation.go"
+	DefaultStepImplDir      = "stepImpl"
+	DefaultStepImplFileName = "stepImplementation.go"
 	DefaultInitTestFileName = "gauge_test.go"
 	CommandGo               = "go"
 	ArgTest                 = "test"
 	GaugePortVariable       = "GAUGE_INTERNAL_PORT"
 	MaxMessageSize          = 8192
+	SkelDir                 = "skel"
 )

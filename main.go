@@ -3,10 +3,9 @@ package main
 import (
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"os/exec"
-	"path"
+	"path/filepath"
 
 	"github.com/getgauge/common"
 	"github.com/manuviswam/gauge-go/constants"
@@ -31,7 +30,7 @@ func main() {
 }
 
 func startGo() {
-	os.Chdir(path.Join(projectRoot, constants.DefaultSpecImplDir))
+	os.Chdir(filepath.Join(projectRoot, constants.DefaultStepImplDir))
 	cmd := exec.Command(constants.CommandGo, constants.ArgTest)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
@@ -42,14 +41,20 @@ func startGo() {
 }
 
 func initGo() {
-	os.Chdir(projectRoot)
-	createDirectory(constants.DefaultSpecImplDir)
-	createFile(path.Join(constants.DefaultSpecImplDir, constants.DefaultStepImplFileName), constants.HelloWorldImplTemplate)
-	createFile(path.Join(constants.DefaultSpecImplDir, constants.DefaultInitTestFileName), constants.InitTestTemplate)
+	stepImplDir := filepath.Join(projectRoot, constants.DefaultStepImplDir)
+	showMessage("create", stepImplDir)
+	createDirectory(stepImplDir)
+	stepImplFile := filepath.Join(stepImplDir, constants.DefaultStepImplFileName)
+	showMessage("create", stepImplFile)
+	common.CopyFile(filepath.Join(constants.SkelDir, constants.DefaultStepImplFileName), stepImplFile)
 }
 
 func printUsage() {
 	flag.PrintDefaults()
+}
+
+func showMessage(action, filename string) {
+	fmt.Printf(" %s  %s\n", action, filename)
 }
 
 func setPluginAndProjectRoots() {
@@ -67,26 +72,13 @@ func setPluginAndProjectRoots() {
 }
 
 func createDirectory(dirPath string) {
-	fmt.Println("create ", dirPath)
+	showMessage("create", dirPath)
 	if !common.DirExists(dirPath) {
-		err := os.MkdirAll(dirPath, 0755)
+		err := os.MkdirAll(dirPath, common.NewDirectoryPermissions)
 		if err != nil {
 			fmt.Printf("Failed to make directory. %s\n", err.Error())
 		}
 	} else {
 		fmt.Println("skip ", dirPath)
 	}
-}
-
-func createFile(filePath, content string) {
-	fmt.Println("create ", filePath)
-	if !common.FileExists(filePath) {
-		err := ioutil.WriteFile(filePath, []byte(content), common.NewFilePermissions)
-		if err != nil {
-			fmt.Println("Error creating file : ", err)
-		}
-	} else {
-		fmt.Println("skip ", filePath)
-	}
-
 }
