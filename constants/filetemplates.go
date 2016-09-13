@@ -7,14 +7,14 @@ import (
 	"fmt"
 
 	m "github.com/manuviswam/gauge-go/models"
-	. "github.com/manuviswam/gauge-go/runner"
+	"github.com/manuviswam/gauge-go/gauge"
 )
 
-var _ = Describe("Say <greeting> to <product name>", func(greeting, name string) {
+var _ = gauge.Step("Say <greeting> to <product name>", func(greeting, name string) {
 	fmt.Println(greeting + ", " + name)
 })
 
-var _ = Describe("Step that takes a table <table>", func(tbl *m.Table) {
+var _ = gauge.Step("Step that takes a table <table>", func(tbl *m.Table) {
 	for _, columnName := range tbl.Headers.Cells {
 		fmt.Printf("%s,\t", columnName)
 	}
@@ -28,7 +28,7 @@ var _ = Describe("Step that takes a table <table>", func(tbl *m.Table) {
 	}
 })
 
-var _ = Describe("A context step which gets executed before every scenario", func() {
+var _ = gauge.Step("A context step which gets executed before every scenario", func() {
 	fmt.Println("Context step executed")
 })
 `

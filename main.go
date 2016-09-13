@@ -15,7 +15,7 @@ import (
 var pluginDir = ""
 var projectRoot = ""
 var start = flag.Bool("start", false, "Start go runner")
-var initialize = flag.Bool("init", false, "Initialize go specs")
+var initialize = flag.Bool("init", false, "Initialize Go project structure")
 
 func main() {
 	flag.Parse()

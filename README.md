@@ -34,12 +34,12 @@ $ gauge specs/
 
 ### Step implementation
 
-**`var _ = Describe(<step-text>, fn)`**
+**`var _ = gauge.Step(<step-text>, fn)`**
 
-Use the `Describe()` method to implement your steps. For example:
+Use the `gauge.Step()` method to implement your steps. For example:
 
 ```go
-var _ = Describe("Vowels in English language are <vowels>.", func (vowelsGiven string) {
+var _ = gauge.Step("Vowels in English language are <vowels>.", func (vowelsGiven string) {
   assert.Equal(vowelsGiven, "aeiou")
 })
 ```
