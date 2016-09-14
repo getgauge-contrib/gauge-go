@@ -1,10 +1,11 @@
 package messageprocessors
 
 import (
+	"testing"
+
 	m "github.com/manuviswam/gauge-go/gauge_messages"
 	t "github.com/manuviswam/gauge-go/testsuit"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestShouldReturnExecutionStatusResponseWithSameIdForSpecDataStoreInit(tst *testing.T) {

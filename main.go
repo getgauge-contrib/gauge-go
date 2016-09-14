@@ -4,11 +4,11 @@ import (
 	"flag"
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 
 	"github.com/getgauge/common"
 	"github.com/manuviswam/gauge-go/constants"
+	"github.com/manuviswam/gauge-go/gauge"
 )
 
 var pluginDir = ""
@@ -30,13 +30,11 @@ func main() {
 }
 
 func startGo() {
-	os.Chdir(filepath.Join(projectRoot, constants.DefaultStepImplDir))
-	cmd := exec.Command(constants.CommandGo, constants.ArgTest)
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	err := cmd.Run()
+	os.Chdir(projectRoot)
+	err := gauge.LoadGaugeImpls()
 	if err != nil {
-		fmt.Println("Error occured while executing 'go test' :", err)
+		fmt.Printf("Killing go runner. Failed to build project: %s\n", err.Error())
+		os.Exit(1)
 	}
 }
 

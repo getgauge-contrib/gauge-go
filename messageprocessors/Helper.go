@@ -1,9 +1,10 @@
 package messageprocessors
 
 import (
+	"time"
+
 	m "github.com/manuviswam/gauge-go/gauge_messages"
 	t "github.com/manuviswam/gauge-go/testsuit"
-	"time"
 )
 
 func executeHooks(hooks []t.Hook) (int64, error) {

@@ -1,9 +1,10 @@
 package models
 
 import (
+	"testing"
+
 	m "github.com/manuviswam/gauge-go/gauge_messages"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestConvertToProtoTable(t *testing.T) {

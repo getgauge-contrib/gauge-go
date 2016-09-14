@@ -1,10 +1,11 @@
 package messageprocessors
 
 import (
+	"testing"
+
 	m "github.com/manuviswam/gauge-go/gauge_messages"
 	t "github.com/manuviswam/gauge-go/testsuit"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestShouldReturnStepNamesResponseWithSameIdForStepValidateRequest(tst *testing.T) {
@@ -54,4 +55,33 @@ func TestShouldValidateStep(tst *testing.T) {
 	result := p.Process(msg, context)
 
 	assert.True(tst, *result.StepValidateResponse.IsValid)
+	assert.Equal(tst, result.StepValidateResponse.GetErrorMessage(), "")
+}
+
+func TestShouldValidateStepWhenNotFound(tst *testing.T) {
+	stepText := "Step description"
+	requiredStep := "hello"
+	msgId := int64(12345)
+	context := &t.GaugeContext{
+		Steps: []t.Step{t.Step{
+			Description: stepText,
+			Impl:        func(args ...interface{}) {},
+		},
+		},
+	}
+
+	msg := &m.Message{
+		MessageType: m.Message_StepNamesRequest.Enum(),
+		MessageId:   &msgId,
+		StepValidateRequest: &m.StepValidateRequest{
+			StepText: &requiredStep,
+		},
+	}
+
+	p := StepValidateRequestProcessor{}
+
+	result := p.Process(msg, context)
+
+	assert.False(tst, *result.StepValidateResponse.IsValid)
+	assert.Equal(tst, result.StepValidateResponse.GetErrorMessage(), "No implementation found for : "+requiredStep)
 }

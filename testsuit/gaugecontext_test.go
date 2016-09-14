@@ -1,8 +1,9 @@
 package testsuit
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestShouldGetStepsWithDescription(t *testing.T) {
