@@ -1,7 +1,7 @@
 package messageprocessors
 
 import (
-	"time"
+	"fmt"
 
 	m "github.com/manuviswam/gauge-go/gauge_messages"
 	"github.com/manuviswam/gauge-go/models"
@@ -11,31 +11,19 @@ import (
 type ExecuteStepProcessor struct{}
 
 func (r *ExecuteStepProcessor) Process(msg *m.Message, context *t.GaugeContext) *m.Message {
-	var failed bool
-	var executionTime int64
-	var errorMsg string
-
 	step, err := context.GetStepByDesc(*msg.ExecuteStepRequest.ParsedStepText)
 	if err != nil {
-		failed = true
-		executionTime = int64(0)
-		errorMsg = err.Error()
-	} else {
-		args := getArgs(msg.ExecuteStepRequest)
-		start := time.Now()
-		step.Execute(args...) //TODO error handling
-		executionTime = time.Since(start).Nanoseconds()
+		// if step implementation not found
+		fmt.Println(err.Error())
 	}
+	args := getArgs(msg.ExecuteStepRequest)
+	exeRes := step.Execute(args...)
 
 	return &m.Message{
 		MessageType: m.Message_ExecutionStatusResponse.Enum(),
 		MessageId:   msg.MessageId,
 		ExecutionStatusResponse: &m.ExecutionStatusResponse{
-			ExecutionResult: &m.ProtoExecutionResult{
-				Failed:        &failed,
-				ExecutionTime: &executionTime,
-				ErrorMessage:  &errorMsg,
-			},
+			ExecutionResult: exeRes,
 		},
 	}
 }
