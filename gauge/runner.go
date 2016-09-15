@@ -44,7 +44,7 @@ func init() {
 	processors[*m.Message_ScenarioDataStoreInit.Enum()] = &mp.ScenarioDataStoreInitProcessor{}
 }
 
-func BeforeSuite(fn func() error, tags []string, op t.Operator) bool {
+func BeforeSuite(fn func(), tags []string, op t.Operator) bool {
 	hook := t.Hook{
 		Type:     t.BEFORESUITE,
 		Impl:     fn,
@@ -56,7 +56,7 @@ func BeforeSuite(fn func() error, tags []string, op t.Operator) bool {
 	return true
 }
 
-func AfterSuite(fn func() error, tags []string, op t.Operator) bool {
+func AfterSuite(fn func(), tags []string, op t.Operator) bool {
 	hook := t.Hook{
 		Type:     t.AFTERSUITE,
 		Impl:     fn,
@@ -68,7 +68,7 @@ func AfterSuite(fn func() error, tags []string, op t.Operator) bool {
 	return true
 }
 
-func BeforeSpec(fn func() error, tags []string, op t.Operator) bool {
+func BeforeSpec(fn func(), tags []string, op t.Operator) bool {
 	hook := t.Hook{
 		Type:     t.BEFORESPEC,
 		Impl:     fn,
@@ -80,7 +80,7 @@ func BeforeSpec(fn func() error, tags []string, op t.Operator) bool {
 	return true
 }
 
-func AfterSpec(fn func() error, tags []string, op t.Operator) bool {
+func AfterSpec(fn func(), tags []string, op t.Operator) bool {
 	hook := t.Hook{
 		Type:     t.AFTERSPEC,
 		Impl:     fn,
@@ -92,7 +92,7 @@ func AfterSpec(fn func() error, tags []string, op t.Operator) bool {
 	return true
 }
 
-func BeforeScenario(fn func() error, tags []string, op t.Operator) bool {
+func BeforeScenario(fn func(), tags []string, op t.Operator) bool {
 	hook := t.Hook{
 		Type:     t.BEFORESCENARIO,
 		Impl:     fn,
@@ -104,7 +104,7 @@ func BeforeScenario(fn func() error, tags []string, op t.Operator) bool {
 	return true
 }
 
-func AfterScenario(fn func() error, tags []string, op t.Operator) bool {
+func AfterScenario(fn func(), tags []string, op t.Operator) bool {
 	hook := t.Hook{
 		Type:     t.AFTERSCENARIO,
 		Impl:     fn,
@@ -116,7 +116,7 @@ func AfterScenario(fn func() error, tags []string, op t.Operator) bool {
 	return true
 }
 
-func BeforeStep(fn func() error, tags []string, op t.Operator) bool {
+func BeforeStep(fn func(), tags []string, op t.Operator) bool {
 	hook := t.Hook{
 		Type:     t.BEFORESTEP,
 		Impl:     fn,
@@ -128,7 +128,7 @@ func BeforeStep(fn func() error, tags []string, op t.Operator) bool {
 	return true
 }
 
-func AfterStep(fn func() error, tags []string, op t.Operator) bool {
+func AfterStep(fn func(), tags []string, op t.Operator) bool {
 	hook := t.Hook{
 		Type:     t.AFTERSTEP,
 		Impl:     fn,

@@ -34,18 +34,16 @@ func TestExecutesHooksForTheTagsForScenarioEnding(tst *testing.T) {
 		Hooks: []t.Hook{
 			t.Hook{
 				Type: t.AFTERSUITE,
-				Impl: func() error {
+				Impl: func() {
 					called1 = true
-					return nil
 				},
 				Tags:     []string{"foo", "bar"},
 				Operator: t.AND,
 			},
 			t.Hook{
 				Type: t.AFTERSUITE,
-				Impl: func() error {
+				Impl: func() {
 					called2 = true
-					return nil
 				},
 				Tags:     []string{"notfoo", "bar"},
 				Operator: t.OR,
@@ -83,21 +81,19 @@ func TestReportErrorIfHookFailsForScenarioEnding(tst *testing.T) {
 		Hooks: []t.Hook{
 			t.Hook{
 				Type: t.AFTERSUITE,
-				Impl: func() error {
+				Impl: func() {
 					called1 = true
-					return nil
 				},
 				Tags:     []string{"foo", "bar"},
 				Operator: t.AND,
 			},
 			t.Hook{
 				Type: t.AFTERSUITE,
-				Impl: func() error {
+				Impl: func() {
 					called2 = true
 					if 1 == 1 {
 						panic(errors.New("Execution failed"))
 					}
-					return nil
 				},
 				Tags:     []string{"notfoo", "bar"},
 				Operator: t.OR,

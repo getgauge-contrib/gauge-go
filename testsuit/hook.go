@@ -28,7 +28,7 @@ const (
 
 type Hook struct {
 	Type     HookType
-	Impl     func() error // TODO: should have return type as error?
+	Impl     func()
 	Tags     []string
 	Operator Operator
 }
