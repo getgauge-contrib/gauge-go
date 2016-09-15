@@ -188,7 +188,6 @@ func Run() {
 }
 
 func Step(stepDesc string, impl interface{}) bool {
-	fmt.Println("got a step impl " + stepDesc)
 	desc, noOfArgs := parseDesc(stepDesc)
 	implType := reflect.TypeOf(impl)
 

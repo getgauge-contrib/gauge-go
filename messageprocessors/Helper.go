@@ -1,22 +1,25 @@
 package messageprocessors
 
 import (
-	"time"
-
 	m "github.com/manuviswam/gauge-go/gauge_messages"
 	t "github.com/manuviswam/gauge-go/testsuit"
 )
 
-func executeHooks(hooks []t.Hook) (int64, error) {
-	var err error
-	start := time.Now()
+func executeHooks(hooks []t.Hook, msg *m.Message) *m.Message {
+	var res *m.ProtoExecutionResult
+	var totalExecutionTime int64
 	for _, hook := range hooks {
-		err = hook.Impl()
-		if err != nil {
-			break
+		res = hook.Execute()
+		totalExecutionTime += res.GetExecutionTime()
+		if res.GetFailed() {
+			return &m.Message{
+				MessageType:             m.Message_ExecutionStatusResponse.Enum(),
+				MessageId:               msg.MessageId,
+				ExecutionStatusResponse: &m.ExecutionStatusResponse{ExecutionResult: res},
+			}
 		}
 	}
-	return time.Since(start).Nanoseconds(), err
+	return createResponseMessage(msg.MessageId, totalExecutionTime, nil)
 }
 
 func createResponseMessage(msgId *int64, executionTime int64, err error) *m.Message {

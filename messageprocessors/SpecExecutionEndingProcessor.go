@@ -11,6 +11,5 @@ func (r *SpecExecutionEndingProcessor) Process(msg *m.Message, context *t.GaugeC
 	tags := msg.GetSpecExecutionEndingRequest().GetCurrentExecutionInfo().GetCurrentSpec().GetTags()
 	hooks := context.GetHooks(t.AFTERSPEC, tags)
 
-	executionTime, err := executeHooks(hooks)
-	return createResponseMessage(msg.MessageId, executionTime, err)
+	return executeHooks(hooks, msg)
 }

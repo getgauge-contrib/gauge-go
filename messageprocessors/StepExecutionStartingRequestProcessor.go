@@ -11,6 +11,5 @@ func (r *StepExecutionStartingRequestProcessor) Process(msg *m.Message, context 
 	tags := msg.GetStepExecutionStartingRequest().GetCurrentExecutionInfo().GetCurrentSpec().GetTags()
 	hooks := context.GetHooks(t.BEFORESTEP, tags)
 
-	executionTime, err := executeHooks(hooks)
-	return createResponseMessage(msg.MessageId, executionTime, err)
+	return executeHooks(hooks, msg)
 }

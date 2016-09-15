@@ -12,6 +12,5 @@ func (r *ExecutionStartingRequestProcessor) Process(msg *m.Message, context *t.G
 	tags := msg.GetExecutionStartingRequest().GetCurrentExecutionInfo().GetCurrentScenario().GetTags()
 	hooks := context.GetHooks(t.BEFORESUITE, tags)
 
-	executionTime, err := executeHooks(hooks)
-	return createResponseMessage(msg.MessageId, executionTime, err)
+	return executeHooks(hooks, msg)
 }

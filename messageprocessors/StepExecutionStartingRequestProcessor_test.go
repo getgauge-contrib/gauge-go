@@ -95,7 +95,10 @@ func TestReportErrorIfHookFailsForStepExecutionStarting(tst *testing.T) {
 				Type: t.BEFORESTEP,
 				Impl: func() error {
 					called2 = true
-					return errors.New("Execution failed")
+					if 1 == 1 {
+						panic(errors.New("Execution failed"))
+					}
+					return nil
 				},
 				Tags:     []string{"notfoo", "bar"},
 				Operator: t.OR,

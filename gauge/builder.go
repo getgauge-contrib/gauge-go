@@ -38,9 +38,8 @@ func LoadGaugeImpls() error {
 	genGaugeTestFileContents(f, b.String())
 	f.Close()
 	// Scan gauge methods
-	if err := runCommand(buff, buff, constants.CommandGo, "run", gaugeGoMainFile); err != nil {
-		buff.Flush()
-		return fmt.Errorf("Failed to run file %s: %s\n%s", gaugeGoMainFile, err.Error(), b.String())
+	if err := runCommand(os.Stdout, os.Stdout, constants.CommandGo, "run", gaugeGoMainFile); err != nil {
+		return fmt.Errorf("Failed to run file %s: %s\n", gaugeGoMainFile, err.Error())
 	}
 	return nil
 }

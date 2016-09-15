@@ -11,6 +11,5 @@ func (r *ExecutionEndingProcessor) Process(msg *m.Message, context *t.GaugeConte
 	tags := msg.GetExecutionEndingRequest().GetCurrentExecutionInfo().GetCurrentScenario().GetTags()
 	hooks := context.GetHooks(t.AFTERSUITE, tags)
 
-	executionTime, err := executeHooks(hooks)
-	return createResponseMessage(msg.MessageId, executionTime, err)
+	return executeHooks(hooks, msg)
 }
