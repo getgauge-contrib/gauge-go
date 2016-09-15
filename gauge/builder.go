@@ -20,6 +20,12 @@ import (
 func LoadGaugeImpls() error {
 	var b bytes.Buffer
 	buff := bufio.NewWriter(&b)
+
+	if err := runCommand(os.Stdout, os.Stdout, constants.CommandGo, "build", "./..."); err != nil {
+		buff.Flush()
+		return fmt.Errorf("Build failed: %s\n", err.Error())
+	}
+
 	// get list of all packages in the projectRoot
 	if err := runCommand(buff, buff, constants.CommandGo, "list", "./..."); err != nil {
 		buff.Flush()
