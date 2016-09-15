@@ -1,18 +1,28 @@
 # gauge-go
 [![Gauge Badge](https://cdn.rawgit.com/renjithgr/gauge-js/72f332d11f54e16b74aedb875f702643708156f7/Gauge_Badge_1.svg)](http://getgauge.io)
 
-Go language plugin for Thoughtworks Gauge
+Go language plugin for ThoughtWorks Gauge.
 
 [![Build Status](https://travis-ci.org/manuviswam/gauge-go.svg?branch=master)](https://travis-ci.org/manuviswam/gauge-go)
 
-To install plugin
-Checkout the repository
-run the command
+## Build from Source
+* Checkout the repository
+* Run commands:
 ```sh
-go build
+go run build/make.go
+go run build/make.go --install
 ```
-copy gauge-go.exe to <gauge plugin directory>/go/1.0.0/bin/ directory
-copy go.json file to <gauge plugin directory>/go/1.0.0/ directory
+This installs the gauge-go plugin to its default location based on OS.
+
+### Run Unit tests
+
+`go test ./...`
+
+### Generate gauge-go distributables
+
+`go run build/make.go --distro`
+
+This generates the gauge-go plugin as zip distributable. In order to generate it for all platforms, add `--all-platforms` flag in above command.
 
 ## Usage
 
@@ -39,6 +49,8 @@ $ gauge specs/
 Use the `gauge.Step()` method to implement your steps. For example:
 
 ```go
+import "github.com/manuviswam/gauge-go/gauge"
+
 var _ = gauge.Step("Vowels in English language are <vowels>.", func (vowelsGiven string) {
   assert.Equal(vowelsGiven, "aeiou")
 })
@@ -65,7 +77,7 @@ gauge-go supports tagged [execution hooks](http://getgauge.io/documentation/user
 Here's an example of a hook that is executed before each scenario:
 
 ```go
-var _ = BeforeScenario(function () {
+var _ = gauge.BeforeScenario(function () {
   assert.equal(vowels.join(""), "aeiou")
 }, []string{"foo", "bar"}, testsuit.AND)
 ```
@@ -79,7 +91,7 @@ This controls whether the current hook is executed when all of the tags match (i
 
 Step implementations can share custom data across scenarios, specifications and suites using data stores.
 
-There are 3 different types of data stores based on the lifecycle of when it gets cleared.
+There are 3 different types of data stores based on the lifecycle of when it gets cleared. These are present in the `github.com/manuviswam/gauge-go/gauge` package of gauge-go plugin.
 
 #### Scenario store
 
