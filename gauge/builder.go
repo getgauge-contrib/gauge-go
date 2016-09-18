@@ -6,13 +6,13 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 	"text/template"
 
 	"github.com/getgauge/common"
 	"github.com/manuviswam/gauge-go/constants"
+	"github.com/manuviswam/gauge-go/util"
 )
 
 // LoadGaugeImpls builds the go project and runs the generated go file,
@@ -21,13 +21,13 @@ func LoadGaugeImpls() error {
 	var b bytes.Buffer
 	buff := bufio.NewWriter(&b)
 
-	if err := runCommand(os.Stdout, os.Stdout, constants.CommandGo, "build", "./..."); err != nil {
+	if err := util.RunCommand(os.Stdout, os.Stdout, constants.CommandGo, "build", "./..."); err != nil {
 		buff.Flush()
 		return fmt.Errorf("Build failed: %s\n", err.Error())
 	}
 
 	// get list of all packages in the projectRoot
-	if err := runCommand(buff, buff, constants.CommandGo, "list", "./..."); err != nil {
+	if err := util.RunCommand(buff, buff, constants.CommandGo, "list", "./..."); err != nil {
 		buff.Flush()
 		fmt.Printf("Failed to get the list of all packages: %s\n%s", err.Error(), b.String())
 	}
@@ -44,7 +44,7 @@ func LoadGaugeImpls() error {
 	genGaugeTestFileContents(f, b.String())
 	f.Close()
 	// Scan gauge methods
-	if err := runCommand(os.Stdout, os.Stdout, constants.CommandGo, "run", gaugeGoMainFile); err != nil {
+	if err := util.RunCommand(os.Stdout, os.Stdout, constants.CommandGo, "run", gaugeGoMainFile); err != nil {
 		return fmt.Errorf("Failed to run file %s: %s\n", gaugeGoMainFile, err.Error())
 	}
 	return nil
@@ -68,10 +68,3 @@ func main() {
 	gauge.Run()
 }
 `))
-
-func runCommand(stdOut, stdErr io.Writer, command string, arg ...string) error {
-	cmd := exec.Command(command, arg...)
-	cmd.Stdout = stdOut
-	cmd.Stderr = stdErr
-	return cmd.Run()
-}

@@ -33,6 +33,7 @@ If you are new to Gauge, please consult the [Gauge documentation](http://getgaug
 ```sh
 $ gauge --init go
 ```
+Note: Create your project in `GOPATH`.
 
 **Run specs:**
 
