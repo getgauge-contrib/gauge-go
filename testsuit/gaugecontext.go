@@ -6,11 +6,12 @@ import (
 )
 
 type GaugeContext struct {
-	Steps         []Step
-	Hooks         []Hook
-	ScenarioStore map[string]interface{}
-	SpecStore     map[string]interface{}
-	SuiteStore    map[string]interface{}
+	Steps                 []Step
+	Hooks                 []Hook
+	ScenarioStore         map[string]interface{}
+	SpecStore             map[string]interface{}
+	SuiteStore            map[string]interface{}
+	CustomMessageRegistry []string
 }
 
 func (c *GaugeContext) GetStepByDesc(desc string) (*Step, error) {
@@ -39,6 +40,11 @@ func (c *GaugeContext) GetHooks(hookType HookType, tags []string) []Hook {
 		}
 	}
 	return h
+}
+
+// ClearCustomMessages clears the CustomMessageRegistry
+func (c *GaugeContext) ClearCustomMessages() {
+	c.CustomMessageRegistry = make([]string, 0)
 }
 
 func filterByType(hooks []Hook, t HookType) []Hook {

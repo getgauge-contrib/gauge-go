@@ -144,6 +144,16 @@ value := GetSuiteStore()[key]
 
 **Note:** Suite Store is not advised to be used when executing specs in parallel. The values are not retained between parallel streams of execution.
 
+### Custom Messages
+
+Custom messages/data can be added to execution reports using the below API from the step implementations. The API is under the package `github.com/manuviswam/gauge-go/gauge` which should be imported.
+
+These messages will appear under steps in the execution reports.
+
+```go
+gauge.WriteMessage("my custom message")
+gauge.WriteMessage("Say %s to %s %d times", "hello", "Gauge", 10) //prints: Say hello to Gauge 10 times
+```
 
 ## License
 

@@ -126,3 +126,37 @@ func TestReportErrorIfHookFailsForStepExecutionEnding(tst *testing.T) {
 	assert.Equal(tst, *result.ExecutionStatusResponse.ExecutionResult.ErrorMessage, "Execution failed")
 
 }
+
+func TestShouldReturnCustomMessagesInResult(tst *testing.T) {
+	customMessages := []string{"my custom message"}
+	called := false
+	context := &t.GaugeContext{
+		Hooks: []t.Hook{
+			t.Hook{
+				Type: t.AFTERSTEP,
+				Impl: func() {
+					called = true
+				},
+				Operator: t.AND,
+			},
+		},
+		CustomMessageRegistry: customMessages,
+	}
+	msgId := int64(12345)
+	msg := &m.Message{
+		MessageType: m.Message_StepExecutionEnding.Enum(),
+		MessageId:   &msgId,
+		StepExecutionEndingRequest: &m.StepExecutionEndingRequest{
+			CurrentExecutionInfo: &m.ExecutionInfo{
+				CurrentSpec: &m.SpecInfo{},
+			},
+		},
+	}
+
+	p := StepExecutionEndingProcessor{}
+
+	resMsg := p.Process(msg, context)
+
+	assert.True(tst, called)
+	assert.Equal(tst, resMsg.GetExecutionStatusResponse().GetExecutionResult().GetMessage(), customMessages)
+}

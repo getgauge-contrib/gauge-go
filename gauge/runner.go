@@ -20,11 +20,12 @@ var processors mp.ProcessorDictionary
 
 func init() {
 	context = &t.GaugeContext{
-		Steps:         make([]t.Step, 0),
-		Hooks:         make([]t.Hook, 0),
-		SuiteStore:    make(map[string]interface{}),
-		SpecStore:     make(map[string]interface{}),
-		ScenarioStore: make(map[string]interface{}),
+		Steps:                 make([]t.Step, 0),
+		Hooks:                 make([]t.Hook, 0),
+		SuiteStore:            make(map[string]interface{}),
+		SpecStore:             make(map[string]interface{}),
+		ScenarioStore:         make(map[string]interface{}),
+		CustomMessageRegistry: make([]string, 0),
 	}
 
 	processors = mp.ProcessorDictionary{}
@@ -153,8 +154,13 @@ func GetScenarioStore() map[string]interface{} {
 	return context.ScenarioStore
 }
 
+// WriteMessage adds additional information at exec time to be available on reports
+func WriteMessage(message string, args ...interface{}) {
+	context.CustomMessageRegistry = append(context.CustomMessageRegistry, fmt.Sprintf(message, args...))
+}
+
 func Run() {
-	fmt.Println("We have got ", len(context.Steps), " step implementations") // remove
+	fmt.Println("We have got ", len(context.Steps), "step implementations") // remove
 
 	var gaugePort = os.Getenv(c.GaugePortVariable)
 

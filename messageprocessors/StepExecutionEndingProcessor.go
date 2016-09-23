@@ -11,5 +11,9 @@ func (r *StepExecutionEndingProcessor) Process(msg *m.Message, context *t.GaugeC
 	tags := msg.GetStepExecutionEndingRequest().GetCurrentExecutionInfo().GetCurrentSpec().GetTags()
 	hooks := context.GetHooks(t.AFTERSTEP, tags)
 
-	return executeHooks(hooks, msg)
+	res := executeHooks(hooks, msg)
+	res.GetExecutionStatusResponse().GetExecutionResult().Message = context.CustomMessageRegistry
+	context.ClearCustomMessages()
+
+	return res
 }
