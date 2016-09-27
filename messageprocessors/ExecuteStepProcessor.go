@@ -31,7 +31,7 @@ func (r *ExecuteStepProcessor) Process(msg *m.Message, context *t.GaugeContext) 
 func getArgs(r *m.ExecuteStepRequest) []interface{} {
 	var args []interface{}
 	for _, param := range r.GetParameters() {
-		if *param.ParameterType.Enum() == *m.Parameter_Table.Enum() {
+		if *param.ParameterType.Enum() == *m.Parameter_Table.Enum() || *param.ParameterType.Enum() == *m.Parameter_Special_Table.Enum() {
 			args = append(args, models.CreateTableFromProtoTable(param.Table))
 		} else {
 			args = append(args, *param.Value)
