@@ -45,17 +45,24 @@ func LoadGaugeImpls() error {
 	f.Close()
 	// Scan gauge methods
 	if err := util.RunCommand(os.Stdout, os.Stdout, constants.CommandGo, "run", gaugeGoMainFile); err != nil {
-		return fmt.Errorf("Failed to run file %s: %s\n", gaugeGoMainFile, err.Error())
+		return fmt.Errorf("Failed to compile project: %s\n", err.Error())
 	}
 	return nil
 }
 
 func genGaugeTestFileContents(fileWriter io.Writer, importString string) {
-	imports := strings.Fields(importString)
 	type info struct {
 		Imports []string
 	}
-	tplMain.Execute(fileWriter, info{Imports: imports})
+	var validImports []string
+	for _, i := range strings.Fields(importString) {
+		if strings.HasPrefix(i, "_") {
+			validImports = append(validImports, strings.TrimPrefix(i, "_"))
+		} else {
+			validImports = append(validImports, i)
+		}
+	}
+	tplMain.Execute(fileWriter, info{Imports: validImports})
 }
 
 var tplMain = template.Must(template.New("main").Parse(

@@ -28,12 +28,13 @@ This generates the gauge-go plugin as zip distributable. In order to generate it
 
 If you are new to Gauge, please consult the [Gauge documentation](http://getgauge.io/documentation/user/current/) to know about how Gauge works.
 
-**Initialize:** To initialize a project with gauge-go, in an empty directory run:
+**Initialize:**
 
+To initialize a project with gauge-go, in an empty directory run:
 ```sh
 $ gauge --init go
 ```
-Note: Create your project in `GOPATH`.
+*Note: Create your project in `GOPATH`.*
 
 **Run specs:**
 
