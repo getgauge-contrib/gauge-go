@@ -23,6 +23,8 @@ const (
 	screenshotFileName = "screenshot.png"
 )
 
+var CustomScreenShot *func() []byte = nil
+
 // TODO: Use gauge-go result object rather than ProtoExecutionResult
 func executeFunc(fn reflect.Value, args ...interface{}) (res *m.ProtoExecutionResult) {
 	rargs := make([]reflect.Value, len(args))
@@ -48,6 +50,11 @@ func executeFunc(fn reflect.Value, args ...interface{}) (res *m.ProtoExecutionRe
 
 func getScreenshot() []byte {
 	if os.Getenv(constants.ScreenshotOnFailure) == "true" {
+		if *CustomScreenShot != nil {
+			fn := reflect.ValueOf(*CustomScreenShot)
+			screenShotBytes := fn.Call(make([]reflect.Value, 0))
+			return screenShotBytes[0].Interface().([]byte)
+		}
 		tmpDir := common.GetTempDir()
 		defer os.RemoveAll(tmpDir)
 		var b bytes.Buffer

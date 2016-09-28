@@ -155,6 +155,26 @@ gauge.WriteMessage("my custom message")
 gauge.WriteMessage("Say %s to %s %d times", "hello", "Gauge", 10) //prints: Say hello to Gauge 10 times
 ```
 
+### Custom Screenshot
+
+You can specify a custom function to grab a screenshot on step failure. By default, gauge-go takes screenshot of the current screen using the `gauge_screenshot` binary.
+
+This custom function should be set on the `gauge.CustomScreenshotFn` property in test implementation code and it should return a base64 encoded byte array of the image data that gauge-go will use as image content on failure.
+
+```go
+import "github.com/manuviswam/gauge-go/gauge"
+
+func init() {
+	gauge.CustomScreenshotFn = func() []byte {
+		screenshot, err := driver.Screenshot()
+        if err != nil {
+            return nil
+        }
+		return screenshot
+	}
+}
+```
+
 ## License
 
 ![GNU Public License version 3.0](http://www.gnu.org/graphics/gplv3-127x51.png)

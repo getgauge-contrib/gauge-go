@@ -43,6 +43,8 @@ func init() {
 	processors[*m.Message_SpecExecutionEnding.Enum()] = &mp.SpecExecutionEndingProcessor{}
 	processors[*m.Message_SpecDataStoreInit.Enum()] = &mp.SpecDataStoreInitProcessor{}
 	processors[*m.Message_ScenarioDataStoreInit.Enum()] = &mp.ScenarioDataStoreInitProcessor{}
+
+	t.CustomScreenShot = &CustomScreenshotFn
 }
 
 func BeforeSuite(fn func(), tags []string, op t.Operator) bool {
@@ -192,6 +194,10 @@ func Run() {
 		mu.WriteGaugeMessage(msgToSend, conn)
 	}
 }
+
+// CustomScreenshotFn to set custom screenshot
+// Returns a byte array which will be set as screenshot in case of failures
+var CustomScreenshotFn func() []byte = nil
 
 func Step(stepDesc string, impl interface{}) bool {
 	desc, noOfArgs := parseDesc(stepDesc)

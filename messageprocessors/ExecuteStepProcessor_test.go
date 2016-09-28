@@ -4,8 +4,8 @@ import (
 	"testing"
 
 	m "github.com/manuviswam/gauge-go/gauge_messages"
-	t "github.com/manuviswam/gauge-go/testsuit"
 	"github.com/manuviswam/gauge-go/models"
+	t "github.com/manuviswam/gauge-go/testsuit"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -65,7 +65,6 @@ func TestShouldRunReturnExecutionStatusResponseWithSameId(tst *testing.T) {
 	assert.Equal(tst, *result.MessageId, msgId)
 }
 
-
 func TestShouldRunStepWithTableParam(tst *testing.T) {
 	stepText := "Step description <table>"
 	msgId := int64(12345)
@@ -73,7 +72,7 @@ func TestShouldRunStepWithTableParam(tst *testing.T) {
 	context := &t.GaugeContext{
 		Steps: []t.Step{t.Step{
 			Description: stepText,
-			Impl:     func(tbl *models.Table) { called = true },
+			Impl:        func(tbl *models.Table) { called = true },
 		},
 		},
 	}
@@ -97,7 +96,7 @@ func TestShouldRunStepWithTableParam(tst *testing.T) {
 			Parameters: []*m.Parameter{
 				&m.Parameter{
 					ParameterType: m.Parameter_Table.Enum(),
-					Table: p,
+					Table:         p,
 				},
 			},
 		},
@@ -118,11 +117,11 @@ func TestShouldRunStepWithSpecialTableParam(tst *testing.T) {
 	context := &t.GaugeContext{
 		Steps: []t.Step{t.Step{
 			Description: stepText,
-			Impl:     func(tbl *models.Table) {
+			Impl: func(tbl *models.Table) {
 				called = true
 				assert.Equal(tst, tbl.Rows[0].Cells[0], columns[0])
 				assert.Equal(tst, tbl.Rows[0].Cells[1], columns[1])
-			 },
+			},
 		},
 		},
 	}
@@ -145,7 +144,7 @@ func TestShouldRunStepWithSpecialTableParam(tst *testing.T) {
 			Parameters: []*m.Parameter{
 				&m.Parameter{
 					ParameterType: m.Parameter_Special_Table.Enum(),
-					Table: p,
+					Table:         p,
 				},
 			},
 		},
