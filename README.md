@@ -1,11 +1,15 @@
 # gauge-go
 [![Gauge Badge](https://cdn.rawgit.com/renjithgr/gauge-js/72f332d11f54e16b74aedb875f702643708156f7/Gauge_Badge_1.svg)](http://getgauge.io)
 
-Go language plugin for ThoughtWorks Gauge.
+Go language plugin for ThoughtWorks [Gauge](http://getgauge.io).
 
 [![Build Status](https://travis-ci.org/manuviswam/gauge-go.svg?branch=master)](https://travis-ci.org/manuviswam/gauge-go)
 
-## Build from Source
+## Installation
+* Install [Gauge](http://getgauge.io). Follow instructions [here](http://getgauge.io/get-started/).
+* Install Gauge-go language plugin as: `gauge --install go`
+
+### Build from Source
 * Checkout the repository
 * Run commands:
 ```sh
@@ -14,15 +18,18 @@ go run build/make.go --install
 ```
 This installs the gauge-go plugin to its default location based on OS.
 
-### Run Unit tests
+#### Run Unit tests
 
 `go test ./...`
 
-### Generate gauge-go distributables
+#### Generate gauge-go distributables
 
 `go run build/make.go --distro`
 
 This generates the gauge-go plugin as zip distributable. In order to generate it for all platforms, add `--all-platforms` flag in above command.
+
+#### Example project
+A sample project illustrating Gauge features using Golang & selenium webdriver can be found [here](https://github.com/getgauge-contrib/gauge-example-go).
 
 ## Usage
 
