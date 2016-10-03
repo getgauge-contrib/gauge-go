@@ -58,12 +58,20 @@ $ gauge specs/
 Use the `gauge.Step()` method to implement your steps. For example:
 
 ```go
-import "github.com/manuviswam/gauge-go/gauge"
+import (
+    "github.com/manuviswam/gauge-go/gauge"
+	. "github.com/manuviswam/gauge-go/testsuit"
+)    
 
 var _ = gauge.Step("Vowels in English language are <vowels>.", func (vowelsGiven string) {
-  assert.Equal(vowelsGiven, "aeiou")
+    if vowelsGiven != "aeiou" {
+        T.Fail(fmt.Errorf("want: %s, got: %s", "aeiou", vowelsGiven))
+    }
 })
 ```
+You can use `T.Fail` or `T.Errorf` functions to mark a step as failure, which are under package `github.com/manuviswam/gauge-go/testsuit`. You can also use any assertion libraries like [testify](https://github.com/stretchr/testify), by passing `testsuit.T` as argument to assertions.
+
+E.g: `assert.Equal(testsuit.T, actualCount, expectedCount, "got: %d, want: %d", actualCount, expectedCount)`
 
 ### Execution Hooks
 
