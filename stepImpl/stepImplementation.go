@@ -1,11 +1,12 @@
 package stepImpl
 
 import (
+	"fmt"
 	"strconv"
-	"testing"
 
 	"github.com/manuviswam/gauge-go/gauge"
 	m "github.com/manuviswam/gauge-go/models"
+	. "github.com/manuviswam/gauge-go/testsuit"
 )
 
 var vowels map[rune]bool
@@ -18,29 +19,27 @@ var _ = gauge.Step("Vowels in English language are <vowels>.", func(vowelString 
 })
 
 var _ = gauge.Step("Almost all words have vowels <table>", func(tbl *m.Table) {
-	var t *testing.T
 	for _, row := range tbl.Rows {
 		word := row.Cells[0]
 		expectedCount, err := strconv.Atoi(row.Cells[1])
 		if err != nil {
-			t.Errorf("Failed to parse string %s to integer", row.Cells[1])
+			T.Fail(fmt.Errorf("Failed to parse string %s to integer", row.Cells[1]))
 		}
 		actualCount := countVowels(word)
 		if actualCount != expectedCount {
-			t.Errorf("got: %d, want: %d", actualCount, expectedCount)
+			T.Fail(fmt.Errorf("Vowel count in word %s - got: %d, want: %d", word, actualCount, expectedCount))
 		}
 	}
 })
 
 var _ = gauge.Step("The word <word> has <expectedCount> vowels.", func(word string, expected string) {
-	var t *testing.T
 	actualCount := countVowels(word)
 	expectedCount, err := strconv.Atoi(expected)
 	if err != nil {
-		t.Errorf("Failed to parse string %s to integer", expected)
+		T.Fail(fmt.Errorf("Failed to parse string %s to integer", expected))
 	}
 	if actualCount != expectedCount {
-		t.Errorf("got: %d, want: %d", actualCount, expectedCount)
+		T.Fail(fmt.Errorf("got: %d, want: %d", actualCount, expectedCount))
 	}
 })
 
