@@ -3,9 +3,9 @@ package messageprocessors
 import (
 	"fmt"
 
-	m "github.com/manuviswam/gauge-go/gauge_messages"
-	"github.com/manuviswam/gauge-go/models"
-	t "github.com/manuviswam/gauge-go/testsuit"
+	m "github.com/getgauge-contrib/gauge-go/gauge_messages"
+	"github.com/getgauge-contrib/gauge-go/models"
+	t "github.com/getgauge-contrib/gauge-go/testsuit"
 )
 
 type ExecuteStepProcessor struct{}

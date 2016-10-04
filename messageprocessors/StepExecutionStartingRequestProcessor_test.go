@@ -4,8 +4,8 @@ import (
 	"errors"
 	"testing"
 
-	m "github.com/manuviswam/gauge-go/gauge_messages"
-	t "github.com/manuviswam/gauge-go/testsuit"
+	m "github.com/getgauge-contrib/gauge-go/gauge_messages"
+	t "github.com/getgauge-contrib/gauge-go/testsuit"
 	"github.com/stretchr/testify/assert"
 )
 

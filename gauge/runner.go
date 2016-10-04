@@ -8,11 +8,11 @@ import (
 
 	"regexp"
 
-	c "github.com/manuviswam/gauge-go/constants"
-	m "github.com/manuviswam/gauge-go/gauge_messages"
-	mp "github.com/manuviswam/gauge-go/messageprocessors"
-	mu "github.com/manuviswam/gauge-go/messageutil"
-	t "github.com/manuviswam/gauge-go/testsuit"
+	c "github.com/getgauge-contrib/gauge-go/constants"
+	m "github.com/getgauge-contrib/gauge-go/gauge_messages"
+	mp "github.com/getgauge-contrib/gauge-go/messageprocessors"
+	mu "github.com/getgauge-contrib/gauge-go/messageutil"
+	t "github.com/getgauge-contrib/gauge-go/testsuit"
 )
 
 var context *t.GaugeContext

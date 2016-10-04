@@ -10,9 +10,9 @@ import (
 	"strings"
 	"text/template"
 
+	"github.com/getgauge-contrib/gauge-go/constants"
+	"github.com/getgauge-contrib/gauge-go/util"
 	"github.com/getgauge/common"
-	"github.com/manuviswam/gauge-go/constants"
-	"github.com/manuviswam/gauge-go/util"
 )
 
 // LoadGaugeImpls builds the go project and runs the generated go file,
@@ -68,7 +68,7 @@ func genGaugeTestFileContents(fileWriter io.Writer, importString string) {
 var tplMain = template.Must(template.New("main").Parse(
 	`package main
 import (
-	"github.com/manuviswam/gauge-go/gauge"
+	"github.com/getgauge-contrib/gauge-go/gauge"
 {{range $n, $i := .Imports}}	_ "{{$i}}"
 {{end}})
 func main() {

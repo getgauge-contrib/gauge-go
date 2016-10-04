@@ -6,7 +6,7 @@ const InitTestTemplate = `
 package specimpl
 
 import (
-	. "github.com/manuviswam/gauge-go/runner"
+	. "github.com/getgauge-contrib/gauge-go/runner"
 	"testing"
 )
 

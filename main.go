@@ -6,9 +6,9 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/getgauge-contrib/gauge-go/constants"
+	"github.com/getgauge-contrib/gauge-go/gauge"
 	"github.com/getgauge/common"
-	"github.com/manuviswam/gauge-go/constants"
-	"github.com/manuviswam/gauge-go/gauge"
 )
 
 var pluginDir = ""

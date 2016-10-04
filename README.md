@@ -1,9 +1,14 @@
 # gauge-go
-[![Gauge Badge](https://cdn.rawgit.com/renjithgr/gauge-js/72f332d11f54e16b74aedb875f702643708156f7/Gauge_Badge_1.svg)](http://getgauge.io)
+[![Gauge Badge](http://getgauge.io/Gauge_Badge.svg)](http://getgauge.io)
 
 Go language plugin for ThoughtWorks [Gauge](http://getgauge.io).
 
-[![Build Status](https://travis-ci.org/manuviswam/gauge-go.svg?branch=master)](https://travis-ci.org/manuviswam/gauge-go)
+[![Build Status](https://travis-ci.org/getgauge-contrib/gauge-go.svg?branch=master)](https://travis-ci.org/getgauge-contrib/gauge-go)
+
+## Getting started in 3 steps
+* Install [Gauge](http://getgauge.io) by following instructions [here](http://getgauge.io/get-started/) and gauge go plugin as `gauge --install go`
+* Initialize a golang gauge project as: `gauge --init go`
+* Run specs: `gauge specs`.
 
 ## Installation
 * Install [Gauge](http://getgauge.io). Follow instructions [here](http://getgauge.io/get-started/).
@@ -33,7 +38,7 @@ A sample project illustrating Gauge features using Golang & selenium webdriver c
 
 ## Usage
 
-If you are new to Gauge, please consult the [Gauge documentation](http://getgauge.io/documentation/user/current/) to know about how Gauge works.
+If you are new to Gauge, please read the [Gauge documentation](http://getgauge.io/documentation/user/current/) to know about how Gauge works.
 
 **Initialize:**
 
@@ -59,8 +64,8 @@ Use the `gauge.Step()` method to implement your steps. For example:
 
 ```go
 import (
-    "github.com/manuviswam/gauge-go/gauge"
-	. "github.com/manuviswam/gauge-go/testsuit"
+    "github.com/getgauge-contrib/gauge-go/gauge"
+	. "github.com/getgauge-contrib/gauge-go/testsuit"
 )    
 
 var _ = gauge.Step("Vowels in English language are <vowels>.", func (vowelsGiven string) {
@@ -69,7 +74,7 @@ var _ = gauge.Step("Vowels in English language are <vowels>.", func (vowelsGiven
     }
 })
 ```
-You can use `T.Fail` or `T.Errorf` functions to mark a step as failure, which are under package `github.com/manuviswam/gauge-go/testsuit`. You can also use any assertion libraries like [testify](https://github.com/stretchr/testify), by passing `testsuit.T` as argument to assertions.
+You can use `T.Fail` or `T.Errorf` functions to mark a step as failure, which are under package `github.com/getgauge-contrib/gauge-go/testsuit`. You can also use any assertion libraries like [testify](https://github.com/stretchr/testify), by passing `testsuit.T` as argument to assertions.
 
 E.g: `assert.Equal(testsuit.T, actualCount, expectedCount, "got: %d, want: %d", actualCount, expectedCount)`
 
@@ -108,7 +113,7 @@ This controls whether the current hook is executed when all of the tags match (i
 
 Step implementations can share custom data across scenarios, specifications and suites using data stores.
 
-There are 3 different types of data stores based on the lifecycle of when it gets cleared. These are present in the `github.com/manuviswam/gauge-go/gauge` package of gauge-go plugin.
+There are 3 different types of data stores based on the lifecycle of when it gets cleared. These are present in the `github.com/getgauge-contrib/gauge-go/gauge` package of gauge-go plugin.
 
 #### Scenario store
 
@@ -162,7 +167,7 @@ value := GetSuiteStore()[key]
 
 ### Custom Messages
 
-Custom messages/data can be added to execution reports using the below API from the step implementations. The API is under the package `github.com/manuviswam/gauge-go/gauge` which should be imported.
+Custom messages/data can be added to execution reports using the below API from the step implementations. The API is under the package `github.com/getgauge-contrib/gauge-go/gauge` which should be imported.
 
 These messages will appear under steps in the execution reports.
 
@@ -178,7 +183,7 @@ You can specify a custom function to grab a screenshot on step failure. By defau
 This custom function should be set on the `gauge.CustomScreenshotFn` property in test implementation code and it should return a base64 encoded byte array of the image data that gauge-go will use as image content on failure.
 
 ```go
-import "github.com/manuviswam/gauge-go/gauge"
+import "github.com/getgauge-contrib/gauge-go/gauge"
 
 func init() {
 	gauge.CustomScreenshotFn = func() []byte {

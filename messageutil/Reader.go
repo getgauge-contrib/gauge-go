@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"net"
 
+	c "github.com/getgauge-contrib/gauge-go/constants"
+	m "github.com/getgauge-contrib/gauge-go/gauge_messages"
 	"github.com/golang/protobuf/proto"
-	c "github.com/manuviswam/gauge-go/constants"
-	m "github.com/manuviswam/gauge-go/gauge_messages"
 )
 
 func ReadMessage(conn net.Conn) (*m.Message, error) {

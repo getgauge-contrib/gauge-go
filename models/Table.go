@@ -1,7 +1,7 @@
 package models
 
 import (
-	m "github.com/manuviswam/gauge-go/gauge_messages"
+	m "github.com/getgauge-contrib/gauge-go/gauge_messages"
 )
 
 type Table struct {

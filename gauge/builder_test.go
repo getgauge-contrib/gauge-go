@@ -19,7 +19,7 @@ github.com/apoorvam/foo/stepImpl/impl`
 
 	expected := `package main
 import (
-	"github.com/manuviswam/gauge-go/gauge"
+	"github.com/getgauge-contrib/gauge-go/gauge"
 	_ "github.com/apoorvam/foo/stepImpl"
 	_ "github.com/apoorvam/foo/stepImpl/impl"
 )

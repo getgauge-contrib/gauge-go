@@ -1,8 +1,8 @@
 package messageprocessors
 
 import (
-	m "github.com/manuviswam/gauge-go/gauge_messages"
-	t "github.com/manuviswam/gauge-go/testsuit"
+	m "github.com/getgauge-contrib/gauge-go/gauge_messages"
+	t "github.com/getgauge-contrib/gauge-go/testsuit"
 )
 
 type StepExecutionEndingProcessor struct{}

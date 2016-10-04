@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/manuviswam/gauge-go/gauge"
-	m "github.com/manuviswam/gauge-go/models"
-	. "github.com/manuviswam/gauge-go/testsuit"
+	"github.com/getgauge-contrib/gauge-go/gauge"
+	m "github.com/getgauge-contrib/gauge-go/models"
+	. "github.com/getgauge-contrib/gauge-go/testsuit"
 )
 
 var vowels map[rune]bool

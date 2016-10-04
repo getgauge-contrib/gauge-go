@@ -1,5 +1,5 @@
 {
-	"ImportPath": "github.com/manuviswam/gauge-go",
+	"ImportPath": "github.com/getgauge-contrib/gauge-go",
 	"GoVersion": "go1.6",
 	"Deps": [
 		{

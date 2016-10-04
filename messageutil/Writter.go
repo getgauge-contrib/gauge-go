@@ -3,9 +3,9 @@ package messageutil
 import (
 	"net"
 
+	"github.com/getgauge-contrib/gauge-go/gauge_messages"
 	"github.com/getgauge/common"
 	"github.com/golang/protobuf/proto"
-	"github.com/manuviswam/gauge-go/gauge_messages"
 )
 
 func Write(conn net.Conn, messageBytes []byte) error {

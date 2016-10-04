@@ -12,11 +12,11 @@ import (
 	"strings"
 	"time"
 
+	"github.com/getgauge-contrib/gauge-go/constants"
+	m "github.com/getgauge-contrib/gauge-go/gauge_messages"
+	"github.com/getgauge-contrib/gauge-go/util"
 	"github.com/getgauge/common"
 	"github.com/golang/protobuf/proto"
-	"github.com/manuviswam/gauge-go/constants"
-	m "github.com/manuviswam/gauge-go/gauge_messages"
-	"github.com/manuviswam/gauge-go/util"
 )
 
 const (
