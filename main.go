@@ -40,7 +40,6 @@ func startGo() {
 
 func initGo() {
 	stepImplDir := filepath.Join(projectRoot, constants.DefaultStepImplDir)
-	showMessage("create", stepImplDir)
 	createDirectory(stepImplDir)
 	stepImplFile := filepath.Join(stepImplDir, constants.DefaultStepImplFileName)
 	showMessage("create", stepImplFile)
