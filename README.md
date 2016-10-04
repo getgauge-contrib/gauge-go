@@ -3,7 +3,7 @@
 
 Go language plugin for ThoughtWorks [Gauge](http://getgauge.io).
 
-[![Build Status](https://travis-ci.org/getgauge-contrib/gauge-go.svg?branch=master)](https://travis-ci.org/getgauge-contrib/gauge-go)
+[![Build Status](https://snap-ci.com/getgauge-contrib/gauge-go/branch/master/build_image)](https://snap-ci.com/getgauge-contrib/gauge-go/branch/master)
 
 ## Getting started in 3 steps
 * Install [Gauge](http://getgauge.io) by following instructions [here](http://getgauge.io/get-started/) and gauge go plugin as `gauge --install go`
