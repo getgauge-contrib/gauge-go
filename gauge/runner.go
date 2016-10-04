@@ -189,11 +189,11 @@ func WriteMessage(message string, args ...interface{}) {
 
 // Run opens a port for listening to gauge. For internal use only.
 func Run() {
-	fmt.Printf("We have got %d step implementations\n", len(context.Steps)) // remove
+	// fmt.Printf("We have got %d step implementations\n", len(context.Steps)) // move to logger
 
 	var gaugePort = os.Getenv(c.GaugePortVariable)
 
-	fmt.Println("Connecting port:", gaugePort) // remove
+	// fmt.Println("Connecting port:", gaugePort) // move to logger
 	conn, err := net.Dial("tcp", net.JoinHostPort("127.0.0.1", gaugePort))
 	defer conn.Close()
 	if err != nil {

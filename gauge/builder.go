@@ -45,7 +45,7 @@ func LoadGaugeImpls() error {
 	f.Close()
 	// Scan gauge methods
 	if err := util.RunCommand(os.Stdout, os.Stdout, constants.CommandGo, "run", gaugeGoMainFile); err != nil {
-		return fmt.Errorf("Failed to compile project: %s\nPlease ensure the project is in GOPATH.", err.Error())
+		return fmt.Errorf("Failed to compile project: %s\nPlease ensure the project is in GOPATH.\n", err.Error())
 	}
 	return nil
 }
