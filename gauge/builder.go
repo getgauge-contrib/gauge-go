@@ -21,11 +21,6 @@ func LoadGaugeImpls() error {
 	var b bytes.Buffer
 	buff := bufio.NewWriter(&b)
 
-	if err := util.RunCommand(os.Stdout, os.Stdout, constants.CommandGo, "get", "./..."); err != nil {
-		buff.Flush()
-		return fmt.Errorf("Failed to get dependencies: %s\n", err.Error())
-	}
-
 	if err := util.RunCommand(os.Stdout, os.Stdout, constants.CommandGo, "build", "./..."); err != nil {
 		buff.Flush()
 		return fmt.Errorf("Build failed: %s\n", err.Error())

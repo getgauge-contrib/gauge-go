@@ -1,6 +1,6 @@
 {
     "id" : "go",
-	"version" : "0.0.1",
+	"version" : "0.0.2",
     "description": "Go support for gauge",
 	"run": {
 		"windows": ["bin/gauge-go", "--start"],
@@ -16,5 +16,10 @@
     "gaugeVersionSupport": {
       "minimum": "0.3.0",
       "maximum": ""
+    },
+    "postInstall": {
+        "windows": ["go", "get", "github.com/getgauge-contrib/gauge-go"],
+        "linux": ["go", "get", "github.com/getgauge-contrib/gauge-go"],
+        "darwin": ["go", "get", "github.com/getgauge-contrib/gauge-go"]
     }
 }
