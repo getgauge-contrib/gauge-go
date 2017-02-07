@@ -66,6 +66,12 @@ func setPluginAndProjectRoots() {
 		fmt.Printf("Could not find %s env. Go Runner exiting...", common.GaugeProjectRootEnv)
 		os.Exit(1)
 	}
+
+	goSrcPath := filepath.Join(os.Getenv("GOPATH"), "src")
+	if !filepath.HasPrefix(projectRoot, goSrcPath) {
+		fmt.Printf("Project folder must be a subfolder in GOPATH/src folder\n")
+		os.Exit(1)
+	}
 }
 
 func createDirectory(dirPath string) {
