@@ -16,16 +16,16 @@ func TestShouldReturnExecutionStatusResponseWithSameIdForStepExecutionStarting(t
 	}
 
 	msg := &m.Message{
-		MessageType: m.Message_StepExecutionStarting.Enum(),
-		MessageId:   &msgId,
+		MessageType: m.Message_StepExecutionStarting,
+		MessageId:   msgId,
 	}
 
 	p := StepExecutionStartingRequestProcessor{}
 
 	result := p.Process(msg, context)
 
-	assert.Equal(tst, result.MessageType, m.Message_ExecutionStatusResponse.Enum())
-	assert.Equal(tst, *result.MessageId, msgId)
+	assert.Equal(tst, result.MessageType, m.Message_ExecutionStatusResponse)
+	assert.Equal(tst, result.MessageId, msgId)
 }
 
 func TestExecutesHooksForTheTagsForStepExecutionStarting(tst *testing.T) {
@@ -53,8 +53,8 @@ func TestExecutesHooksForTheTagsForStepExecutionStarting(tst *testing.T) {
 	}
 	msgId := int64(12345)
 	msg := &m.Message{
-		MessageType: m.Message_StepExecutionStarting.Enum(),
-		MessageId:   &msgId,
+		MessageType: m.Message_StepExecutionStarting,
+		MessageId:   msgId,
 		StepExecutionStartingRequest: &m.StepExecutionStartingRequest{
 			CurrentExecutionInfo: &m.ExecutionInfo{
 				CurrentSpec: &m.SpecInfo{
@@ -68,8 +68,8 @@ func TestExecutesHooksForTheTagsForStepExecutionStarting(tst *testing.T) {
 
 	result := p.Process(msg, context)
 
-	assert.Equal(tst, result.MessageType, m.Message_ExecutionStatusResponse.Enum())
-	assert.Equal(tst, *result.MessageId, msgId)
+	assert.Equal(tst, result.MessageType, m.Message_ExecutionStatusResponse)
+	assert.Equal(tst, result.MessageId, msgId)
 	assert.True(tst, called1)
 	assert.True(tst, called2)
 
@@ -103,8 +103,8 @@ func TestReportErrorIfHookFailsForStepExecutionStarting(tst *testing.T) {
 	}
 	msgId := int64(12345)
 	msg := &m.Message{
-		MessageType: m.Message_StepExecutionStarting.Enum(),
-		MessageId:   &msgId,
+		MessageType: m.Message_StepExecutionStarting,
+		MessageId:   msgId,
 		StepExecutionStartingRequest: &m.StepExecutionStartingRequest{
 			CurrentExecutionInfo: &m.ExecutionInfo{
 				CurrentSpec: &m.SpecInfo{
@@ -120,9 +120,9 @@ func TestReportErrorIfHookFailsForStepExecutionStarting(tst *testing.T) {
 
 	assert.True(tst, called1)
 	assert.True(tst, called2)
-	assert.Equal(tst, result.MessageType, m.Message_ExecutionStatusResponse.Enum())
-	assert.Equal(tst, *result.MessageId, msgId)
-	assert.True(tst, *result.ExecutionStatusResponse.ExecutionResult.Failed)
-	assert.Equal(tst, *result.ExecutionStatusResponse.ExecutionResult.ErrorMessage, "Execution failed")
+	assert.Equal(tst, result.MessageType, m.Message_ExecutionStatusResponse)
+	assert.Equal(tst, result.MessageId, msgId)
+	assert.True(tst, result.ExecutionStatusResponse.ExecutionResult.Failed)
+	assert.Equal(tst, result.ExecutionStatusResponse.ExecutionResult.ErrorMessage, "Execution failed")
 
 }

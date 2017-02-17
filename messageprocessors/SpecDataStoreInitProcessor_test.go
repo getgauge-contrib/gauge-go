@@ -15,16 +15,16 @@ func TestShouldReturnExecutionStatusResponseWithSameIdForSpecDataStoreInit(tst *
 	}
 
 	msg := &m.Message{
-		MessageType: m.Message_SpecDataStoreInit.Enum(),
-		MessageId:   &msgId,
+		MessageType: m.Message_SpecDataStoreInit,
+		MessageId:   msgId,
 	}
 
 	p := SpecDataStoreInitProcessor{}
 
 	result := p.Process(msg, context)
 
-	assert.Equal(tst, result.MessageType, m.Message_ExecutionStatusResponse.Enum())
-	assert.Equal(tst, *result.MessageId, msgId)
+	assert.Equal(tst, result.MessageType, m.Message_ExecutionStatusResponse)
+	assert.Equal(tst, result.MessageId, msgId)
 }
 
 func TestShouldResetSpecDataStore(tst *testing.T) {
@@ -33,8 +33,8 @@ func TestShouldResetSpecDataStore(tst *testing.T) {
 		SpecStore: make(map[string]interface{}),
 	}
 	msg := &m.Message{
-		MessageType: m.Message_ScenarioDataStoreInit.Enum(),
-		MessageId:   &msgId,
+		MessageType: m.Message_ScenarioDataStoreInit,
+		MessageId:   msgId,
 	}
 
 	context.SpecStore["foo"] = "bar"
@@ -43,7 +43,7 @@ func TestShouldResetSpecDataStore(tst *testing.T) {
 
 	result := p.Process(msg, context)
 
-	assert.Equal(tst, result.MessageType, m.Message_ExecutionStatusResponse.Enum())
-	assert.Equal(tst, *result.MessageId, msgId)
+	assert.Equal(tst, result.MessageType, m.Message_ExecutionStatusResponse)
+	assert.Equal(tst, result.MessageId, msgId)
 	assert.Nil(tst, context.SpecStore["foo"])
 }

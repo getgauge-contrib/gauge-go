@@ -15,16 +15,16 @@ func TestShouldReturnStepNamesResponseWithSameIdForStepnamesRequest(tst *testing
 	}
 
 	msg := &m.Message{
-		MessageType: m.Message_StepNamesRequest.Enum(),
-		MessageId:   &msgId,
+		MessageType: m.Message_StepNamesRequest,
+		MessageId:   msgId,
 	}
 
 	p := StepNamesRequestProcessor{}
 
 	result := p.Process(msg, context)
 
-	assert.Equal(tst, result.MessageType, m.Message_StepNamesResponse.Enum())
-	assert.Equal(tst, *result.MessageId, msgId)
+	assert.Equal(tst, result.MessageType, m.Message_StepNamesResponse)
+	assert.Equal(tst, result.MessageId, msgId)
 }
 
 func TestShouldReturnAllStepNames(tst *testing.T) {
@@ -39,8 +39,8 @@ func TestShouldReturnAllStepNames(tst *testing.T) {
 	}
 
 	msg := &m.Message{
-		MessageType: m.Message_StepNamesRequest.Enum(),
-		MessageId:   &msgId,
+		MessageType: m.Message_StepNamesRequest,
+		MessageId:   msgId,
 	}
 
 	p := StepNamesRequestProcessor{}

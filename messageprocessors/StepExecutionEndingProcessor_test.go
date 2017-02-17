@@ -16,16 +16,16 @@ func TestShouldReturnExecutionStatusResponseWithSameIdForStepExecutionEnding(tst
 	}
 
 	msg := &m.Message{
-		MessageType: m.Message_StepExecutionEnding.Enum(),
-		MessageId:   &msgId,
+		MessageType: m.Message_StepExecutionEnding,
+		MessageId:   msgId,
 	}
 
 	p := StepExecutionEndingProcessor{}
 
 	result := p.Process(msg, context)
 
-	assert.Equal(tst, result.MessageType, m.Message_ExecutionStatusResponse.Enum())
-	assert.Equal(tst, *result.MessageId, msgId)
+	assert.Equal(tst, result.MessageType, m.Message_ExecutionStatusResponse)
+	assert.Equal(tst, result.MessageId, msgId)
 }
 
 func TestExecutesHooksForTheTagsForStepExecutionEnding(tst *testing.T) {
@@ -53,8 +53,8 @@ func TestExecutesHooksForTheTagsForStepExecutionEnding(tst *testing.T) {
 	}
 	msgId := int64(12345)
 	msg := &m.Message{
-		MessageType: m.Message_StepExecutionEnding.Enum(),
-		MessageId:   &msgId,
+		MessageType: m.Message_StepExecutionEnding,
+		MessageId:   msgId,
 		StepExecutionEndingRequest: &m.StepExecutionEndingRequest{
 			CurrentExecutionInfo: &m.ExecutionInfo{
 				CurrentSpec: &m.SpecInfo{
@@ -68,8 +68,8 @@ func TestExecutesHooksForTheTagsForStepExecutionEnding(tst *testing.T) {
 
 	result := p.Process(msg, context)
 
-	assert.Equal(tst, result.MessageType, m.Message_ExecutionStatusResponse.Enum())
-	assert.Equal(tst, *result.MessageId, msgId)
+	assert.Equal(tst, result.MessageType, m.Message_ExecutionStatusResponse)
+	assert.Equal(tst, result.MessageId, msgId)
 	assert.True(tst, called1)
 	assert.True(tst, called2)
 
@@ -103,8 +103,8 @@ func TestReportErrorIfHookFailsForStepExecutionEnding(tst *testing.T) {
 	}
 	msgId := int64(12345)
 	msg := &m.Message{
-		MessageType: m.Message_StepExecutionEnding.Enum(),
-		MessageId:   &msgId,
+		MessageType: m.Message_StepExecutionEnding,
+		MessageId:   msgId,
 		StepExecutionEndingRequest: &m.StepExecutionEndingRequest{
 			CurrentExecutionInfo: &m.ExecutionInfo{
 				CurrentSpec: &m.SpecInfo{
@@ -120,10 +120,10 @@ func TestReportErrorIfHookFailsForStepExecutionEnding(tst *testing.T) {
 
 	assert.True(tst, called1)
 	assert.True(tst, called2)
-	assert.Equal(tst, result.MessageType, m.Message_ExecutionStatusResponse.Enum())
-	assert.Equal(tst, *result.MessageId, msgId)
-	assert.True(tst, *result.ExecutionStatusResponse.ExecutionResult.Failed)
-	assert.Equal(tst, *result.ExecutionStatusResponse.ExecutionResult.ErrorMessage, "Execution failed")
+	assert.Equal(tst, result.MessageType, m.Message_ExecutionStatusResponse)
+	assert.Equal(tst, result.MessageId, msgId)
+	assert.True(tst, result.ExecutionStatusResponse.ExecutionResult.Failed)
+	assert.Equal(tst, result.ExecutionStatusResponse.ExecutionResult.ErrorMessage, "Execution failed")
 
 }
 
@@ -144,8 +144,8 @@ func TestShouldReturnCustomMessagesInResult(tst *testing.T) {
 	}
 	msgId := int64(12345)
 	msg := &m.Message{
-		MessageType: m.Message_StepExecutionEnding.Enum(),
-		MessageId:   &msgId,
+		MessageType: m.Message_StepExecutionEnding,
+		MessageId:   msgId,
 		StepExecutionEndingRequest: &m.StepExecutionEndingRequest{
 			CurrentExecutionInfo: &m.ExecutionInfo{
 				CurrentSpec: &m.SpecInfo{},

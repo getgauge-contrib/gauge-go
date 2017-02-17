@@ -16,7 +16,6 @@ import (
 	m "github.com/getgauge-contrib/gauge-go/gauge_messages"
 	"github.com/getgauge-contrib/gauge-go/util"
 	"github.com/getgauge/common"
-	"github.com/golang/protobuf/proto"
 )
 
 const (
@@ -37,22 +36,22 @@ func executeFunc(fn reflect.Value, args ...interface{}) (res *m.ProtoExecutionRe
 	defer func() {
 		if r := recover(); r != nil {
 			res.ScreenShot = getScreenshot()
-			res.Failed = proto.Bool(true)
-			res.ExecutionTime = proto.Int64(time.Since(start).Nanoseconds())
-			res.StackTrace = proto.String(strings.SplitN(string(debug.Stack()), "\n", 9)[8])
-			res.ErrorMessage = proto.String(fmt.Sprintf("%s", r))
+			res.Failed = true
+			res.ExecutionTime = time.Since(start).Nanoseconds()
+			res.StackTrace = strings.SplitN(string(debug.Stack()), "\n", 9)[8]
+			res.ErrorMessage = fmt.Sprintf("%s", r)
 		}
 		T = &testingT{}
 	}()
 	fn.Call(rargs)
-	res.Failed = proto.Bool(false)
+	res.Failed = false
 	if len(T.errors) != 0 {
 		res.ScreenShot = getScreenshot()
-		res.Failed = proto.Bool(true)
-		res.StackTrace = proto.String(T.getStacktraces())
-		res.ErrorMessage = proto.String(T.getErrors())
+		res.Failed = true
+		res.StackTrace = T.getStacktraces()
+		res.ErrorMessage = T.getErrors()
 	}
-	res.ExecutionTime = proto.Int64(time.Since(start).Nanoseconds())
+	res.ExecutionTime = time.Since(start).Nanoseconds()
 	return res
 }
 

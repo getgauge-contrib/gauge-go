@@ -13,7 +13,7 @@ func executeHooks(hooks []t.Hook, msg *m.Message) *m.Message {
 		totalExecutionTime += res.GetExecutionTime()
 		if res.GetFailed() {
 			return &m.Message{
-				MessageType:             m.Message_ExecutionStatusResponse.Enum(),
+				MessageType:             m.Message_ExecutionStatusResponse,
 				MessageId:               msg.MessageId,
 				ExecutionStatusResponse: &m.ExecutionStatusResponse{ExecutionResult: res},
 			}
@@ -22,7 +22,7 @@ func executeHooks(hooks []t.Hook, msg *m.Message) *m.Message {
 	return createResponseMessage(msg.MessageId, totalExecutionTime, nil)
 }
 
-func createResponseMessage(msgId *int64, executionTime int64, err error) *m.Message {
+func createResponseMessage(msgId int64, executionTime int64, err error) *m.Message {
 	failed := false
 	errorMsg := ""
 	if err != nil {
@@ -30,13 +30,13 @@ func createResponseMessage(msgId *int64, executionTime int64, err error) *m.Mess
 		errorMsg = err.Error()
 	}
 	return &m.Message{
-		MessageType: m.Message_ExecutionStatusResponse.Enum(),
+		MessageType: m.Message_ExecutionStatusResponse,
 		MessageId:   msgId,
 		ExecutionStatusResponse: &m.ExecutionStatusResponse{
 			ExecutionResult: &m.ProtoExecutionResult{
-				Failed:        &failed,
-				ExecutionTime: &executionTime,
-				ErrorMessage:  &errorMsg,
+				Failed:        failed,
+				ExecutionTime: executionTime,
+				ErrorMessage:  errorMsg,
 			},
 		},
 	}

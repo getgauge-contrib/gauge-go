@@ -16,10 +16,10 @@ func TestShouldReturnStepNamesResponseWithSameIdForStepValidateRequest(tst *test
 	}
 
 	msg := &m.Message{
-		MessageType: m.Message_StepNamesRequest.Enum(),
-		MessageId:   &msgId,
+		MessageType: m.Message_StepNamesRequest,
+		MessageId:   msgId,
 		StepValidateRequest: &m.StepValidateRequest{
-			StepText: &stepText,
+			StepText: stepText,
 		},
 	}
 
@@ -27,8 +27,8 @@ func TestShouldReturnStepNamesResponseWithSameIdForStepValidateRequest(tst *test
 
 	result := p.Process(msg, context)
 
-	assert.Equal(tst, result.MessageType, m.Message_StepValidateResponse.Enum())
-	assert.Equal(tst, *result.MessageId, msgId)
+	assert.Equal(tst, result.MessageType, m.Message_StepValidateResponse)
+	assert.Equal(tst, result.MessageId, msgId)
 }
 
 func TestShouldValidateStep(tst *testing.T) {
@@ -43,10 +43,10 @@ func TestShouldValidateStep(tst *testing.T) {
 	}
 
 	msg := &m.Message{
-		MessageType: m.Message_StepNamesRequest.Enum(),
-		MessageId:   &msgId,
+		MessageType: m.Message_StepNamesRequest,
+		MessageId:   msgId,
 		StepValidateRequest: &m.StepValidateRequest{
-			StepText: &stepText,
+			StepText: stepText,
 		},
 	}
 
@@ -54,7 +54,7 @@ func TestShouldValidateStep(tst *testing.T) {
 
 	result := p.Process(msg, context)
 
-	assert.True(tst, *result.StepValidateResponse.IsValid)
+	assert.True(tst, result.StepValidateResponse.IsValid)
 	assert.Equal(tst, result.StepValidateResponse.GetErrorMessage(), "")
 }
 
@@ -71,10 +71,10 @@ func TestShouldValidateStepWhenNotFound(tst *testing.T) {
 	}
 
 	msg := &m.Message{
-		MessageType: m.Message_StepNamesRequest.Enum(),
-		MessageId:   &msgId,
+		MessageType: m.Message_StepNamesRequest,
+		MessageId:   msgId,
 		StepValidateRequest: &m.StepValidateRequest{
-			StepText: &requiredStep,
+			StepText: requiredStep,
 		},
 	}
 
@@ -82,6 +82,6 @@ func TestShouldValidateStepWhenNotFound(tst *testing.T) {
 
 	result := p.Process(msg, context)
 
-	assert.False(tst, *result.StepValidateResponse.IsValid)
+	assert.False(tst, result.StepValidateResponse.IsValid)
 	assert.Equal(tst, result.StepValidateResponse.GetErrorMessage(), "No implementation found for : "+requiredStep)
 }

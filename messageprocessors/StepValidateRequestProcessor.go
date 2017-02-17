@@ -15,22 +15,22 @@ func (s *StepValidateRequestProcessor) Process(msg *gm.Message, context *t.Gauge
 
 	res := &gm.StepValidateResponse{}
 	if !valid {
-		errorMsg = "No implementation found for : " + *stepDesc
-		res.ErrorMessage = &errorMsg
-		res.ErrorType = gm.StepValidateResponse_STEP_IMPLEMENTATION_NOT_FOUND.Enum()
+		errorMsg = "No implementation found for : " + stepDesc
+		res.ErrorMessage = errorMsg
+		res.ErrorType = gm.StepValidateResponse_STEP_IMPLEMENTATION_NOT_FOUND
 	}
-	res.IsValid = &valid
+	res.IsValid = valid
 
 	return &gm.Message{
-		MessageType:          gm.Message_StepValidateResponse.Enum(),
+		MessageType:          gm.Message_StepValidateResponse,
 		MessageId:            msg.MessageId,
 		StepValidateResponse: res,
 	}
 }
 
-func isValid(steps []t.Step, desc *string) bool {
+func isValid(steps []t.Step, desc string) bool {
 	for _, step := range steps {
-		if step.Description == *desc {
+		if step.Description == desc {
 			return true
 		}
 	}

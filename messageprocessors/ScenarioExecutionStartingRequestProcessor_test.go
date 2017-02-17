@@ -16,16 +16,16 @@ func TestShouldReturnExecutionStatusResponseWithSameIdForScenarioExecutionStarti
 	}
 
 	msg := &m.Message{
-		MessageType: m.Message_ScenarioExecutionStarting.Enum(),
-		MessageId:   &msgId,
+		MessageType: m.Message_ScenarioExecutionStarting,
+		MessageId:   msgId,
 	}
 
 	p := ScenarioExecutionStartingRequestProcessor{}
 
 	result := p.Process(msg, context)
 
-	assert.Equal(tst, result.MessageType, m.Message_ExecutionStatusResponse.Enum())
-	assert.Equal(tst, *result.MessageId, msgId)
+	assert.Equal(tst, result.MessageType, m.Message_ExecutionStatusResponse)
+	assert.Equal(tst, result.MessageId, msgId)
 }
 
 func TestExecutesHooksForTheTagsForScenarioExecutionStartingRequest(tst *testing.T) {
@@ -53,8 +53,8 @@ func TestExecutesHooksForTheTagsForScenarioExecutionStartingRequest(tst *testing
 	}
 	msgId := int64(12345)
 	msg := &m.Message{
-		MessageType: m.Message_ScenarioExecutionStarting.Enum(),
-		MessageId:   &msgId,
+		MessageType: m.Message_ScenarioExecutionStarting,
+		MessageId:   msgId,
 		ScenarioExecutionStartingRequest: &m.ScenarioExecutionStartingRequest{
 			CurrentExecutionInfo: &m.ExecutionInfo{
 				CurrentScenario: &m.ScenarioInfo{
@@ -68,8 +68,8 @@ func TestExecutesHooksForTheTagsForScenarioExecutionStartingRequest(tst *testing
 
 	result := p.Process(msg, context)
 
-	assert.Equal(tst, result.MessageType, m.Message_ExecutionStatusResponse.Enum())
-	assert.Equal(tst, *result.MessageId, msgId)
+	assert.Equal(tst, result.MessageType, m.Message_ExecutionStatusResponse)
+	assert.Equal(tst, result.MessageId, msgId)
 	assert.True(tst, called1)
 	assert.True(tst, called2)
 }
@@ -102,8 +102,8 @@ func TestReportErrorIfHookFailsForScenarioExecutionStartingRequest(tst *testing.
 	}
 	msgId := int64(12345)
 	msg := &m.Message{
-		MessageType: m.Message_ScenarioExecutionStarting.Enum(),
-		MessageId:   &msgId,
+		MessageType: m.Message_ScenarioExecutionStarting,
+		MessageId:   msgId,
 		ScenarioExecutionStartingRequest: &m.ScenarioExecutionStartingRequest{
 			CurrentExecutionInfo: &m.ExecutionInfo{
 				CurrentScenario: &m.ScenarioInfo{
@@ -119,9 +119,9 @@ func TestReportErrorIfHookFailsForScenarioExecutionStartingRequest(tst *testing.
 
 	assert.True(tst, called1)
 	assert.True(tst, called2)
-	assert.Equal(tst, result.MessageType, m.Message_ExecutionStatusResponse.Enum())
-	assert.Equal(tst, *result.MessageId, msgId)
-	assert.True(tst, *result.ExecutionStatusResponse.ExecutionResult.Failed)
-	assert.Equal(tst, *result.ExecutionStatusResponse.ExecutionResult.ErrorMessage, "Execution failed")
+	assert.Equal(tst, result.MessageType, m.Message_ExecutionStatusResponse)
+	assert.Equal(tst, result.MessageId, msgId)
+	assert.True(tst, result.ExecutionStatusResponse.ExecutionResult.Failed)
+	assert.Equal(tst, result.ExecutionStatusResponse.ExecutionResult.ErrorMessage, "Execution failed")
 
 }

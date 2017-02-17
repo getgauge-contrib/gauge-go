@@ -9,7 +9,7 @@ type StepNamesRequestProcessor struct{}
 
 func (s *StepNamesRequestProcessor) Process(msg *m.Message, context *t.GaugeContext) *m.Message {
 	return &m.Message{
-		MessageType: m.Message_StepNamesResponse.Enum(),
+		MessageType: m.Message_StepNamesResponse,
 		MessageId:   msg.MessageId,
 		StepNamesResponse: &m.StepNamesResponse{
 			Steps: getAllDescriptions(context.Steps),

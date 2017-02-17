@@ -15,16 +15,16 @@ func TestShouldReturnExecutionStatusResponseWithSameId(tst *testing.T) {
 		Steps: make([]t.Step, 0),
 	}
 	msg := &m.Message{
-		MessageType: m.Message_ExecutionEnding.Enum(),
-		MessageId:   &msgId,
+		MessageType: m.Message_ExecutionEnding,
+		MessageId:   msgId,
 	}
 
 	p := ExecutionEndingProcessor{}
 
 	result := p.Process(msg, context)
 
-	assert.Equal(tst, result.MessageType, m.Message_ExecutionStatusResponse.Enum())
-	assert.Equal(tst, *result.MessageId, msgId)
+	assert.Equal(tst, result.MessageType, m.Message_ExecutionStatusResponse)
+	assert.Equal(tst, result.MessageId, msgId)
 }
 
 func TestExecutesHooksForTheTagsForScenarioEnding(tst *testing.T) {
@@ -52,8 +52,8 @@ func TestExecutesHooksForTheTagsForScenarioEnding(tst *testing.T) {
 	}
 	msgId := int64(12345)
 	msg := &m.Message{
-		MessageType: m.Message_ExecutionStarting.Enum(),
-		MessageId:   &msgId,
+		MessageType: m.Message_ExecutionStarting,
+		MessageId:   msgId,
 		ExecutionEndingRequest: &m.ExecutionEndingRequest{
 			CurrentExecutionInfo: &m.ExecutionInfo{
 				CurrentScenario: &m.ScenarioInfo{
@@ -67,8 +67,8 @@ func TestExecutesHooksForTheTagsForScenarioEnding(tst *testing.T) {
 
 	result := p.Process(msg, context)
 
-	assert.Equal(tst, result.MessageType, m.Message_ExecutionStatusResponse.Enum())
-	assert.Equal(tst, *result.MessageId, msgId)
+	assert.Equal(tst, result.MessageType, m.Message_ExecutionStatusResponse)
+	assert.Equal(tst, result.MessageId, msgId)
 	assert.True(tst, called1)
 	assert.True(tst, called2)
 
@@ -102,8 +102,8 @@ func TestReportErrorIfHookFailsForScenarioEnding(tst *testing.T) {
 	}
 	msgId := int64(12345)
 	msg := &m.Message{
-		MessageType: m.Message_ExecutionStarting.Enum(),
-		MessageId:   &msgId,
+		MessageType: m.Message_ExecutionStarting,
+		MessageId:   msgId,
 		ExecutionEndingRequest: &m.ExecutionEndingRequest{
 			CurrentExecutionInfo: &m.ExecutionInfo{
 				CurrentScenario: &m.ScenarioInfo{
@@ -119,9 +119,9 @@ func TestReportErrorIfHookFailsForScenarioEnding(tst *testing.T) {
 
 	assert.True(tst, called1)
 	assert.True(tst, called2)
-	assert.Equal(tst, result.MessageType, m.Message_ExecutionStatusResponse.Enum())
-	assert.Equal(tst, *result.MessageId, msgId)
-	assert.True(tst, *result.ExecutionStatusResponse.ExecutionResult.Failed)
-	assert.Equal(tst, *result.ExecutionStatusResponse.ExecutionResult.ErrorMessage, "Execution failed")
+	assert.Equal(tst, result.MessageType, m.Message_ExecutionStatusResponse)
+	assert.Equal(tst, result.MessageId, msgId)
+	assert.True(tst, result.ExecutionStatusResponse.ExecutionResult.Failed)
+	assert.Equal(tst, result.ExecutionStatusResponse.ExecutionResult.ErrorMessage, "Execution failed")
 
 }

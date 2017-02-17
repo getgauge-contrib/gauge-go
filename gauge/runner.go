@@ -29,20 +29,20 @@ func init() {
 	}
 
 	processors = mp.ProcessorDictionary{}
-	processors[*m.Message_StepNamesRequest.Enum()] = &mp.StepNamesRequestProcessor{}
-	processors[*m.Message_StepValidateRequest.Enum()] = &mp.StepValidateRequestProcessor{}
-	processors[*m.Message_SuiteDataStoreInit.Enum()] = &mp.SuiteDataStoreInitRequestProcessor{}
-	processors[*m.Message_ExecutionStarting.Enum()] = &mp.ExecutionStartingRequestProcessor{}
-	processors[*m.Message_SpecExecutionStarting.Enum()] = &mp.SpecExecutionStartingRequestProcessor{}
-	processors[*m.Message_ScenarioExecutionStarting.Enum()] = &mp.ScenarioExecutionStartingRequestProcessor{}
-	processors[*m.Message_StepExecutionStarting.Enum()] = &mp.StepExecutionStartingRequestProcessor{}
-	processors[*m.Message_ExecuteStep.Enum()] = &mp.ExecuteStepProcessor{}
-	processors[*m.Message_ExecutionEnding.Enum()] = &mp.ExecutionEndingProcessor{}
-	processors[*m.Message_StepExecutionEnding.Enum()] = &mp.StepExecutionEndingProcessor{}
-	processors[*m.Message_ScenarioExecutionEnding.Enum()] = &mp.ScenarioExecutionEndingProcessor{}
-	processors[*m.Message_SpecExecutionEnding.Enum()] = &mp.SpecExecutionEndingProcessor{}
-	processors[*m.Message_SpecDataStoreInit.Enum()] = &mp.SpecDataStoreInitProcessor{}
-	processors[*m.Message_ScenarioDataStoreInit.Enum()] = &mp.ScenarioDataStoreInitProcessor{}
+	processors[m.Message_StepNamesRequest] = &mp.StepNamesRequestProcessor{}
+	processors[m.Message_StepValidateRequest] = &mp.StepValidateRequestProcessor{}
+	processors[m.Message_SuiteDataStoreInit] = &mp.SuiteDataStoreInitRequestProcessor{}
+	processors[m.Message_ExecutionStarting] = &mp.ExecutionStartingRequestProcessor{}
+	processors[m.Message_SpecExecutionStarting] = &mp.SpecExecutionStartingRequestProcessor{}
+	processors[m.Message_ScenarioExecutionStarting] = &mp.ScenarioExecutionStartingRequestProcessor{}
+	processors[m.Message_StepExecutionStarting] = &mp.StepExecutionStartingRequestProcessor{}
+	processors[m.Message_ExecuteStep] = &mp.ExecuteStepProcessor{}
+	processors[m.Message_ExecutionEnding] = &mp.ExecutionEndingProcessor{}
+	processors[m.Message_StepExecutionEnding] = &mp.StepExecutionEndingProcessor{}
+	processors[m.Message_ScenarioExecutionEnding] = &mp.ScenarioExecutionEndingProcessor{}
+	processors[m.Message_SpecExecutionEnding] = &mp.SpecExecutionEndingProcessor{}
+	processors[m.Message_SpecDataStoreInit] = &mp.SpecDataStoreInitProcessor{}
+	processors[m.Message_ScenarioDataStoreInit] = &mp.ScenarioDataStoreInitProcessor{}
 
 	t.CustomScreenShot = &CustomScreenshotFn
 }
@@ -206,11 +206,11 @@ func Run() {
 			fmt.Println("Error reading message : ", err)
 			return
 		}
-		if *msg.MessageType.Enum() == *m.Message_KillProcessRequest.Enum() {
+		if msg.MessageType == m.Message_KillProcessRequest {
 			return
 		}
 
-		processor := processors[*msg.MessageType.Enum()]
+		processor := processors[msg.MessageType]
 
 		if processor == nil {
 			fmt.Println("Unable to find processor for message type : ", msg.MessageType)

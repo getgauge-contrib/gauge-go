@@ -22,10 +22,10 @@ func TestShouldRunStep(tst *testing.T) {
 	}
 
 	msg := &m.Message{
-		MessageType: m.Message_ExecuteStep.Enum(),
-		MessageId:   &msgId,
+		MessageType: m.Message_ExecuteStep,
+		MessageId:   msgId,
 		ExecuteStepRequest: &m.ExecuteStepRequest{
-			ParsedStepText: &stepText,
+			ParsedStepText: stepText,
 		},
 	}
 
@@ -50,10 +50,10 @@ func TestShouldRunReturnExecutionStatusResponseWithSameId(tst *testing.T) {
 	}
 
 	msg := &m.Message{
-		MessageType: m.Message_ExecuteStep.Enum(),
-		MessageId:   &msgId,
+		MessageType: m.Message_ExecuteStep,
+		MessageId:   msgId,
 		ExecuteStepRequest: &m.ExecuteStepRequest{
-			ParsedStepText: &stepText,
+			ParsedStepText: stepText,
 		},
 	}
 
@@ -61,8 +61,8 @@ func TestShouldRunReturnExecutionStatusResponseWithSameId(tst *testing.T) {
 
 	result := p.Process(msg, context)
 
-	assert.Equal(tst, result.MessageType, m.Message_ExecutionStatusResponse.Enum())
-	assert.Equal(tst, *result.MessageId, msgId)
+	assert.Equal(tst, result.MessageType, m.Message_ExecutionStatusResponse)
+	assert.Equal(tst, result.MessageId, msgId)
 }
 
 func TestShouldRunStepWithTableParam(tst *testing.T) {
@@ -89,18 +89,17 @@ func TestShouldRunStepWithTableParam(tst *testing.T) {
 	}
 
 	msg := &m.Message{
-		MessageType: m.Message_ExecuteStep.Enum(),
-		MessageId:   &msgId,
+		MessageType: m.Message_ExecuteStep,
+		MessageId:   msgId,
 		ExecuteStepRequest: &m.ExecuteStepRequest{
-			ParsedStepText: &stepText,
+			ParsedStepText: stepText,
 			Parameters: []*m.Parameter{
 				&m.Parameter{
-					ParameterType: m.Parameter_Table.Enum(),
+					ParameterType: m.Parameter_Table,
 					Table:         p,
 				},
 			},
-		},
-	}
+		}}
 
 	proc := ExecuteStepProcessor{}
 	proc.Process(msg, context)
@@ -137,18 +136,17 @@ func TestShouldRunStepWithSpecialTableParam(tst *testing.T) {
 	}
 
 	msg := &m.Message{
-		MessageType: m.Message_ExecuteStep.Enum(),
-		MessageId:   &msgId,
+		MessageType: m.Message_ExecuteStep,
+		MessageId:   msgId,
 		ExecuteStepRequest: &m.ExecuteStepRequest{
-			ParsedStepText: &stepText,
+			ParsedStepText: stepText,
 			Parameters: []*m.Parameter{
 				&m.Parameter{
-					ParameterType: m.Parameter_Special_Table.Enum(),
+					ParameterType: m.Parameter_Special_Table,
 					Table:         p,
 				},
 			},
-		},
-	}
+		}}
 
 	proc := ExecuteStepProcessor{}
 	proc.Process(msg, context)
