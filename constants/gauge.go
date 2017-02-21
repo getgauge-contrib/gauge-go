@@ -9,7 +9,7 @@ const (
 	GaugePortVariable       = "GAUGE_INTERNAL_PORT"
 	MaxMessageSize          = 8192
 	SkelDir                 = "skel"
-	GaugeTestMainFileName   = "gaugetest_go.go"
+	GaugeTestFileName       = "gauge_test.go"
 	ScreenshotOnFailure     = "screenshot_on_failure"
 	GaugeScreenshot         = "gauge_screenshot"
 )

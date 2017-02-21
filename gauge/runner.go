@@ -195,11 +195,11 @@ func Run() {
 
 	// fmt.Println("Connecting port:", gaugePort) // move to logger
 	conn, err := net.Dial("tcp", net.JoinHostPort("127.0.0.1", gaugePort))
-	defer conn.Close()
 	if err != nil {
 		fmt.Println("dial error:", err)
 		return
 	}
+	defer conn.Close()
 	for {
 		msg, err := mu.ReadMessage(conn)
 		if err != nil {

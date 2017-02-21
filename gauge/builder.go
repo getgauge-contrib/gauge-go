@@ -35,7 +35,7 @@ func LoadGaugeImpls() error {
 	tempDir := common.GetTempDir()
 	defer os.RemoveAll(tempDir)
 
-	gaugeGoMainFile := filepath.Join(tempDir, constants.GaugeTestMainFileName)
+	gaugeGoMainFile := filepath.Join(tempDir, constants.GaugeTestFileName)
 	f, err := os.Create(gaugeGoMainFile)
 	if err != nil {
 		return fmt.Errorf("Failed to create main file in %s: %s", tempDir, err.Error())
@@ -44,7 +44,7 @@ func LoadGaugeImpls() error {
 	genGaugeTestFileContents(f, b.String())
 	f.Close()
 	// Scan gauge methods
-	if err := util.RunCommand(os.Stdout, os.Stdout, constants.CommandGo, "run", gaugeGoMainFile); err != nil {
+	if err := util.RunCommand(os.Stdout, os.Stdout, constants.CommandGo, "test", "-v", gaugeGoMainFile); err != nil {
 		return fmt.Errorf("Failed to compile project: %s\nPlease ensure the project is in GOPATH.\n", err.Error())
 	}
 	return nil
@@ -62,16 +62,20 @@ func genGaugeTestFileContents(fileWriter io.Writer, importString string) {
 			validImports = append(validImports, i)
 		}
 	}
-	tplMain.Execute(fileWriter, info{Imports: validImports})
+	gaugeTestRunnerTpl.Execute(fileWriter, info{Imports: validImports})
 }
 
-var tplMain = template.Must(template.New("main").Parse(
-	`package main
+var gaugeTestRunnerTpl = template.Must(template.New("main").Parse(
+	`package gauge_test_bootstrap
 import (
+	"os"
 	"github.com/getgauge-contrib/gauge-go/gauge"
 {{range $n, $i := .Imports}}	_ "{{$i}}"
 {{end}})
-func main() {
+func init() {
 	gauge.Run()
+	_, w, _ := os.Pipe()
+	os.Stderr = w
+	os.Stdout = w
 }
 `))
