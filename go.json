@@ -1,6 +1,6 @@
 {
     "id": "go",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "Go support for gauge",
     "run": {
         "windows": ["bin/gauge-go", "--start"],
