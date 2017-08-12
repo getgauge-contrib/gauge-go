@@ -14,6 +14,7 @@ import (
 	"time"
 
 	"github.com/getgauge-contrib/gauge-go/constants"
+	"github.com/getgauge-contrib/gauge-go/gauge_messages"
 	m "github.com/getgauge-contrib/gauge-go/gauge_messages"
 	"github.com/getgauge-contrib/gauge-go/util"
 	"github.com/getgauge/common"
@@ -38,6 +39,7 @@ func executeFunc(fn reflect.Value, args ...interface{}) (res *m.ProtoExecutionRe
 				res.ScreenShot = getScreenshot()
 				res.Failed = true
 				res.ExecutionTime = 0
+				res.ErrorType = gauge_messages.ProtoExecutionResult_VERIFICATION
 				res.StackTrace = " " // make sure that the error message is displayed on the report html
 				res.ErrorMessage = err.Error()
 				return res
@@ -98,31 +100,34 @@ func convertType(t reflect.Type, strVal string) (reflect.Value, error) {
 		return reflect.ValueOf(strVal), nil
 	}
 	tBitSize := int(t.Size()) * 8
+
+	val := reflect.New(t)
+	var err error
+
 	switch t.Kind() {
 	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
-		n, err := strconv.ParseInt(strVal, 10, tBitSize)
-		if err != nil {
-			return reflect.Value{}, fmt.Errorf("cannot convert %#v to a %s value: %s", strVal, t.String(), err.Error())
+		n, e := strconv.ParseInt(strVal, 10, tBitSize)
+		if e == nil {
+			val.Elem().SetInt(n)
 		}
-		intVal := reflect.New(t)
-		intVal.Elem().SetInt(n)
-		return intVal.Elem(), nil
+		err = e
 	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
-		n, err := strconv.ParseUint(strVal, 10, tBitSize)
-		if err != nil {
-			return reflect.Value{}, fmt.Errorf("cannot convert %#v to a %s value: %s", strVal, t.String(), err.Error())
+		n, e := strconv.ParseUint(strVal, 10, tBitSize)
+		if e == nil {
+			val.Elem().SetUint(n)
 		}
-		uintVal := reflect.New(t)
-		uintVal.Elem().SetUint(n)
-		return uintVal.Elem(), nil
+		err = e
 	case reflect.Float32, reflect.Float64:
-		n, err := strconv.ParseFloat(strVal, tBitSize)
-		if err != nil {
-			return reflect.Value{}, fmt.Errorf("cannot convert %#v to a %s value: %s", strVal, t.String(), err.Error())
+		n, e := strconv.ParseFloat(strVal, tBitSize)
+		if e == nil {
+			val.Elem().SetFloat(n)
 		}
-		floatVal := reflect.New(t)
-		floatVal.Elem().SetFloat(n)
-		return floatVal.Elem(), nil
+		err = e
+	default:
+		return val, fmt.Errorf("cannot convert a string to a %s value", t.String())
 	}
-	return reflect.Value{}, fmt.Errorf("cannot convert a string to a %s value")
+	if err != nil {
+		err = fmt.Errorf("cannot convert %#v to a %s value: %s", strVal, t.String(), err.Error())
+	}
+	return val.Elem(), err
 }
