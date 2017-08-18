@@ -56,6 +56,9 @@ func genGaugeTestFileContents(fileWriter io.Writer, importString string) {
 	}
 	var validImports []string
 	for _, i := range strings.Fields(importString) {
+		if isVendorPackage(i) {
+			continue
+		}
 		if strings.HasPrefix(i, "_") {
 			validImports = append(validImports, strings.TrimPrefix(i, "_"))
 		} else {
@@ -63,6 +66,11 @@ func genGaugeTestFileContents(fileWriter io.Writer, importString string) {
 		}
 	}
 	gaugeTestRunnerTpl.Execute(fileWriter, info{Imports: validImports})
+}
+
+func isVendorPackage(packageName string) bool {
+	split := strings.Split(packageName, "/")
+	return len(split) > 1 && strings.ToLower(split[1]) == "vendor"
 }
 
 var gaugeTestRunnerTpl = template.Must(template.New("main").Parse(

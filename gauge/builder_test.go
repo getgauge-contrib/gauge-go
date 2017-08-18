@@ -11,8 +11,8 @@ import (
 func TestGenerateMainFileContents(tst *testing.T) {
 	var b bytes.Buffer
 	buffWriter := bufio.NewWriter(&b)
-	importString := `github.com/apoorvam/foo/stepImpl
-github.com/apoorvam/foo/stepImpl/impl`
+	importString := `foo/stepImpl
+foo/stepImpl/impl`
 
 	genGaugeTestFileContents(buffWriter, importString)
 	buffWriter.Flush()
@@ -21,8 +21,64 @@ github.com/apoorvam/foo/stepImpl/impl`
 import (
 	"os"
 	"github.com/getgauge-contrib/gauge-go/gauge"
-	_ "github.com/apoorvam/foo/stepImpl"
-	_ "github.com/apoorvam/foo/stepImpl/impl"
+	_ "foo/stepImpl"
+	_ "foo/stepImpl/impl"
+)
+func init() {
+	gauge.Run()
+	_, w, _ := os.Pipe()
+	os.Stderr = w
+	os.Stdout = w
+}
+`
+	assert.Equal(tst, expected, b.String())
+}
+
+func TestGeneratedMainFileContentsShouldFilterOutVendorPackages(tst *testing.T) {
+	var b bytes.Buffer
+	buffWriter := bufio.NewWriter(&b)
+	importString := `foo/stepImpl
+foo/stepImpl/impl
+foo/vendor/vendorStepImpl/impl`
+
+	genGaugeTestFileContents(buffWriter, importString)
+	buffWriter.Flush()
+
+	expected := `package gauge_test_bootstrap
+import (
+	"os"
+	"github.com/getgauge-contrib/gauge-go/gauge"
+	_ "foo/stepImpl"
+	_ "foo/stepImpl/impl"
+)
+func init() {
+	gauge.Run()
+	_, w, _ := os.Pipe()
+	os.Stderr = w
+	os.Stdout = w
+}
+`
+	assert.Equal(tst, expected, b.String())
+}
+
+func TestGeneratedMainFileContentsShouldNotFilterOutVendorFolderWhichIsNotInRootFolder(tst *testing.T) {
+	var b bytes.Buffer
+	buffWriter := bufio.NewWriter(&b)
+	importString := `foo/stepImpl
+foo/stepImpl/impl
+foo/bar/vendor/stepImpl/impl
+foo/vendor/vendorStepImpl/impl`
+
+	genGaugeTestFileContents(buffWriter, importString)
+	buffWriter.Flush()
+
+	expected := `package gauge_test_bootstrap
+import (
+	"os"
+	"github.com/getgauge-contrib/gauge-go/gauge"
+	_ "foo/stepImpl"
+	_ "foo/stepImpl/impl"
+	_ "foo/bar/vendor/stepImpl/impl"
 )
 func init() {
 	gauge.Run()
