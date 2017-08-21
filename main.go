@@ -30,8 +30,7 @@ func main() {
 }
 
 func startGo() {
-	os.Chdir(projectRoot)
-	err := gauge.LoadGaugeImpls()
+	err := gauge.LoadGaugeImpls(projectRoot)
 	if err != nil {
 		fmt.Printf("Failed to build project: %s\nKilling go runner. \n", err.Error())
 		os.Exit(1)
