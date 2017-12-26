@@ -218,7 +218,11 @@ func Run() {
 		}
 		msgToSend := processor.Process(msg, context)
 
-		mu.WriteGaugeMessage(msgToSend, conn)
+		err = mu.WriteGaugeMessage(msgToSend, conn)
+		if err != nil {
+			fmt.Println("Unable to write response : ", err.Error())
+			return
+		}
 	}
 }
 
