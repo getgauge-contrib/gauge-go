@@ -10,13 +10,13 @@ Go language plugin for ThoughtWorks [Gauge](http://getgauge.io).
 cd $GOPATH/src
 mkdir gaugeproject
 cd gaugeproject
-gauge --init go
+gauge init go
 ```
-* Run specs: `gauge specs`
+* Run specs: `gauge run specs`
 
 ## Installation
 * Install [Gauge](http://getgauge.io). Follow instructions [here](http://getgauge.io/get-started/).
-* Install Gauge-Go language plugin as: `gauge --install go`
+* Install Gauge-Go language plugin as: `gauge install go`
 
 ### Build from Source
 * Checkout the repository
@@ -48,14 +48,14 @@ If you are new to Gauge, please read the [Gauge documentation](http://getgauge.i
 
 To initialize a project with gauge-go, in an empty directory run:
 ```sh
-$ gauge --init go
+$ gauge init go
 ```
 **Note: Create your project in `$GOPATH/src`.**
 
 **Run specs:**
 
 ```sh
-$ gauge specs/
+$ gauge run specs/
 ```
 
 ## Methods
