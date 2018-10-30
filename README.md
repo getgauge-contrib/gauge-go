@@ -1,10 +1,11 @@
 # gauge-go
-[![Gauge Badge](http://getgauge.io/Gauge_Badge.svg)](http://getgauge.io) [![Build Status](https://snap-ci.com/getgauge-contrib/gauge-go/branch/master/build_image)](https://snap-ci.com/getgauge-contrib/gauge-go/branch/master)
+[![Gauge Badge](http://getgauge.io/Gauge_Badge.svg)](http://getgauge.io) 
+[![Build Status](https://travis-ci.org/getgauge/gauge.svg?branch=master)](https://travis-ci.org/getgauge/gauge)
 
 Go language plugin for ThoughtWorks [Gauge](http://getgauge.io).
 
 ## Getting started in 3 steps
-* Install [Gauge](http://getgauge.io) by following instructions [here](http://getgauge.io/get-started/index.html) and gauge go plugin as `gauge --install go`
+* Install [Gauge](http://getgauge.io) by following instructions [here](http://getgauge.io/get-started/index.html) and gauge go plugin as `gauge install go`
 * Initialize a golang gauge project in subfolder within `GOPATH/src` directory as: 
 ```sh
 cd $GOPATH/src
