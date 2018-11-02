@@ -3,8 +3,11 @@ package main
 import (
 	"flag"
 	"fmt"
+	"go/build"
 	"os"
 	"path/filepath"
+	"runtime"
+	"strings"
 
 	"github.com/getgauge-contrib/gauge-go/constants"
 	"github.com/getgauge-contrib/gauge-go/gauge"
@@ -66,8 +69,7 @@ func setPluginAndProjectRoots() {
 		os.Exit(1)
 	}
 
-	goSrcPath := filepath.Join(os.Getenv("GOPATH"), "src")
-	if !filepath.HasPrefix(projectRoot, goSrcPath) {
+	if !checkIfInSrcPath(projectRoot) {
 		fmt.Printf("Project folder must be a subfolder in GOPATH/src folder\n")
 		os.Exit(1)
 	}
@@ -83,4 +85,31 @@ func createDirectory(dirPath string) {
 	} else {
 		fmt.Println("skip ", dirPath)
 	}
+}
+
+func getGoPaths() []string {
+	var paths []string
+	if runtime.GOOS == "windows" {
+		paths = strings.Split(build.Default.GOPATH, ";")
+	} else {
+		paths = strings.Split(build.Default.GOPATH, ":")
+	}
+	return paths
+}
+
+func getGoSrcPaths() []string {
+	var paths = getGoPaths()
+	for i, p := range paths {
+		paths[i] = filepath.Join(p, "src")
+	}
+	return paths
+}
+
+func checkIfInSrcPath(dirPath string) bool {
+	for _, p := range getGoSrcPaths() {
+		if filepath.HasPrefix(dirPath, p) {
+			return true
+		}
+	}
+	return false
 }
