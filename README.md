@@ -43,7 +43,7 @@ A sample project illustrating Gauge features using Golang & selenium webdriver c
 
 ## Usage
 
-If you are new to Gauge, please read the [Gauge documentation](http://getgauge.io/documentation/user/current/) to know about how Gauge works.
+If you are new to Gauge, please read the [Gauge documentation](https://docs.gauge.org/latest/index.html) to know about how Gauge works.
 
 **Initialize:**
 
@@ -85,7 +85,7 @@ E.g: `assert.Equal(testsuit.T, actualCount, expectedCount, "got: %d, want: %d", 
 
 ### Execution Hooks
 
-gauge-go supports tagged [execution hooks](http://getgauge.io/documentation/user/current/execution/execution_hooks.html). These methods are available for each type of hook:
+gauge-go supports tagged [execution hooks](https://docs.gauge.org/latest/writing-specifications.html#execution-hooks). These methods are available for each type of hook:
 
 "Before" hooks:
 
