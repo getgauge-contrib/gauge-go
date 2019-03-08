@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"go/build"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strings"
@@ -46,6 +47,20 @@ func initGo() {
 	stepImplFile := filepath.Join(stepImplDir, constants.DefaultStepImplFileName)
 	showMessage("create", stepImplFile)
 	common.CopyFile(filepath.Join(constants.SkelDir, constants.DefaultStepImplFileName), stepImplFile)
+
+	if requiresGoModuleFile(projectRoot) {
+		showMessage("create", "go.mod")
+
+		cmd := exec.Command("go", "mod", "init")
+		cmd.Dir = projectRoot
+
+		err := cmd.Run()
+		if err != nil {
+			// go mod init without parameters only works if it can find an import hint or GoDep config or verdoring config or the git origin is on github
+			// in other situations, it will fail, in which case the user must run it themselves with the correct module name
+			fmt.Printf(" could not create go.mod; create it yourself using `go mod init <module name>`\n")
+		}
+	}
 }
 
 func printUsage() {
@@ -122,4 +137,27 @@ func checkGoModulesAvailable() bool {
 		}
 	}
 	return false
+}
+
+func requiresGoModuleFile(dirPath string) bool {
+
+	// Module file is never required in GOPATH
+	if checkIfInSrcPath(dirPath) {
+		return false
+	}
+
+	// Look for a module file; if one exists somewhere up the tree everything is OK
+	dir := dirPath
+	// Traverse up to the root volume. On Windows VolumeName returns C:, on *nix it returns an empty string
+	root := filepath.VolumeName(dirPath) + string(os.PathSeparator)
+	for dir != root {
+		modPath := filepath.Join(dir, `go.mod`)
+		if common.FileExists(modPath) {
+			return false
+		}
+		dir = filepath.Dir(dir)
+	}
+
+	// Outside of GOPATH and no module file could be found, so one is needed
+	return true
 }
