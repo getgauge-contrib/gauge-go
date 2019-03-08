@@ -34,6 +34,10 @@ func main() {
 }
 
 func startGo() {
+	if requiresGoModuleFile(projectRoot) {
+		fmt.Printf("Failed to start runner; go.mod is required when working outside the GOPATH.\nCreate it using `go mod init <module-name>`\n")
+		os.Exit(1)
+	}
 	err := gauge.LoadGaugeImpls(projectRoot)
 	if err != nil {
 		fmt.Printf("Failed to build project: %s\nKilling go runner. \n", err.Error())
@@ -140,7 +144,6 @@ func checkGoModulesAvailable() bool {
 }
 
 func requiresGoModuleFile(dirPath string) bool {
-
 	// Module file is never required in GOPATH
 	if checkIfInSrcPath(dirPath) {
 		return false
