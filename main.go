@@ -69,8 +69,8 @@ func setPluginAndProjectRoots() {
 		os.Exit(1)
 	}
 
-	if !checkIfInSrcPath(projectRoot) {
-		fmt.Printf("Project folder must be a subfolder in GOPATH/src folder\n")
+	if !checkIfInSrcPath(projectRoot) && !checkGoModulesAvailable() {
+		fmt.Printf("Project folder must be a subfolder in GOPATH/src folder, or Go Modules must be available (go1.11+)\n")
 		os.Exit(1)
 	}
 }
@@ -108,6 +108,16 @@ func getGoSrcPaths() []string {
 func checkIfInSrcPath(dirPath string) bool {
 	for _, p := range getGoSrcPaths() {
 		if filepath.HasPrefix(dirPath, p) {
+			return true
+		}
+	}
+	return false
+}
+
+func checkGoModulesAvailable() bool {
+	minReleaseTag := "go1.11"
+	for _, tag := range build.Default.ReleaseTags {
+		if minReleaseTag == tag {
 			return true
 		}
 	}
