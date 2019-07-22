@@ -37,7 +37,7 @@ func executeFunc(fn reflect.Value, args ...interface{}) (res *m.ProtoExecutionRe
 		if r := recover(); r != nil {
 			res.ScreenShot = getScreenshot()
 			res.Failed = true
-			res.ExecutionTime = time.Since(start).Nanoseconds()
+			res.ExecutionTime = time.Since(start).Nanoseconds() / int64(time.Millisecond)
 			res.StackTrace = strings.SplitN(string(debug.Stack()), "\n", 9)[8]
 			res.ErrorMessage = fmt.Sprintf("%s", r)
 		}
@@ -51,7 +51,7 @@ func executeFunc(fn reflect.Value, args ...interface{}) (res *m.ProtoExecutionRe
 		res.StackTrace = T.getStacktraces()
 		res.ErrorMessage = T.getErrors()
 	}
-	res.ExecutionTime = time.Since(start).Nanoseconds()
+	res.ExecutionTime = time.Since(start).Nanoseconds() / int64(time.Millisecond)
 	return res
 }
 
