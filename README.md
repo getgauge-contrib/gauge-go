@@ -5,7 +5,7 @@
 Go language plugin for ThoughtWorks [Gauge](http://getgauge.io).
 
 ## Getting started in 3 steps
-* Install [Gauge](http://getgauge.io) by following instructions [here](http://getgauge.io/get-started/index.html) and gauge go plugin as `gauge install go`
+* Install [Gauge](http://gauge.org) by following instructions [here](https://docs.gauge.org/getting_started/installing-gauge.html) and gauge go plugin as `gauge install go`
 * Initialize a golang gauge project in subfolder within `GOPATH/src` directory as: 
 ```sh
 cd $GOPATH/src
@@ -16,7 +16,7 @@ gauge init go
 * Run specs: `gauge run specs`
 
 ## Installation
-* Install [Gauge](http://getgauge.io). Follow instructions [here](http://getgauge.io/get-started/).
+* Install [Gauge](http://gauge.org). Follow instructions [here](https://docs.gauge.org/getting_started/installing-gauge.html).
 * Install Gauge-Go language plugin as: `gauge install go`
 
 ### Build from Source
@@ -43,7 +43,7 @@ A sample project illustrating Gauge features using Golang & selenium webdriver c
 
 ## Usage
 
-If you are new to Gauge, please read the [Gauge documentation](https://docs.gauge.org/latest/index.html) to know about how Gauge works.
+If you are new to Gauge, please read the [Gauge documentation](https://docs.gauge.org/index.html) to know about how Gauge works.
 
 **Initialize:**
 
@@ -85,7 +85,7 @@ E.g: `assert.Equal(testsuit.T, actualCount, expectedCount, "got: %d, want: %d", 
 
 ### Execution Hooks
 
-gauge-go supports tagged [execution hooks](https://docs.gauge.org/latest/writing-specifications.html#execution-hooks). These methods are available for each type of hook:
+gauge-go supports tagged [execution hooks](https://docs.gauge.org/writing-specifications.html#execution-hooks). These methods are available for each type of hook:
 
 "Before" hooks:
 
