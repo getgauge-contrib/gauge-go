@@ -4,13 +4,16 @@ import (
 	"fmt"
 	"runtime/debug"
 	"strings"
+	"testing"
 )
 
 // T is a wrapper around *testing.T
 var T *testingT
 
 type testingT struct {
-	errors []testError
+	testing.T
+	errors            []testError
+	continueOnFailure bool
 }
 
 type testError struct {
@@ -34,9 +37,18 @@ func (t *testingT) getStacktraces() string {
 	return strings.Join(stacktraces, "\n\n")
 }
 
+func (t *testingT) getContinueOnFailure() bool {
+	return t.continueOnFailure
+}
+
 // Fail fails the step execution with the given error
 func (t *testingT) Fail(err error) {
 	panic(err)
+}
+
+// Any errors added through the Errorf method will now let the step continue to the next one.
+func (t *testingT) ContinueOnFailure() {
+	t.continueOnFailure = true
 }
 
 // Errorf records the error given, but step execution continues. However, the step is marked as failure.
