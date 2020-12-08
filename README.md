@@ -1,7 +1,3 @@
-# gauge-go
-[![Gauge Badge](http://getgauge.io/Gauge_Badge.svg)](http://getgauge.io) 
-[![Build Status](https://travis-ci.org/getgauge/gauge.svg?branch=master)](https://travis-ci.org/getgauge/gauge)
-
 Go language plugin for ThoughtWorks [Gauge](http://getgauge.io).
 
 ## Getting started in 3 steps
