@@ -83,7 +83,7 @@ func TestShouldReturnFailedButContinuableMethodExecutionResult(t *testing.T) {
 	assert.True(t, called)
 	assert.True(t, res.GetFailed())
 	assert.NotZero(t, res.GetExecutionTime())
-	assert.Equal(t, "runtime error: index out of range", res.GetErrorMessage())
+	assert.Equal(t, "runtime error: index out of range [7] with length 0", res.GetErrorMessage())
 	assert.NotZero(t, res.GetStackTrace())
 	assert.True(t, res.GetRecoverableError())
 }
