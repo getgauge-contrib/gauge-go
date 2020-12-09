@@ -3,6 +3,7 @@ package testsuit
 import (
 	"fmt"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -31,6 +32,7 @@ func TestShouldReturnPassedMethodExecutionResult(t *testing.T) {
 	step := Step{
 		Description: "Test description",
 		Impl: func(args ...interface{}) {
+			doWork()
 			called = true
 		},
 	}
@@ -49,9 +51,11 @@ func TestShouldReturnFailedMethodExecutionResult(t *testing.T) {
 	step := Step{
 		Description: "Test description",
 		Impl: func(args ...interface{}) {
+			doWork()
 			called = true
 			var a []string
 			fmt.Println(a[7])
+
 		},
 	}
 
@@ -60,6 +64,12 @@ func TestShouldReturnFailedMethodExecutionResult(t *testing.T) {
 	assert.True(t, called)
 	assert.True(t, res.GetFailed())
 	assert.NotZero(t, res.GetExecutionTime())
-	assert.Equal(t, "runtime error: index out of range", res.GetErrorMessage())
+	assert.Equal(t, "runtime error: index out of range [7] with length 0", res.GetErrorMessage())
 	assert.NotZero(t, res.GetStackTrace())
+}
+
+func doWork() {
+	// test execution time resolution is in milliseconds. So we need to wait at least that long for any
+	// assertions on it to be meaningful.
+	time.Sleep(1 * time.Millisecond)
 }

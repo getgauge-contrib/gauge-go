@@ -42,7 +42,7 @@ func TestShouldRunReturnExecutionStatusResponseWithSameId(tst *testing.T) {
 	msgId := int64(12345)
 	called := false
 	context := &t.GaugeContext{
-		Steps: []t.Step{t.Step{
+		Steps: []t.Step{{
 			Description: stepText,
 			Impl:        func(args ...interface{}) { called = true },
 		},
@@ -63,6 +63,7 @@ func TestShouldRunReturnExecutionStatusResponseWithSameId(tst *testing.T) {
 
 	assert.Equal(tst, result.MessageType, m.Message_ExecutionStatusResponse)
 	assert.Equal(tst, result.MessageId, msgId)
+	assert.True(tst, called)
 }
 
 func TestShouldRunStepWithTableParam(tst *testing.T) {
