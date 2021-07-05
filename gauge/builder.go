@@ -48,16 +48,26 @@ func LoadGaugeImpls(projectRoot string) error {
 
 	genGaugeTestFileContents(f, b.String(), vendorPackages)
 	f.Close()
-	// Scan gauge methods
-	if err := util.RunCommand(os.Stdout, os.Stdout, constants.CommandGo, "test", "-timeout", "0", "-v", gaugeGoMainFile); err != nil {
-		return fmt.Errorf("Failed to compile project: %s\nPlease ensure the project is in GOPATH.\n", err.Error())
+
+	debugPort := os.Getenv(common.GaugeDebugOptsEnv)
+
+	if debugPort == "" {
+		if err := util.RunCommand(os.Stdout, os.Stdout, constants.CommandGo, "test", "-timeout", "0", "-v", gaugeGoMainFile); err != nil {
+			return fmt.Errorf("Failed to compile project: %s\nPlease ensure the project is in GOPATH.\n", err.Error())
+		}
+		return nil
+	}
+
+	// Use Dlv to enable remote debugging
+	if err := util.RunCommand(os.Stdout, os.Stdout, "dlv", "--listen=:"+debugPort, "--headless=true", "--api-version=2", "--accept-multiclient", "test", gaugeGoMainFile, "--", "-test.run"); err != nil {
+		return fmt.Errorf("Failed to run the test in debugging mode: %s\nPlease ensure the project is in GOPATH.\n", err.Error())
 	}
 	return nil
 }
 
 func getVendorPackageList(projectRoot string) (string, error) {
 	vendorDir := filepath.Join(projectRoot, "vendor")
-	if _, err := os.Stat(vendorDir) ; err != nil {
+	if _, err := os.Stat(vendorDir); err != nil {
 		return "", nil
 	}
 	err := os.Chdir(vendorDir)
