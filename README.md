@@ -55,6 +55,11 @@ $ gauge init go
 $ gauge run specs/
 ```
 
+**Run specs with remote debugging enabled:**
+
+```sh
+$ GAUGE_DEBUG_OPTS=40000 gauge run specs/
+```
 ## Methods
 
 ### Step implementation

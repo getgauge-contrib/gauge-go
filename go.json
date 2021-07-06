@@ -1,7 +1,12 @@
 {
     "id": "go",
-    "version": "0.1.4",
+    "version": "0.2.0",
     "description": "Go support for gauge",
+    "preInstall": {
+        "windows": ["go", "get", "github.com/go-delve/delve/cmd/dlv"],
+        "linux": ["go", "get", "github.com/go-delve/delve/cmd/dlv"],
+        "darwin": ["go", "get", "github.com/go-delve/delve/cmd/dlv"]
+    },
     "run": {
         "windows": ["bin/gauge-go", "--start"],
         "linux": ["bin/gauge-go", "--start"],
