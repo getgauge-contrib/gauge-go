@@ -22,6 +22,7 @@ const (
 	GOOS        = "GOOS"
 	X86         = "386"
 	X86_64      = "amd64"
+	ARM64       = "arm64"
 	DARWIN      = "darwin"
 	LINUX       = "linux"
 	WINDOWS     = "windows"
@@ -43,12 +44,12 @@ var binDir = flag.String("bin-dir", "", "Specifies OS_PLATFORM specific binaries
 
 var (
 	platformEnvs = []map[string]string{
-		map[string]string{GOARCH: X86, GOOS: DARWIN, CGO_ENABLED: "0"},
-		map[string]string{GOARCH: X86_64, GOOS: DARWIN, CGO_ENABLED: "0"},
-		map[string]string{GOARCH: X86, GOOS: LINUX, CGO_ENABLED: "0"},
-		map[string]string{GOARCH: X86_64, GOOS: LINUX, CGO_ENABLED: "0"},
-		map[string]string{GOARCH: X86, GOOS: WINDOWS, CGO_ENABLED: "0"},
-		map[string]string{GOARCH: X86_64, GOOS: WINDOWS, CGO_ENABLED: "0"},
+		{GOARCH: ARM64, GOOS: DARWIN, CGO_ENABLED: "0"},
+		{GOARCH: X86_64, GOOS: DARWIN, CGO_ENABLED: "0"},
+		{GOARCH: X86, GOOS: LINUX, CGO_ENABLED: "0"},
+		{GOARCH: X86_64, GOOS: LINUX, CGO_ENABLED: "0"},
+		{GOARCH: X86, GOOS: WINDOWS, CGO_ENABLED: "0"},
+		{GOARCH: X86_64, GOOS: WINDOWS, CGO_ENABLED: "0"},
 	}
 )
 
