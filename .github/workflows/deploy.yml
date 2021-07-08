@@ -1,0 +1,63 @@
+name: deploy
+on: [deployment]
+
+jobs:
+  deploy:
+    name: deploy json report
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Setup go 1.16
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.16
+
+      - name: build
+        run: |
+          go run build/make.go --all-platforms
+          go run build/make.go --all-platforms --distro
+      - name: update
+        run: |
+          cd deploy
+          if [ -z "$version" ]; then
+            version=$(grep '"version"' ../plugin.json | sed 's/"version":[[:space:]]*"//' | sed 's/",//' | tr -d [:space:])
+          fi
+          artifacts=()
+          dir=`pwd`
+          for i in `ls *.zip`; do
+              artifacts+="$dir/$i "
+          done
+          cd ..
+          echo "---------------------------"
+          echo "Updating release v$version"
+          echo "---------------------------"
+          echo -e "JSON Report v$version\n\n" > desc.txt
+          release_description=$(ruby -e "$(curl -sSfL https://github.com/getgauge/gauge/raw/master/build/create_release_text.rb)" getgauge-contrib gauge-go)
+          echo "$release_description" >> desc.txt
+          echo "Creating new draft for release v$version"
+          hub release create -d -F ./desc.txt "v$version"
+          rm -rf desc.txt
+          echo "Start uploading assets..."
+          for i in `ls $artifacts`; do
+              hub release edit -m "" -a $i "v$version"
+              if [ $? -ne 0 ];then
+                  exit 1
+              fi
+          done
+      - name: 'deployment success'
+        if: success()
+        uses: 'deliverybot/status@master'
+        with:
+          state: 'success'
+          token: '${{ secrets.GITHUB_TOKEN }}'
+
+      - name: 'deployment failure'
+        if: failure()
+        uses: 'deliverybot/status@master'
+        with:
+          state: 'failure'
+          token: '${{ secrets.GITHUB_TOKEN }}'
