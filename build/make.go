@@ -242,6 +242,9 @@ func getUserHome() string {
 
 func getArch() string {
 	arch := getGOARCH()
+	if arch == ARM64 {
+		return ARM64
+	}
 	if arch == X86 {
 		return "x86"
 	}
