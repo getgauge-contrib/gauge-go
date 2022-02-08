@@ -34,7 +34,7 @@ func TestExecutesHooksForTheTags(tst *testing.T) {
 		Hooks: []t.Hook{
 			t.Hook{
 				Type: t.BEFORESUITE,
-				Impl: func() {
+				Impl: func(*m.ExecutionInfo) {
 					called1 = true
 				},
 				Tags:     []string{"foo", "bar"},
@@ -42,7 +42,7 @@ func TestExecutesHooksForTheTags(tst *testing.T) {
 			},
 			t.Hook{
 				Type: t.BEFORESUITE,
-				Impl: func() {
+				Impl: func(*m.ExecutionInfo) {
 					called2 = true
 				},
 				Tags:     []string{"notfoo", "bar"},
@@ -81,7 +81,7 @@ func TestReportErrorIfHookFails(tst *testing.T) {
 		Hooks: []t.Hook{
 			t.Hook{
 				Type: t.BEFORESUITE,
-				Impl: func() {
+				Impl: func(*m.ExecutionInfo) {
 					called1 = true
 				},
 				Tags:     []string{"foo", "bar"},
@@ -89,7 +89,7 @@ func TestReportErrorIfHookFails(tst *testing.T) {
 			},
 			t.Hook{
 				Type: t.BEFORESUITE,
-				Impl: func() {
+				Impl: func(*m.ExecutionInfo) {
 					called2 = true
 					if 1 == 1 {
 						panic(errors.New("Execution failed"))
