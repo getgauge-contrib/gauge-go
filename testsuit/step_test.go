@@ -76,6 +76,7 @@ func TestShouldReturnFailedButContinuableMethodExecutionResult(t *testing.T) {
 		Description: "Test description",
 		Impl: func(args ...interface{}) {
 			T.ContinueOnFailure()
+			doWork()
 			called = true
 			var a []string
 			fmt.Println(a[7])
