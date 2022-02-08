@@ -5,11 +5,11 @@ import (
 	t "github.com/getgauge-contrib/gauge-go/testsuit"
 )
 
-func executeHooks(hooks []t.Hook, msg *m.Message) *m.Message {
+func executeHooks(hooks []t.Hook, msg *m.Message, exInfo *m.ExecutionInfo) *m.Message {
 	var res *m.ProtoExecutionResult
 	var totalExecutionTime int64
 	for _, hook := range hooks {
-		res = hook.Execute()
+		res = hook.Execute(exInfo)
 		totalExecutionTime += res.GetExecutionTime()
 		if res.GetFailed() {
 			return &m.Message{

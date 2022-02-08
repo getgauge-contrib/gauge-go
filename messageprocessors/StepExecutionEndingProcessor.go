@@ -10,8 +10,9 @@ type StepExecutionEndingProcessor struct{}
 func (r *StepExecutionEndingProcessor) Process(msg *m.Message, context *t.GaugeContext) *m.Message {
 	tags := msg.GetStepExecutionEndingRequest().GetCurrentExecutionInfo().GetCurrentSpec().GetTags()
 	hooks := context.GetHooks(t.AFTERSTEP, tags)
+	exInfo := msg.GetStepExecutionEndingRequest().GetCurrentExecutionInfo()
 
-	res := executeHooks(hooks, msg)
+	res := executeHooks(hooks, msg, exInfo)
 	res.GetExecutionStatusResponse().GetExecutionResult().Message = context.CustomMessageRegistry
 	context.ClearCustomMessages()
 

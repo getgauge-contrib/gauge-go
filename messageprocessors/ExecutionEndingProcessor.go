@@ -10,6 +10,7 @@ type ExecutionEndingProcessor struct{}
 func (r *ExecutionEndingProcessor) Process(msg *m.Message, context *t.GaugeContext) *m.Message {
 	tags := msg.GetExecutionEndingRequest().GetCurrentExecutionInfo().GetCurrentScenario().GetTags()
 	hooks := context.GetHooks(t.AFTERSUITE, tags)
+	exInfo := msg.GetExecutionEndingRequest().GetCurrentExecutionInfo()
 
-	return executeHooks(hooks, msg)
+	return executeHooks(hooks, msg, exInfo)
 }
