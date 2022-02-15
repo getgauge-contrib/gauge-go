@@ -35,7 +35,7 @@ func TestExecutesHooksForTheTagsForScenarioExecutionStartingRequest(tst *testing
 		Hooks: []t.Hook{
 			t.Hook{
 				Type: t.BEFORESCENARIO,
-				Impl: func() {
+				Impl: func(*m.ExecutionInfo) {
 					called1 = true
 				},
 				Tags:     []string{"foo", "bar"},
@@ -43,7 +43,7 @@ func TestExecutesHooksForTheTagsForScenarioExecutionStartingRequest(tst *testing
 			},
 			t.Hook{
 				Type: t.BEFORESCENARIO,
-				Impl: func() {
+				Impl: func(*m.ExecutionInfo) {
 					called2 = true
 				},
 				Tags:     []string{"notfoo", "bar"},
@@ -81,7 +81,7 @@ func TestReportErrorIfHookFailsForScenarioExecutionStartingRequest(tst *testing.
 		Hooks: []t.Hook{
 			t.Hook{
 				Type: t.BEFORESCENARIO,
-				Impl: func() {
+				Impl: func(*m.ExecutionInfo) {
 					called1 = true
 				},
 				Tags:     []string{"foo", "bar"},
@@ -89,7 +89,7 @@ func TestReportErrorIfHookFailsForScenarioExecutionStartingRequest(tst *testing.
 			},
 			t.Hook{
 				Type: t.BEFORESCENARIO,
-				Impl: func() {
+				Impl: func(*m.ExecutionInfo) {
 					called2 = true
 					if 1 == 1 {
 						panic(errors.New("Execution failed"))

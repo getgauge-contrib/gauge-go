@@ -28,12 +28,12 @@ const (
 
 type Hook struct {
 	Type     HookType
-	Impl     func()
+	Impl     func(*m.ExecutionInfo)
 	Tags     []string
 	Operator Operator
 }
 
-func (hook *Hook) Execute() *m.ProtoExecutionResult {
+func (hook *Hook) Execute(exInfo *m.ExecutionInfo) *m.ProtoExecutionResult {
 	fn := reflect.ValueOf(hook.Impl)
-	return executeFunc(fn)
+	return executeFunc(fn, exInfo)
 }

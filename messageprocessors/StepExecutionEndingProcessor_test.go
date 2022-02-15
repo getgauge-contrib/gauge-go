@@ -35,7 +35,7 @@ func TestExecutesHooksForTheTagsForStepExecutionEnding(tst *testing.T) {
 		Hooks: []t.Hook{
 			t.Hook{
 				Type: t.AFTERSTEP,
-				Impl: func() {
+				Impl: func(*m.ExecutionInfo) {
 					called1 = true
 				},
 				Tags:     []string{"foo", "bar"},
@@ -43,7 +43,7 @@ func TestExecutesHooksForTheTagsForStepExecutionEnding(tst *testing.T) {
 			},
 			t.Hook{
 				Type: t.AFTERSTEP,
-				Impl: func() {
+				Impl: func(*m.ExecutionInfo) {
 					called2 = true
 				},
 				Tags:     []string{"notfoo", "bar"},
@@ -82,7 +82,7 @@ func TestReportErrorIfHookFailsForStepExecutionEnding(tst *testing.T) {
 		Hooks: []t.Hook{
 			t.Hook{
 				Type: t.AFTERSTEP,
-				Impl: func() {
+				Impl: func(*m.ExecutionInfo) {
 					called1 = true
 				},
 				Tags:     []string{"foo", "bar"},
@@ -90,7 +90,7 @@ func TestReportErrorIfHookFailsForStepExecutionEnding(tst *testing.T) {
 			},
 			t.Hook{
 				Type: t.AFTERSTEP,
-				Impl: func() {
+				Impl: func(*m.ExecutionInfo) {
 					called2 = true
 					if 1 == 1 {
 						panic(errors.New("Execution failed"))
@@ -134,7 +134,7 @@ func TestShouldReturnCustomMessagesInResult(tst *testing.T) {
 		Hooks: []t.Hook{
 			t.Hook{
 				Type: t.AFTERSTEP,
-				Impl: func() {
+				Impl: func(*m.ExecutionInfo) {
 					called = true
 				},
 				Operator: t.AND,

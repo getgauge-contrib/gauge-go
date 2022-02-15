@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	m "github.com/getgauge-contrib/gauge-go/gauge_messages"
 )
 
 func TestShouldGetStepsWithDescription(t *testing.T) {
@@ -43,7 +44,7 @@ func TestShouldGetHooksOfGivenType(t *testing.T) {
 		Hooks: []Hook{
 			Hook{
 				Type:     BEFORESUITE,
-				Impl:     func() {},
+				Impl:     func(*m.ExecutionInfo) {},
 				Tags:     []string{},
 				Operator: AND,
 			},
@@ -60,13 +61,13 @@ func TestShouldGetHooksWithAnyOfTheseTags(t *testing.T) {
 		Hooks: []Hook{
 			Hook{
 				Type:     BEFORESUITE,
-				Impl:     func() {},
+				Impl:     func(*m.ExecutionInfo) {},
 				Tags:     []string{"foo", "bar"},
 				Operator: OR,
 			},
 			Hook{
 				Type:     BEFORESUITE,
-				Impl:     func() {},
+				Impl:     func(*m.ExecutionInfo) {},
 				Tags:     []string{"notfoo", "bar"},
 				Operator: OR,
 			},
@@ -84,13 +85,13 @@ func TestShouldNotGetHooksIfTagsDontMatch(t *testing.T) {
 		Hooks: []Hook{
 			Hook{
 				Type:     BEFORESUITE,
-				Impl:     func() {},
+				Impl:     func(*m.ExecutionInfo) {},
 				Tags:     []string{"foo", "bar"},
 				Operator: OR,
 			},
 			Hook{
 				Type:     BEFORESUITE,
-				Impl:     func() {},
+				Impl:     func(*m.ExecutionInfo) {},
 				Tags:     []string{"notfoo", "bar"},
 				Operator: OR,
 			},
@@ -106,13 +107,13 @@ func TestShouldGetHooksWithBothTags(t *testing.T) {
 		Hooks: []Hook{
 			Hook{
 				Type:     BEFORESUITE,
-				Impl:     func() {},
+				Impl:     func(*m.ExecutionInfo) {},
 				Tags:     []string{"foo", "bar"},
 				Operator: AND,
 			},
 			Hook{
 				Type:     BEFORESUITE,
-				Impl:     func() {},
+				Impl:     func(*m.ExecutionInfo) {},
 				Tags:     []string{"notfoo", "bar"},
 				Operator: AND,
 			},

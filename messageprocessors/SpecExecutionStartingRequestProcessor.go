@@ -10,6 +10,7 @@ type SpecExecutionStartingRequestProcessor struct{}
 func (r *SpecExecutionStartingRequestProcessor) Process(msg *m.Message, context *t.GaugeContext) *m.Message {
 	tags := msg.GetSpecExecutionStartingRequest().GetCurrentExecutionInfo().GetCurrentSpec().GetTags()
 	hooks := context.GetHooks(t.BEFORESPEC, tags)
+	exInfo := msg.GetSpecExecutionStartingRequest().GetCurrentExecutionInfo()
 
-	return executeHooks(hooks, msg)
+	return executeHooks(hooks, msg, exInfo)
 }

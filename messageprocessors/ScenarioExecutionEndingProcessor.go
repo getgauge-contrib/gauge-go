@@ -10,5 +10,7 @@ type ScenarioExecutionEndingProcessor struct{}
 func (r *ScenarioExecutionEndingProcessor) Process(msg *m.Message, context *t.GaugeContext) *m.Message {
 	tags := msg.GetScenarioExecutionEndingRequest().GetCurrentExecutionInfo().GetCurrentScenario().GetTags()
 	hooks := context.GetHooks(t.AFTERSCENARIO, tags)
-	return executeHooks(hooks, msg)
+	exInfo := msg.GetScenarioExecutionEndingRequest().GetCurrentExecutionInfo()
+
+	return executeHooks(hooks, msg, exInfo)
 }
