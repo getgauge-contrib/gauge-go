@@ -8,7 +8,7 @@ import (
 type ScenarioExecutionEndingProcessor struct{}
 
 func (r *ScenarioExecutionEndingProcessor) Process(msg *m.Message, context *t.GaugeContext) *m.Message {
-	tags := msg.GetScenarioExecutionEndingRequest().GetCurrentExecutionInfo().GetCurrentScenario().GetTags()
+	tags := mergeSpecAndScenarioTags(msg.GetScenarioExecutionEndingRequest().GetCurrentExecutionInfo())
 	hooks := context.GetHooks(t.AFTERSCENARIO, tags)
 	exInfo := msg.GetScenarioExecutionEndingRequest().GetCurrentExecutionInfo()
 

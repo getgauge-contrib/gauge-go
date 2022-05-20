@@ -8,7 +8,7 @@ import (
 type StepExecutionEndingProcessor struct{}
 
 func (r *StepExecutionEndingProcessor) Process(msg *m.Message, context *t.GaugeContext) *m.Message {
-	tags := msg.GetStepExecutionEndingRequest().GetCurrentExecutionInfo().GetCurrentSpec().GetTags()
+	tags := mergeSpecAndScenarioTags(msg.GetStepExecutionEndingRequest().GetCurrentExecutionInfo())
 	hooks := context.GetHooks(t.AFTERSTEP, tags)
 	exInfo := msg.GetStepExecutionEndingRequest().GetCurrentExecutionInfo()
 
