@@ -41,3 +41,10 @@ func createResponseMessage(msgId int64, executionTime int64, err error) *m.Messa
 		},
 	}
 }
+
+func mergeSpecAndScenarioTags(exInfo *m.ExecutionInfo) (mergedTags []string){
+	specTags := exInfo.GetCurrentSpec().GetTags()
+	scenarioTags := exInfo.GetCurrentScenario().GetTags()
+	mergedTags = append(specTags, scenarioTags...)
+	return
+}

@@ -9,7 +9,7 @@ type ExecutionStartingRequestProcessor struct{}
 
 func (r *ExecutionStartingRequestProcessor) Process(msg *m.Message, context *t.GaugeContext) *m.Message {
 
-	tags := msg.GetExecutionStartingRequest().GetCurrentExecutionInfo().GetCurrentScenario().GetTags()
+	tags := []string{}
 	hooks := context.GetHooks(t.BEFORESUITE, tags)
 	exInfo := msg.GetExecutionStartingRequest().GetCurrentExecutionInfo()
 

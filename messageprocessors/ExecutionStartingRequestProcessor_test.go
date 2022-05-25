@@ -77,6 +77,7 @@ func TestExecutesHooksForTheTags(tst *testing.T) {
 func TestReportErrorIfHookFails(tst *testing.T) {
 	called1 := false
 	called2 := false
+	called3 := false
 	context := &t.GaugeContext{
 		Hooks: []t.Hook{
 			t.Hook{
@@ -84,13 +85,19 @@ func TestReportErrorIfHookFails(tst *testing.T) {
 				Impl: func(*m.ExecutionInfo) {
 					called1 = true
 				},
+			},
+			t.Hook{
+				Type: t.BEFORESUITE,
+				Impl: func(*m.ExecutionInfo) {
+					called2 = true
+				},
 				Tags:     []string{"foo", "bar"},
 				Operator: t.AND,
 			},
 			t.Hook{
 				Type: t.BEFORESUITE,
 				Impl: func(*m.ExecutionInfo) {
-					called2 = true
+					called3 = true
 					if 1 == 1 {
 						panic(errors.New("Execution failed"))
 					}
@@ -119,6 +126,7 @@ func TestReportErrorIfHookFails(tst *testing.T) {
 
 	assert.True(tst, called1)
 	assert.True(tst, called2)
+	assert.True(tst, called3)
 	assert.Equal(tst, result.MessageType, m.Message_ExecutionStatusResponse)
 	assert.Equal(tst, result.MessageId, msgId)
 	assert.True(tst, result.ExecutionStatusResponse.ExecutionResult.Failed)
