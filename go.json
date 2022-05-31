@@ -1,6 +1,6 @@
 {
     "id": "go",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "description": "Go support for gauge",
     "preInstall": {
         "windows": ["go", "get", "github.com/go-delve/delve/cmd/dlv"],
