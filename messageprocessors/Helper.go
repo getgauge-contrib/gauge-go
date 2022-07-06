@@ -5,11 +5,11 @@ import (
 	t "github.com/getgauge-contrib/gauge-go/testsuit"
 )
 
-func executeHooks(hooks []t.Hook, msg *m.Message) *m.Message {
+func executeHooks(hooks []t.Hook, msg *m.Message, exInfo *m.ExecutionInfo) *m.Message {
 	var res *m.ProtoExecutionResult
 	var totalExecutionTime int64
 	for _, hook := range hooks {
-		res = hook.Execute()
+		res = hook.Execute(exInfo)
 		totalExecutionTime += res.GetExecutionTime()
 		if res.GetFailed() {
 			return &m.Message{
@@ -40,4 +40,11 @@ func createResponseMessage(msgId int64, executionTime int64, err error) *m.Messa
 			},
 		},
 	}
+}
+
+func mergeSpecAndScenarioTags(exInfo *m.ExecutionInfo) (mergedTags []string){
+	specTags := exInfo.GetCurrentSpec().GetTags()
+	scenarioTags := exInfo.GetCurrentScenario().GetTags()
+	mergedTags = append(specTags, scenarioTags...)
+	return
 }

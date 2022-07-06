@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	m "github.com/getgauge-contrib/gauge-go/gauge_messages"
 )
 
 func TestShouldGetStepsWithDescription(t *testing.T) {
@@ -43,7 +44,13 @@ func TestShouldGetHooksOfGivenType(t *testing.T) {
 		Hooks: []Hook{
 			Hook{
 				Type:     BEFORESUITE,
-				Impl:     func() {},
+				Impl:     func(*m.ExecutionInfo) {},
+				Tags:     []string{},
+				Operator: AND,
+			},
+			Hook{
+				Type:     AFTERSUITE,
+				Impl:     func(*m.ExecutionInfo) {},
 				Tags:     []string{},
 				Operator: AND,
 			},
@@ -55,25 +62,79 @@ func TestShouldGetHooksOfGivenType(t *testing.T) {
 	assert.Equal(t, 1, len(hooks))
 }
 
-func TestShouldGetHooksWithAnyOfTheseTags(t *testing.T) {
+// Suite hooks should be not filtered by tags
+
+func TestBeforeSuiteShouldGetHooksIfTagsDontMatch(t *testing.T) {
 	context := &GaugeContext{
 		Hooks: []Hook{
 			Hook{
 				Type:     BEFORESUITE,
-				Impl:     func() {},
+				Impl:     func(*m.ExecutionInfo) {},
 				Tags:     []string{"foo", "bar"},
 				Operator: OR,
 			},
 			Hook{
 				Type:     BEFORESUITE,
-				Impl:     func() {},
+				Impl:     func(*m.ExecutionInfo) {},
 				Tags:     []string{"notfoo", "bar"},
 				Operator: OR,
 			},
 		},
 	}
 
-	hooks := context.GetHooks(BEFORESUITE, []string{"foo", "foobar"})
+	hooks := context.GetHooks(BEFORESUITE, []string{"foobar"})
+
+	assert.Equal(t, 2, len(hooks))
+	assert.NotContains(t, hooks[0].Tags, "foobar")
+	assert.NotContains(t, hooks[1].Tags, "foobar")
+}
+
+func TestAfterSuiteShouldGetHooksIfTagsDontMatch(t *testing.T) {
+	context := &GaugeContext{
+		Hooks: []Hook{
+			Hook{
+				Type:     AFTERSUITE,
+				Impl:     func(*m.ExecutionInfo) {},
+				Tags:     []string{"foo", "bar"},
+				Operator: OR,
+			},
+			Hook{
+				Type:     AFTERSUITE,
+				Impl:     func(*m.ExecutionInfo) {},
+				Tags:     []string{"notfoo", "bar"},
+				Operator: OR,
+			},
+		},
+	}
+
+	hooks := context.GetHooks(AFTERSUITE, []string{"foobar"})
+
+	assert.Equal(t, 2, len(hooks))
+	assert.NotContains(t, hooks[0].Tags, "foobar")
+	assert.NotContains(t, hooks[1].Tags, "foobar")
+}
+
+// Test hook filtering by tags
+
+func TestShouldGetHooksWithAnyOfTheseTags(t *testing.T) {
+	context := &GaugeContext{
+		Hooks: []Hook{
+			Hook{
+				Type:     BEFORESPEC,
+				Impl:     func(*m.ExecutionInfo) {},
+				Tags:     []string{"foo", "bar"},
+				Operator: OR,
+			},
+			Hook{
+				Type:     BEFORESPEC,
+				Impl:     func(*m.ExecutionInfo) {},
+				Tags:     []string{"notfoo", "bar"},
+				Operator: OR,
+			},
+		},
+	}
+
+	hooks := context.GetHooks(BEFORESPEC, []string{"foo", "foobar"})
 
 	assert.Equal(t, 1, len(hooks))
 	assert.Contains(t, hooks[0].Tags, "foo")
@@ -83,14 +144,14 @@ func TestShouldNotGetHooksIfTagsDontMatch(t *testing.T) {
 	context := &GaugeContext{
 		Hooks: []Hook{
 			Hook{
-				Type:     BEFORESUITE,
-				Impl:     func() {},
+				Type:     BEFORESPEC,
+				Impl:     func(*m.ExecutionInfo) {},
 				Tags:     []string{"foo", "bar"},
 				Operator: OR,
 			},
 			Hook{
-				Type:     BEFORESUITE,
-				Impl:     func() {},
+				Type:     BEFORESPEC,
+				Impl:     func(*m.ExecutionInfo) {},
 				Tags:     []string{"notfoo", "bar"},
 				Operator: OR,
 			},
@@ -105,21 +166,21 @@ func TestShouldGetHooksWithBothTags(t *testing.T) {
 	context := &GaugeContext{
 		Hooks: []Hook{
 			Hook{
-				Type:     BEFORESUITE,
-				Impl:     func() {},
+				Type:     BEFORESPEC,
+				Impl:     func(*m.ExecutionInfo) {},
 				Tags:     []string{"foo", "bar"},
 				Operator: AND,
 			},
 			Hook{
-				Type:     BEFORESUITE,
-				Impl:     func() {},
+				Type:     BEFORESPEC,
+				Impl:     func(*m.ExecutionInfo) {},
 				Tags:     []string{"notfoo", "bar"},
 				Operator: AND,
 			},
 		},
 	}
 
-	hooks := context.GetHooks(BEFORESUITE, []string{"foo", "bar"})
+	hooks := context.GetHooks(BEFORESPEC, []string{"foo", "bar"})
 
 	assert.Equal(t, 1, len(hooks))
 	assert.Contains(t, hooks[0].Tags, "foo")

@@ -8,8 +8,10 @@ import (
 type StepExecutionStartingRequestProcessor struct{}
 
 func (r *StepExecutionStartingRequestProcessor) Process(msg *m.Message, context *t.GaugeContext) *m.Message {
-	tags := msg.GetStepExecutionStartingRequest().GetCurrentExecutionInfo().GetCurrentSpec().GetTags()
+	tags := mergeSpecAndScenarioTags(msg.GetStepExecutionStartingRequest().GetCurrentExecutionInfo())
 	hooks := context.GetHooks(t.BEFORESTEP, tags)
+	exInfo := msg.GetStepExecutionStartingRequest().GetCurrentExecutionInfo()
 	context.ClearCustomMessages()
-	return executeHooks(hooks, msg)
+
+	return executeHooks(hooks, msg, exInfo)
 }

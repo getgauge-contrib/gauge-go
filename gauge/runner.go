@@ -49,7 +49,7 @@ func init() {
 
 // BeforeSuite hook is executed before suite execution begins
 // This can be used for any setup before execution begins.
-func BeforeSuite(fn func(), tags []string, op t.Operator) bool {
+func BeforeSuite(fn func(exInfo *m.ExecutionInfo), tags []string, op t.Operator) bool {
 	hook := t.Hook{
 		Type:     t.BEFORESUITE,
 		Impl:     fn,
@@ -63,7 +63,7 @@ func BeforeSuite(fn func(), tags []string, op t.Operator) bool {
 
 // AfterSuite hook is executed after hook execution is completed.
 // This can be used for any cleanup after entire execution.
-func AfterSuite(fn func(), tags []string, op t.Operator) bool {
+func AfterSuite(fn func(exInfo *m.ExecutionInfo), tags []string, op t.Operator) bool {
 	hook := t.Hook{
 		Type:     t.AFTERSUITE,
 		Impl:     fn,
@@ -78,7 +78,7 @@ func AfterSuite(fn func(), tags []string, op t.Operator) bool {
 // BeforeSpec hook is executed before every spec execution begins
 // This can be used for any spec setup before execution begins. It can be executed for only a specific set of specs using Tags.
 // This hook will be executed only for specs which satisfy the tags and tag operator(AND or OR) mentioned.
-func BeforeSpec(fn func(), tags []string, op t.Operator) bool {
+func BeforeSpec(fn func(exInfo *m.ExecutionInfo), tags []string, op t.Operator) bool {
 	hook := t.Hook{
 		Type:     t.BEFORESPEC,
 		Impl:     fn,
@@ -93,7 +93,7 @@ func BeforeSpec(fn func(), tags []string, op t.Operator) bool {
 // AfterSpec hook is executed after every spec execution.
 // This can be used for any spec cleanup after execution. It can be executed for only a specific set of specs using Tags.
 // This hook will be executed only for specs which satisfy the tags and tag operator(AND or OR) mentioned.
-func AfterSpec(fn func(), tags []string, op t.Operator) bool {
+func AfterSpec(fn func(exInfo *m.ExecutionInfo), tags []string, op t.Operator) bool {
 	hook := t.Hook{
 		Type:     t.AFTERSPEC,
 		Impl:     fn,
@@ -108,7 +108,7 @@ func AfterSpec(fn func(), tags []string, op t.Operator) bool {
 // BeforeScenario hook is executed before every scenario execution begins.
 // This can be used for any scenario setup before execution begins. It can be executed for only a specific set of specs using Tags.
 // This hook will be executed only for scenario which satisfy the tags and tag operator(AND or OR) mentioned.
-func BeforeScenario(fn func(), tags []string, op t.Operator) bool {
+func BeforeScenario(fn func(exInfo *m.ExecutionInfo), tags []string, op t.Operator) bool {
 	hook := t.Hook{
 		Type:     t.BEFORESCENARIO,
 		Impl:     fn,
@@ -123,7 +123,7 @@ func BeforeScenario(fn func(), tags []string, op t.Operator) bool {
 // AfterScenario hook is executed after every scenario execution.
 // This can be used for any spec cleanup after execution. It can be executed for only a specific set of specs using Tags.
 // This hook will be executed only for scenarios which satisfy the tags and tag operator(AND or OR) mentioned.
-func AfterScenario(fn func(), tags []string, op t.Operator) bool {
+func AfterScenario(fn func(exInfo *m.ExecutionInfo), tags []string, op t.Operator) bool {
 	hook := t.Hook{
 		Type:     t.AFTERSCENARIO,
 		Impl:     fn,
@@ -137,7 +137,7 @@ func AfterScenario(fn func(), tags []string, op t.Operator) bool {
 
 // BeforeStep hook is executed before every step execution begins.
 // This can be used for any step setup before execution begins.
-func BeforeStep(fn func(), tags []string, op t.Operator) bool {
+func BeforeStep(fn func(exInfo *m.ExecutionInfo), tags []string, op t.Operator) bool {
 	hook := t.Hook{
 		Type:     t.BEFORESTEP,
 		Impl:     fn,
@@ -151,7 +151,7 @@ func BeforeStep(fn func(), tags []string, op t.Operator) bool {
 
 // AfterStep hook is executed before after every step execution.
 // This can be used for any step cleanup after execution.
-func AfterStep(fn func(), tags []string, op t.Operator) bool {
+func AfterStep(fn func(exInfo *m.ExecutionInfo), tags []string, op t.Operator) bool {
 	hook := t.Hook{
 		Type:     t.AFTERSTEP,
 		Impl:     fn,

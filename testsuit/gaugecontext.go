@@ -26,6 +26,12 @@ func (c *GaugeContext) GetStepByDesc(desc string) (*Step, error) {
 func (c *GaugeContext) GetHooks(hookType HookType, tags []string) []Hook {
 	filteredByType := filterByType(c.Hooks, hookType)
 	h := make([]Hook, 0)
+	//Suite Hooks are not filtered by tags
+	if BEFORESUITE == hookType ||
+	   AFTERSUITE  == hookType {
+		h = append(h, filteredByType...)
+		return h
+	}
 	//TODO complexity is O(n^3) optimize it
 	for _, hook := range filteredByType {
 		switch hook.Operator {
