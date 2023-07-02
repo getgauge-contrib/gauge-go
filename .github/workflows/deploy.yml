@@ -27,6 +27,12 @@ jobs:
           go run build/make.go --all-platforms
           go run build/make.go --all-platforms --distro
 
+      - name: 'deployment pending'
+        uses: 'deliverybot/deployment-status@v1'
+        with:
+          state: 'pending'
+          token: '${{ secrets.GITHUB_TOKEN }}'
+
       - name: update
         run: |
           cd deploy
@@ -59,14 +65,14 @@ jobs:
           done
       - name: 'deployment success'
         if: success()
-        uses: 'deliverybot/status@master'
+        uses: 'deliverybot/deployment-status@v1'
         with:
           state: 'success'
           token: '${{ secrets.GITHUB_TOKEN }}'
 
       - name: 'deployment failure'
         if: failure()
-        uses: 'deliverybot/status@master'
+        uses: 'deliverybot/deployment-status@v1'
         with:
           state: 'failure'
           token: '${{ secrets.GITHUB_TOKEN }}'
