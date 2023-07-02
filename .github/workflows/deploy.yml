@@ -1,10 +1,16 @@
 name: deploy
-on: [deployment]
+concurrency:
+  group: production
+  cancel-in-progress: true
+
+on:
+  workflow_dispatch:
 
 jobs:
   deploy:
     name: deploy gauge-go
     runs-on: ubuntu-latest
+    environment: production
     env:
       GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
 
