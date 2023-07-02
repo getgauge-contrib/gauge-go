@@ -27,18 +27,13 @@ jobs:
           go run build/make.go --all-platforms
           go run build/make.go --all-platforms --distro
 
-      - name: 'deployment pending'
-        uses: 'deliverybot/deployment-status@v1'
-        with:
-          state: 'pending'
-          token: '${{ secrets.GITHUB_TOKEN }}'
-
       - name: update
         run: |
           cd deploy
           if [ -z "$version" ]; then
             version=$(grep '"version"' ../go.json | sed 's/"version":[[:space:]]*"//' | sed 's/",//' | tr -d [:space:])
           fi
+          echo "VERSION=$version" >> $GITHUB_ENV
           artifacts=()
           dir=`pwd`
           for i in `ls *.zip`; do
@@ -63,16 +58,12 @@ jobs:
                   exit 1
               fi
           done
-      - name: 'deployment success'
-        if: success()
-        uses: 'deliverybot/deployment-status@v1'
-        with:
-          state: 'success'
-          token: '${{ secrets.GITHUB_TOKEN }}'
 
-      - name: 'deployment failure'
-        if: failure()
-        uses: 'deliverybot/deployment-status@v1'
-        with:
-          state: 'failure'
-          token: '${{ secrets.GITHUB_TOKEN }}'
+      - name: Update metadata in gauge-repository
+        run: |
+          git clone https://github.com/getgauge/gauge-repository.git
+          cd gauge-repository
+          python update_metadata.py go $VERSION
+          commit_message=$(echo -e "Update go to v$VERSION")
+          git commit -am "$commit_message"
+          git push "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/getgauge/gauge-repository.git" master
