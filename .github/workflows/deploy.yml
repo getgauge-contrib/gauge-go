@@ -59,6 +59,11 @@ jobs:
               fi
           done
 
+      - name: Setup git
+        run: |
+          git config --global user.name "$(git --no-pager log --format=format:'%an' -n 1)"
+          git config --global user.email "$(git --no-pager log --format=format:'%ae' -n 1)"
+
       - name: Update metadata in gauge-repository
         run: |
           git clone https://github.com/getgauge/gauge-repository.git
