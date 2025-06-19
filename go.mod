@@ -1,10 +1,12 @@
 module github.com/getgauge-contrib/gauge-go
 
-go 1.20
+go 1.24
+
+toolchain go1.24.4
 
 require (
-	github.com/getgauge/common v0.0.0-20211105093448-e0aee1ccb217
-	github.com/golang/protobuf v1.5.3
+	github.com/getgauge/common v0.0.0-20250512071011-6a075badb588
+	github.com/golang/protobuf v1.5.4
 	github.com/stretchr/testify v1.6.1
 )
 
@@ -12,7 +14,7 @@ require (
 	github.com/davecgh/go-spew v1.1.0 // indirect
 	github.com/dmotylev/goproperties v0.0.0-20140630191356-7cbffbaada47 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	google.golang.org/protobuf v1.31.0 // indirect
+	google.golang.org/protobuf v1.36.6 // indirect
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 	gopkg.in/yaml.v3 v3.0.0 // indirect
 )
