@@ -7,8 +7,8 @@ toolchain go1.24.4
 require (
 	github.com/getgauge/common v0.0.0-20250512071011-6a075badb588
 	github.com/golang/protobuf v1.5.4
-	github.com/stretchr/testify v1.10.0
-	google.golang.org/protobuf v1.36.6
+	github.com/stretchr/testify v1.11.1
+	google.golang.org/protobuf v1.36.10
 )
 
 require (
