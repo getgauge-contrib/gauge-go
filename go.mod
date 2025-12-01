@@ -1,8 +1,6 @@
 module github.com/getgauge-contrib/gauge-go
 
-go 1.24
-
-toolchain go1.24.4
+go 1.25
 
 require (
 	github.com/getgauge/common v0.0.0-20250512071011-6a075badb588
