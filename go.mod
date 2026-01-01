@@ -6,7 +6,7 @@ require (
 	github.com/getgauge/common v0.0.0-20250512071011-6a075badb588
 	github.com/golang/protobuf v1.5.4
 	github.com/stretchr/testify v1.11.1
-	google.golang.org/protobuf v1.36.10
+	google.golang.org/protobuf v1.36.11
 )
 
 require (
