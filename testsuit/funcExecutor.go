@@ -8,8 +8,7 @@ import (
 	"os"
 	"path/filepath"
 	"reflect"
-	"runtime/debug"
-	"strings"
+	"runtime"
 	"time"
 
 	"github.com/getgauge-contrib/gauge-go/constants"
@@ -38,7 +37,7 @@ func executeFunc(fn reflect.Value, args ...interface{}) (res *m.ProtoExecutionRe
 			res.ScreenShot = getScreenshot()
 			res.Failed = true
 			res.ExecutionTime = time.Since(start).Nanoseconds() / int64(time.Millisecond)
-			res.StackTrace = strings.SplitN(string(debug.Stack()), "\n", 9)[8]
+			res.StackTrace = caller(4)
 			res.ErrorMessage = fmt.Sprintf("%s", r)
 			res.RecoverableError = T.getContinueOnFailure()
 		}
@@ -78,4 +77,9 @@ func getScreenshot() []byte {
 		return bytes
 	}
 	return nil
+}
+
+func caller(skip int) string {
+	_, file, line, _ := runtime.Caller(skip)
+	return fmt.Sprintf("\t%s:%d", file, line)
 }
