@@ -2,7 +2,6 @@ package testsuit
 
 import (
 	"fmt"
-	"runtime/debug"
 	"strings"
 	"testing"
 )
@@ -53,5 +52,5 @@ func (t *testingT) ContinueOnFailure() {
 
 // Errorf records the error given, but step execution continues. However, the step is marked as failure.
 func (t *testingT) Errorf(format string, args ...interface{}) {
-	t.errors = append(t.errors, testError{errMsg: fmt.Sprintf(format, args...), stacktrace: string(debug.Stack())})
+	t.errors = append(t.errors, testError{errMsg: fmt.Sprintf(format, args...), stacktrace: caller(2)})
 }
