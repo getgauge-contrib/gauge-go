@@ -11,5 +11,5 @@ require (
 
 require (
 	github.com/dmotylev/goproperties v0.0.0-20140630191356-7cbffbaada47 // indirect
-	go.yaml.in/yaml/v3 v3.0.5 // indirect
+	go.yaml.in/yaml/v3 v3.0.6 // indirect
 )
